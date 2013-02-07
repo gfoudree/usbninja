@@ -3,13 +3,18 @@
 #include <dbt.h>
 #include <stdlib.h>
 #include <winsvc.h>
+#include <boost/thread.hpp>
+#include <boost/bind.hpp>
 #include <../USBNinjaDll/usbdevice.h>
 #include <../USBNinjaDll/sql.h>
 #include <../USBNinjaDll/errorlog.h>
+#include "handler.h"
 
 using namespace std;
 
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+boost::thread_group thrd_grp;
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArguement, int nCmdShow)
 {
@@ -69,15 +74,17 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
             {
                 PDEV_BROADCAST_VOLUME pHdrv = (PDEV_BROADCAST_VOLUME) pHdr;
                 char driveLtr = UsbDevice::FirstDriveFromMask(pHdrv->dbcv_unitmask);
-                Sql sql;
-                sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
-                sql.dbDisconnect();
+
+                thrd_grp.create_thread(boost::bind(threadHandler, driveLtr));
             }
         }
         break;
 
     case WM_DESTROY:
+    {
+        thrd_grp.join_all();
         PostQuitMessage(0);
+    }
         break;
 
     default:
