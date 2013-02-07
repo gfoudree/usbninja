@@ -1,0 +1,26 @@
+1 VERSIONINFO
+FILEVERSION 0,0,0,1
+PRODUCTVERSION 0,0,0,1
+FILEOS 0x4
+FILETYPE 0x0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName", "Security Seven"
+      VALUE "FileDescription", "USBNinja Library"
+      VALUE "FileVersion", "0,0,0,1"
+      VALUE "InternalName", "USBNinja Library"
+      VALUE "LegalCopyright", "Copyright © 2010 Security Seven"
+      VALUE "OriginalFilename", "usb32.dll"
+      VALUE "ProductName", "USBNinja"
+      VALUE "ProductVersion", "0,0,0,1"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0409, 0x04B0
+  END
+END
