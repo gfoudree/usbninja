@@ -4,7 +4,7 @@
 #include <boost/thread.hpp>
 #include <windows.h>
 #include <winioctl.h>
-#include <stdio.h>
+#include <iostream>
 #include <../USBNinjaDll/usbdevice.h>
 #include <../USBNinjaDll/settings.h>
 

@@ -9,7 +9,7 @@
 class Settings
 {
 public:
-    static std::string queryXml(const char *xquery, const char *xmlFile = "C:\\users\\grant\\desktop\\test.xml");
+    static std::string queryXml(const char *xquery, const char *xmlFile = "settings.xml");
     Settings();
 };
 
