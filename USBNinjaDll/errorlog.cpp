@@ -4,13 +4,14 @@ ErrorLog::ErrorLog()
 {
 }
 
-void ErrorLog::logErrorToFile(char *errMsg)
+void ErrorLog::logErrorToFile(char *errLevel, char *errMsg, char *extra, char *extra_2)
 {
     std::ofstream logfile;
     logfile.open("C:\\users\\grant\\desktop\\log.txt", std::ios::app);
     if (logfile.is_open())
     {
-        logfile << "[" << dateAndTime() << "] " << errMsg << std::endl;
+        logfile << "[" << dateAndTime() << "] ";
+        logfile << errLevel << " " << errMsg << extra << extra_2 << std::endl;
     }
     logfile.close();
 }

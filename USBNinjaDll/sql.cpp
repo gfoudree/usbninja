@@ -27,9 +27,7 @@ bool Sql::dbConnect(char *filename)
             }
             else
             {
-                std::string errStr = "Error accessing local SQL database: ";
-                errStr.append(sqlite3_errstr(res));
-                ErrorLog::logErrorToFile((char*)errStr.c_str());
+                ErrorLog::logErrorToFile("*CRITICAL*", "Error accessing local SQL database: ", (char*)sqlite3_errstr(res));
                 return false;
             }
         }
@@ -43,9 +41,7 @@ bool Sql::dbExecSql(char *sqlStmt)
     char *errMsg = NULL;
     if (sqlite3_exec(db, sqlStmt, NULL, NULL, &errMsg) != SQLITE_OK)
     {
-        std::string errStr = "Error executing SQL statement: ";
-        errStr.append(errMsg);
-        ErrorLog::logErrorToFile((char*)errStr.c_str());
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error executing SQL statement:", errMsg);
         sqlite3_free(errMsg);
         return false;
     }
