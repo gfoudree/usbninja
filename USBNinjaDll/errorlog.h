@@ -9,7 +9,7 @@
 class ErrorLog
 {
 public:
-    static void logErrorToFile(char *errLevel = "*NORMAL*", char *errMsg = "", char *extra = "", char *extra_2 = "");
+    static void logErrorToFile(char *errLevel = "*NORMAL*", char *errMsg = "", char *extra = "", char *extra_2 = "", char *extra_3 = "");
     static std::string dateAndTime();
 
     ErrorLog();

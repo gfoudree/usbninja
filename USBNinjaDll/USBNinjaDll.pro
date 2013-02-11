@@ -6,14 +6,16 @@ TARGET = usb32
 SOURCES += \
     usbdevice.cpp \
     sql.cpp \
-    errorlog.cpp
+    errorlog.cpp \
+    settings.cpp
 
 HEADERS += \
     usbdevice.h \
     sql.h \
-    errorlog.h
+    errorlog.h \
+    settings.h
 
-LIBS += -lsqlite3
+LIBS += -lsqlite3 -lpugi
 
 OTHER_FILES += \
     versioninfo.rc
