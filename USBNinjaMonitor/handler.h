@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <winioctl.h>
 #include <stdio.h>
+#include <../USBNinjaDll/usbdevice.h>
 
 void threadHandler(char driveLtr);
 

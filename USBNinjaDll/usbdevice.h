@@ -7,6 +7,9 @@
 
 class UsbDevice
 {
+private:
+    static std::string ltrtstr(char driveLtr);
+
 public:
 
     static bool GetDriveDeviceId(char drvLtr, std::string *deviceID);

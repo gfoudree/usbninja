@@ -86,10 +86,7 @@ bool UsbDevice::GetFriendlyName(std::string deviceID, std::string *friendlyName)
 bool UsbDevice::GetVolumeSerial(char drvLtr, std::string *serial)
 {
     DWORD serialNum;
-    std::string drvPath;
-    drvPath.append(1, drvLtr);
-    drvPath.append(":\\");
-    if (GetVolumeInformationA(drvPath.c_str(), NULL, 0, &serialNum, NULL, NULL, NULL, 0) == 0)
+    if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), NULL, 0, &serialNum, NULL, NULL, NULL, 0) == 0)
         return false;
     else
     {
@@ -100,11 +97,8 @@ bool UsbDevice::GetVolumeSerial(char drvLtr, std::string *serial)
 
 bool UsbDevice::GetVolumeName(char drvLtr, std::string *name)
 {
-    std::string drvPath;
-    drvPath.append(1, drvLtr);
-    drvPath.append(":\\");
     char label[255];
-    if (GetVolumeInformationA(drvPath.c_str(), label, sizeof(label), NULL, NULL, NULL, NULL, 0) == 0)
+    if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), label, sizeof(label), NULL, NULL, NULL, NULL, 0) == 0)
         return false;
     else
     {
@@ -115,11 +109,8 @@ bool UsbDevice::GetVolumeName(char drvLtr, std::string *name)
 
 bool UsbDevice::GetVolumeSize(char drvLtr, unsigned int *volSize)
 {
-    std::string drvPath;
-    drvPath.append(1, drvLtr);
-    drvPath.append(":\\");
     ULARGE_INTEGER freeSpace, diskSpace;
-    if(GetDiskFreeSpaceExA(drvPath.c_str(), &freeSpace, &diskSpace, NULL) == 0)
+    if(GetDiskFreeSpaceExA(ltrtstr(drvLtr).c_str(), &freeSpace, &diskSpace, NULL) == 0)
         return false;
     else
     {
@@ -145,4 +136,12 @@ inline std::string UsbDevice::toStr(T val)
     std::stringstream ss;
     ss << val;
     return ss.str();
+}
+
+std::string UsbDevice::ltrtstr(char driveLtr)
+{
+    std::string retVal;
+    retVal.append(1, driveLtr);
+    retVal.append(":\\");
+    return retVal;
 }
