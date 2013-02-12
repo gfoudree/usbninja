@@ -7,6 +7,7 @@
 #include <iostream>
 #include <../USBNinjaDll/usbdevice.h>
 #include <../USBNinjaDll/settings.h>
+#include <../USBNinjaDll/sql.h>
 
 void threadHandler(char driveLtr);
 

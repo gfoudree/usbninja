@@ -53,3 +53,25 @@ void Sql::dbDisconnect()
 {
     sqlite3_close(db);
 }
+
+
+int Sql::sqlCallback(void *dataPtr, int argc, char **argv, char **colname)
+{
+    sqlDriveStruct tmpDrv;
+    tmpDrv.id = atoi(argv[0]);
+    tmpDrv.date = argv[1];
+    tmpDrv.serial = argv[2];
+    tmpDrv.driveName = argv[3];
+    tmpDrv.driveSize = atoi(argv[4]);
+
+    std::vector<sqlDriveStruct> *pParamStruct = static_cast<std::vector<sqlDriveStruct>*>(dataPtr);
+    pParamStruct->push_back(tmpDrv);
+    return 0;
+}
+
+void Sql::queryDrives(std::vector<sqlDriveStruct> *drives)
+{
+    char *errBuf;
+    if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlCallback, static_cast<void*>(drives), &errBuf) != 0)
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error reading authorized USB drives: ", errBuf);
+}
