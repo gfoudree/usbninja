@@ -10,3 +10,4 @@ Icon?
 .ethumbs.db
 *.log
 Build/
+*.pro.user.*

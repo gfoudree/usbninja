@@ -20,7 +20,7 @@ bool Sql::dbConnect(char *filename)
             res = sqlite3_open(filename, &db);
             if (res == SQLITE_OK)
             {
-                dbExecSql("CREATE TABLE authorizedDrives (id int AUTO_INCREMENT, serial char(100));");
+                dbExecSql("CREATE TABLE authDrives (id INTEGER PRIMARY KEY, dateAuthorized char (20), serial char(120), driveName char(30), driveSize INTEGER);");
                 dbExecSql("CREATE TABLE loggedDrives (id int AUTO_INCREMENT, driveltr char(5), serial char(100));");
                 ErrorLog::logErrorToFile("Created new SQL database.");
                 return true;
@@ -32,8 +32,7 @@ bool Sql::dbConnect(char *filename)
             }
         }
     }
-    else
-        return true;
+    return true;
 }
 
 bool Sql::dbExecSql(char *sqlStmt)

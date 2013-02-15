@@ -18,3 +18,5 @@ RC_FILE = versioninfo.rc
 HEADERS += \
     handler.h \
     usbops.h
+
+QMAKE_CXXFLAGS += -Wno-write-strings    #Get rid of annoying warnings for const *char to *char

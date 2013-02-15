@@ -13,7 +13,7 @@ void UsbOps::lockUSB(char driveLtr)
     char driveFileName[10];
     sprintf(driveFileName, "\\\\.\\%c:", driveLtr);
 
-    HANDLE hVolume = CreateFileA(driveFileName, GENERIC_READ | GENERIC_WRITE,
+    hVolume = CreateFileA(driveFileName, GENERIC_READ | GENERIC_WRITE,
                                FILE_SHARE_READ | FILE_SHARE_WRITE,
                                NULL,
                                OPEN_EXISTING,
@@ -43,4 +43,37 @@ void UsbOps::unlockUSB()
         Sleep(1000);    //1 second pause between attempts
     }
     CloseHandle(hVolume);
+}
+
+void UsbOps::ejectUSB()
+{
+    if (!dismountVolume())
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to dismount USB volume: ", ErrorLog::winErrToStr(GetLastError()));
+    if (!preventRemovalOfVolume())
+        ErrorLog::logErrorToFile("Unable to set USB drive to \"safe to remove\": ", ErrorLog::winErrToStr(GetLastError()));
+    if (!autoEjectVolume())
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error ejecting USB volume: ", ErrorLog::winErrToStr(GetLastError()));
+    CloseHandle(hVolume);
+}
+
+bool UsbOps::dismountVolume()
+{
+    DWORD bRet;
+    return DeviceIoControl(hVolume, FSCTL_DISMOUNT_VOLUME, NULL, 0, NULL, 0, &bRet, NULL);
+}
+
+bool UsbOps::preventRemovalOfVolume()
+{
+    DWORD bRet;
+    PREVENT_MEDIA_REMOVAL pmrBuf;
+    pmrBuf.PreventMediaRemoval = FALSE;
+    return DeviceIoControl(hVolume, IOCTL_STORAGE_MEDIA_REMOVAL, &pmrBuf,
+                           sizeof(PREVENT_MEDIA_REMOVAL), NULL, 0, &bRet, NULL);
+}
+
+bool UsbOps::autoEjectVolume()
+{
+    DWORD bRet;
+    return DeviceIoControl(hVolume, IOCTL_STORAGE_EJECT_MEDIA, NULL, 0,
+                           NULL, 0, &bRet, NULL);
 }

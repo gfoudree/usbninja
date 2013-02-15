@@ -25,3 +25,11 @@ std::string ErrorLog::dateAndTime()
     strftime(buf, sizeof(buf), "%Y-%m-%d_%X", &tstruct);
     return buf;
 }
+
+char *ErrorLog::winErrToStr(DWORD errCode)
+{
+    char *buf;
+    FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                   NULL, errCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&buf, 0, NULL);
+    return buf;
+}
