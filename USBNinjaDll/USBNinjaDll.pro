@@ -7,13 +7,15 @@ SOURCES += \
     usbdevice.cpp \
     sql.cpp \
     errorlog.cpp \
-    settings.cpp
+    settings.cpp \
+    accesslog.cpp
 
 HEADERS += \
     usbdevice.h \
     sql.h \
     errorlog.h \
-    settings.h
+    settings.h \
+    accesslog.h
 
 LIBS += -lsqlite3 -lpugi
 

@@ -4,6 +4,11 @@ Sql::Sql()
 {
 }
 
+Sql::Sql(char *filename)
+{
+    dbConnect(filename);
+}
+
 Sql::~Sql()
 {
     dbDisconnect();
@@ -20,8 +25,9 @@ bool Sql::dbConnect(char *filename)
             res = sqlite3_open(filename, &db);
             if (res == SQLITE_OK)
             {
-                dbExecSql("CREATE TABLE authDrives (id INTEGER PRIMARY KEY, dateAuthorized char (20), serial char(120), driveName char(30), driveSize INTEGER);");
-                dbExecSql("CREATE TABLE loggedDrives (id int AUTO_INCREMENT, driveltr char(5), serial char(100));");
+                dbExecSql("CREATE TABLE authDrives (id INTEGER PRIMARY KEY, dateAuthorized CHAR(20), serial CHAR(120), driveName CHAR(30), driveSize INTEGER);");
+                dbExecSql("CREATE TABLE loggedDrives (id INTEGER PRIMARY KEY, accepted INT, date CHAR(50), user CHAR(50), driveLetter CHAR(1), driveName CHAR(50), " \
+                          "driveSize BIGINT, driveSerial CHAR(100), driveGUID CHAR(50), volumeID CHAR(50));");
                 ErrorLog::logErrorToFile("Created new SQL database.");
                 return true;
             }

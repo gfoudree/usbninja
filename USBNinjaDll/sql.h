@@ -22,6 +22,7 @@ public:
     void queryDrives(std::vector<sqlDriveStruct> *drives);
 
     Sql();
+    Sql(char *filename);
     ~Sql();
 };
 
