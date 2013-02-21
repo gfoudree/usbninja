@@ -1,6 +1,7 @@
 #ifndef HANDLER_H
 #define HANDLER_H
 
+#define _WIN32_WINNT 0x601
 #include <boost/thread.hpp>
 #include <windows.h>
 #include <winioctl.h>

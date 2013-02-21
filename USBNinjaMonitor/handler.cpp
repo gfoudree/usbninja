@@ -16,15 +16,7 @@ void threadHandler(char driveLtr)
     */
 
     AccessLog *log = new AccessLog;
-    log->logUSBStruct.accepted = true;
-    log->logUSBStruct.date = "2/19/13_7:47PM";
-    log->logUSBStruct.driveGUID = "ffwe990aa0jf";
-    log->logUSBStruct.driveLetter = 'E';
-    log->logUSBStruct.driveName = "PENDRIVE";
-    log->logUSBStruct.driveSerial = "0xff31f9019";
-    log->logUSBStruct.driveSize = 40960;
-    log->logUSBStruct.user = "Gmoney";
-    log->logUSBStruct.volumeID = "004001414";
+    log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);
     delete log;
 }

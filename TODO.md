@@ -1,5 +1,7 @@
 Todo
 ----------------------------
+- add USBserial reading function and member in USBLog struct
+- add error handling for usbdevice.cpp functions
 
 Notes
 ----------------------------
@@ -19,7 +21,8 @@ Fields:
 - user
 - driveLetter
 - driveName		#USB friendly name
+- driveLabel
 - driveSize
 - driveSerial
 - driveGUID
-- volumeID
+- usbninjaSerial

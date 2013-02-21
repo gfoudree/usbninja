@@ -1,6 +1,7 @@
 #ifndef USBOPS_H
 #define USBOPS_H
 
+#define _WIN32_WINNT 0x601
 #include <windows.h>
 #include <winioctl.h>
 #include <stdio.h>

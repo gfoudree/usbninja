@@ -12,6 +12,7 @@ void ErrorLog::logErrorToFile(char *errLevel, char *errMsg, char *extra, char *e
     {
         logfile << "[" << dateAndTime() << "] ";
         logfile << errLevel << " " << errMsg << extra << extra_2 << extra_3 << std::endl;
+        logfile.flush();
     }
     logfile.close();
 }

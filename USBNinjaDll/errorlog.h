@@ -1,6 +1,7 @@
 #ifndef ERRORLOG_H
 #define ERRORLOG_H
 
+#define _WIN32_WINNT 0x601
 #include <iostream>
 #include <fstream>
 #include <sstream>

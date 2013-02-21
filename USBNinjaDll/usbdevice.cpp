@@ -119,6 +119,32 @@ bool UsbDevice::GetVolumeSize(char drvLtr, unsigned int *volSize)
     }
 }
 
+bool UsbDevice::GetVolumeLabel(char drvLtr, std::string *label)
+{
+    char labelBuf[MAX_PATH];
+    DWORD dwRet;
+    if (!GetVolumeInformationA(UsbDevice::ltrtstr(drvLtr).c_str(),
+                               labelBuf, sizeof(labelBuf),
+                               NULL, &dwRet, &dwRet, NULL, 0))
+    {
+        return false;
+    }
+    *label = labelBuf;
+    return true;
+}
+
+bool UsbDevice::GetVolumeGUID(char drvLtr, std::string *GUID)
+{
+    char GUIDBuf[512];
+    if (!GetVolumeNameForVolumeMountPointA(UsbDevice::ltrtstr(drvLtr).c_str(),
+                                           GUIDBuf, sizeof(GUIDBuf)))
+    {
+        return false;
+    }
+    *GUID = GUIDBuf;
+    return true;
+}
+
 char UsbDevice::FirstDriveFromMask(ULONG unitmask)
 {
     char i;
