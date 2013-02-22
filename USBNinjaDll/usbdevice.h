@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <iostream>
 #include <sstream>
+#include "errorlog.h"
 
 class UsbDevice
 {

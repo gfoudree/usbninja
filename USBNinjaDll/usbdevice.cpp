@@ -50,6 +50,7 @@ bool UsbDevice::GetDriveDeviceId(char drvLtr, std::string *deviceID)
     else
     {
         RegCloseKey(key);
+        ErrorLog::logErrorToFile("Unable to read registry key to obtain device id: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
 }
@@ -79,6 +80,7 @@ bool UsbDevice::GetFriendlyName(std::string deviceID, std::string *friendlyName)
     else
     {
         RegCloseKey(key);
+        ErrorLog::logErrorToFile("Unable to read registery key to get friendly name: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
 }
@@ -87,7 +89,10 @@ bool UsbDevice::GetVolumeSerial(char drvLtr, std::string *serial)
 {
     DWORD serialNum;
     if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), NULL, 0, &serialNum, NULL, NULL, NULL, 0) == 0)
+    {
+        ErrorLog::logErrorToFile("Unable to get volume serial: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
+    }
     else
     {
         *serial = toStr<DWORD>(serialNum);
@@ -99,7 +104,10 @@ bool UsbDevice::GetVolumeName(char drvLtr, std::string *name)
 {
     char label[255];
     if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), label, sizeof(label), NULL, NULL, NULL, NULL, 0) == 0)
+    {
+        ErrorLog::logErrorToFile("Unable to get volume name: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
+    }
     else
     {
         *name = toStr<>(label);
@@ -111,7 +119,10 @@ bool UsbDevice::GetVolumeSize(char drvLtr, unsigned int *volSize)
 {
     ULARGE_INTEGER freeSpace, diskSpace;
     if(GetDiskFreeSpaceExA(ltrtstr(drvLtr).c_str(), &freeSpace, &diskSpace, NULL) == 0)
+    {
+        ErrorLog::logErrorToFile("Unable to get volume size: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
+    }
     else
     {
         *volSize = diskSpace.QuadPart >> 20;
@@ -127,6 +138,7 @@ bool UsbDevice::GetVolumeLabel(char drvLtr, std::string *label)
                                labelBuf, sizeof(labelBuf),
                                NULL, &dwRet, &dwRet, NULL, 0))
     {
+        ErrorLog::logErrorToFile("Unable to get volume label: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     *label = labelBuf;
@@ -139,6 +151,7 @@ bool UsbDevice::GetVolumeGUID(char drvLtr, std::string *GUID)
     if (!GetVolumeNameForVolumeMountPointA(UsbDevice::ltrtstr(drvLtr).c_str(),
                                            GUIDBuf, sizeof(GUIDBuf)))
     {
+        ErrorLog::logErrorToFile("Unable to get volume GUID: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     *GUID = GUIDBuf;
