@@ -20,3 +20,6 @@ HEADERS  += mainwindow.h
 FORMS    += mainwindow.ui
 
 RC_FILE = versioninfo.rc
+
+QMAKE_CXXFLAGS += -static -static-libstdc++ -static-libgcc
+QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc

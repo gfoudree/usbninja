@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.6.2, 2013-02-11T23:03:52. -->
+<!-- Written by Qt Creator 2.6.2, 2013-02-23T17:28:10. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -213,7 +213,9 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">USBNinja.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal">false</value>
-    <valuelist type="QVariantList" key="Qt4ProjectManager.Qt4RunConfiguration.UserEnvironmentChanges"/>
+    <valuelist type="QVariantList" key="Qt4ProjectManager.Qt4RunConfiguration.UserEnvironmentChanges">
+     <value type="QString">PATH=C:\Qt\Qt5.0.1\5.0.1\mingw47_32\lib;C:\Qt\Qt5.0.1\5.0.1\mingw47_32\bin;C:\MinGW\bin;C:\Program Files (x86)\vim73;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Program Files (x86)\nasm;C:\MinGW\bin;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files (x86)\Subversion\bin;C:\Program Files (x86)\Java\jre7\bin;C:\Python27;C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\strawberry\perl\bin;C:\Program Files\OpenVPN\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Git\cmd;C:\Ruby\bin;C:\GNUstep\GNUstep\System\Tools;C:\GNUstep\bin;C:\Program Files (x86)\Nmap;C:\Qt\Qt5.0.1\5.0.1\mingw47_32\bin;</value>
+    </valuelist>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">true</value>
