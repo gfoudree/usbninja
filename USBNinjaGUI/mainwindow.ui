@@ -43,6 +43,10 @@
 
  QTreeView::branch:!has-children:!has-siblings:adjoins-item {
      border-image: url(:/new/prefix1/resources/branch-end.png) 0;
+ }
+
+ QTreeView::branch:!has-children:has-siblings:adjoins-item {
+     border-image: url(:/new/prefix1/resources/vline.png) 0;
  }</string>
     </property>
     <column>
@@ -98,6 +102,8 @@
     <addaction name="actionManage_Devices"/>
     <addaction name="actionAuthorize_Device"/>
     <addaction name="actionUnauthorize_All_Devices"/>
+    <addaction name="separator"/>
+    <addaction name="actionGraph_Data"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -106,8 +112,16 @@
     <addaction name="actionHelp"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuMonitor">
+    <property name="title">
+     <string>Monitor</string>
+    </property>
+    <addaction name="actionStart_Monitoring"/>
+    <addaction name="actionStop_Monitoring"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuManage"/>
+   <addaction name="menuMonitor"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionReload_Log">
@@ -160,6 +174,21 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionStart_Monitoring">
+   <property name="text">
+    <string>Start Monitoring</string>
+   </property>
+  </action>
+  <action name="actionStop_Monitoring">
+   <property name="text">
+    <string>Stop Monitoring</string>
+   </property>
+  </action>
+  <action name="actionGraph_Data">
+   <property name="text">
+    <string>Graph Data</string>
    </property>
   </action>
  </widget>
