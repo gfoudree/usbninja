@@ -12,11 +12,11 @@
 class ErrorLog
 {
 public:
-    static void logErrorToFile(char *errLevel = "*NORMAL*", char *errMsg = "", char *extra = "", char *extra_2 = "", char *extra_3 = "");
-    static std::string dateAndTime();
-    static char *winErrToStr(DWORD errCode);
+    __declspec(dllexport) static void logErrorToFile(char *errLevel = "*NORMAL*", char *errMsg = "", char *extra = "", char *extra_2 = "", char *extra_3 = "");
+    __declspec(dllexport) static std::string dateAndTime();
+    __declspec(dllexport) static char *winErrToStr(DWORD errCode);
 
-    ErrorLog();
+    __declspec(dllexport) ErrorLog();
 };
 
 #endif // ERRORLOG_H

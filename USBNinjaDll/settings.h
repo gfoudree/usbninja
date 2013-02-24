@@ -9,8 +9,8 @@
 class Settings
 {
 public:
-    static std::string queryXml(const char *xquery, const char *xmlFile = "settings.xml");
-    Settings();
+    __declspec(dllexport) static std::string queryXml(const char *xquery, const char *xmlFile = "settings.xml");
+    __declspec(dllexport) Settings();
 };
 
 

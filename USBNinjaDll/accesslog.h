@@ -30,10 +30,10 @@ public:
         std::string     usbninjaSerial;
     } logUSBStruct;
 
-    static bool logUsbDrive(logUSB &lUsb);
-    static std::string userName();
-    void createLogStruct(logUSB *lUsb, char drvLtr);
-    AccessLog();
+    __declspec(dllexport) static bool logUsbDrive(logUSB &lUsb);
+    __declspec(dllexport) static std::string userName();
+    __declspec(dllexport) void createLogStruct(logUSB *lUsb, char drvLtr);
+    __declspec(dllexport) AccessLog();
 };
 
 

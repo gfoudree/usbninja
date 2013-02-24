@@ -14,19 +14,19 @@ private:
 
 public:
 
-    static bool GetDriveDeviceId(char drvLtr, std::string *deviceID);
-    static bool GetFriendlyName(std::string deviceID, std::string *friendlyName);
-    static bool GetVolumeSerial(char drvLtr, std::string *serial);
-    static bool GetVolumeName(char drvLtr, std::string *name);
-    static bool GetVolumeSize(char drvLtr, unsigned int *volSize);
-    static bool GetVolumeLabel(char drvLtr, std::string *label);
-    static bool GetVolumeGUID(char drvLtr, std::string *GUID);
-    static char FirstDriveFromMask(ULONG unitmask);
+    __declspec(dllexport) static bool GetDriveDeviceId(char drvLtr, std::string *deviceID);
+    __declspec(dllexport) static bool GetFriendlyName(std::string deviceID, std::string *friendlyName);
+    __declspec(dllexport) static bool GetVolumeSerial(char drvLtr, std::string *serial);
+    __declspec(dllexport) static bool GetVolumeName(char drvLtr, std::string *name);
+    __declspec(dllexport) static bool GetVolumeSize(char drvLtr, unsigned int *volSize);
+    __declspec(dllexport) static bool GetVolumeLabel(char drvLtr, std::string *label);
+    __declspec(dllexport) static bool GetVolumeGUID(char drvLtr, std::string *GUID);
+    __declspec(dllexport) static char FirstDriveFromMask(ULONG unitmask);
 
     template <class T>
-    static inline std::string toStr(T val);
+    __declspec(dllexport) static inline std::string toStr(T val);
 
-    UsbDevice();
+    __declspec(dllexport) UsbDevice();
 };
 
 #endif // USBDEVICE_H

@@ -59,8 +59,26 @@ void Sql::dbDisconnect()
     sqlite3_close(db);
 }
 
+int Sql::sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname)
+{
+    logUSB tmpUsb;
+    tmpUsb.accepted = false; /*TODO: fix this later!*/
+    tmpUsb.date = argv[2];
+    tmpUsb.user = argv[3];
+    tmpUsb.driveLetter = argv[4][0];
+    tmpUsb.driveName = argv[5];
+    tmpUsb.driveLabel = argv[6];
+    tmpUsb.driveSize = atoi(argv[7]);
+    tmpUsb.driveSerial = argv[8];
+    tmpUsb.driveGUID = argv[9];
+    tmpUsb.usbninjaSerial = argv[10];
 
-int Sql::sqlCallback(void *dataPtr, int argc, char **argv, char **colname)
+    std::vector<logUSB> *pLogStruct = static_cast<std::vector<logUSB>*>(dataPtr);
+    pLogStruct->push_back(tmpUsb);
+    return 0;
+}
+
+int Sql::sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname)
 {
     sqlDriveStruct tmpDrv;
     tmpDrv.id = atoi(argv[0]);
@@ -77,6 +95,13 @@ int Sql::sqlCallback(void *dataPtr, int argc, char **argv, char **colname)
 void Sql::queryDrives(std::vector<sqlDriveStruct> *drives)
 {
     char *errBuf;
-    if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlCallback, static_cast<void*>(drives), &errBuf) != 0)
+    if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthCallback, static_cast<void*>(drives), &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error reading authorized USB drives: ", errBuf);
+}
+
+void Sql::queryLog(std::vector<logUSB> *drives)
+{
+    char *errBuf;
+    if (sqlite3_exec(db, "SELECT * FROM loggedDrives;", sqlLogCallback, static_cast<void*>(drives), &errBuf) != 0)
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
 }
