@@ -92,6 +92,19 @@ int Sql::sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname)
     return 0;
 }
 
+int Sql::sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname)
+{
+    authedDrive tmpDrv;
+    tmpDrv.dateAuthorized = argv[1];
+    tmpDrv.serial = argv[2];
+    tmpDrv.driveName = argv[3];
+    tmpDrv.driveSize = atoi(argv[4]);
+
+    std::vector<authedDrive> *pParamStruct = static_cast<std::vector<authedDrive>*>(dataPtr);
+    pParamStruct->push_back(tmpDrv);
+    return 0;
+}
+
 void Sql::queryDrives(std::vector<sqlDriveStruct> *drives)
 {
     char *errBuf;
@@ -103,5 +116,12 @@ void Sql::queryLog(std::vector<logUSB> *drives)
 {
     char *errBuf;
     if (sqlite3_exec(db, "SELECT * FROM loggedDrives;", sqlLogCallback, static_cast<void*>(drives), &errBuf) != 0)
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
+}
+
+void Sql::queryAuthedDrives(std::vector<authedDrive> *drives)
+{
+    char *errBuf;
+    if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthedDrivesCallback, static_cast<void*>(drives), &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
 }

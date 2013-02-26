@@ -9,6 +9,7 @@
 
 struct sqlDriveStruct;
 struct logUSB;
+struct authedDrive;
 
 class Sql
 {
@@ -16,6 +17,7 @@ protected:
     sqlite3 *db;
     static int sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname);
+    static int sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname);
 
 public:
     __declspec(dllexport) bool dbConnect(char *filename);
@@ -23,6 +25,7 @@ public:
     __declspec(dllexport) bool dbExecSql(char *sqlStmt);
     __declspec(dllexport) void queryDrives(std::vector<sqlDriveStruct> *drives);
     __declspec(dllexport) void queryLog(std::vector<logUSB> *drives);
+    __declspec(dllexport) void queryAuthedDrives(std::vector<authedDrive> *drives);
 
     __declspec(dllexport) Sql();
     __declspec(dllexport) Sql(char *filename);
@@ -50,6 +53,14 @@ struct logUSB
     std::string     driveSerial;
     std::string     driveGUID;
     std::string     usbninjaSerial;
+};
+
+struct authedDrive
+{
+    std::string     dateAuthorized;
+    std::string     serial;
+    std::string     driveName;
+    unsigned int    driveSize;
 };
 
 #endif // SQL_H

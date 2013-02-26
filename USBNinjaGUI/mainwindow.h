@@ -5,6 +5,7 @@
 #include <../../USBNinjaDll/sql.h>
 
 #include "aboutdialog.h"
+#include "managedrivesdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,9 +29,7 @@ private slots:
 
     void on_actionAbout_triggered();
 
-    void on_actionStart_Monitoring_triggered();
-
-    void on_actionStop_Monitoring_triggered();
+    void on_actionManage_Devices_triggered();
 
 private:
     Ui::MainWindow *ui;

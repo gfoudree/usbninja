@@ -74,17 +74,14 @@ void MainWindow::on_actionClear_Log_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-    AboutDialog aboutdialog;
-    aboutdialog.setModal(true);
-    aboutdialog.exec();
+    AboutDialog aboutDialog;
+    aboutDialog.setModal(true);
+    aboutDialog.exec();
 }
 
-void MainWindow::on_actionStart_Monitoring_triggered()
+void MainWindow::on_actionManage_Devices_triggered()
 {
-
-}
-
-void MainWindow::on_actionStop_Monitoring_triggered()
-{
-
+    ManageDrivesDialog manageDrivesDialog;
+    manageDrivesDialog.setModal(true);
+    manageDrivesDialog.exec();
 }
