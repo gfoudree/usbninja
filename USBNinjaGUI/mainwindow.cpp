@@ -56,6 +56,7 @@ void MainWindow::loadData()
         ui->treeWidget->insertTopLevelItem(0, parentItm);
     }
     ui->treeWidget->setColumnWidth(0, 40);
+    ui->treeWidget->setColumnWidth(3, 150);
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->resizeColumnToContents(5);
 }
@@ -69,4 +70,21 @@ void MainWindow::on_actionClear_Log_triggered()
 {
     clearData();
     loadData();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog aboutdialog;
+    aboutdialog.setModal(true);
+    aboutdialog.exec();
+}
+
+void MainWindow::on_actionStart_Monitoring_triggered()
+{
+
+}
+
+void MainWindow::on_actionStop_Monitoring_triggered()
+{
+
 }
