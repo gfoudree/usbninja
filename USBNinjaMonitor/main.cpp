@@ -13,6 +13,7 @@
 using namespace std;
 
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+void logQuitMessage();
 
 boost::thread_group thrd_grp;
 
@@ -54,6 +55,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgu
                hInstance,
                NULL
                );
+    ErrorLog::logErrorToFile("*INFO*", "USBNinja daemon started.");
+    atexit(logQuitMessage);
 
     while (GetMessage (&messages, NULL, 0, 0))
     {
@@ -82,13 +85,18 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
     case WM_DESTROY:
     {
-        thrd_grp.join_all();
         PostQuitMessage(0);
     }
-        break;
+    break;
 
     default:
         return DefWindowProcA(hwnd, message, wParam, lParam);
     }
     return 0;
+}
+
+void logQuitMessage()
+{
+    thrd_grp.join_all();
+    ErrorLog::logErrorToFile("*INFO*", "USBNinja daemon stopped.");
 }

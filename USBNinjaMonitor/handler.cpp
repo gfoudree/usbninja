@@ -15,8 +15,7 @@ void threadHandler(char driveLtr)
     ops.ejectUSB();
     */
 
-    AccessLog *log = new AccessLog;
+    boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);
-    delete log;
 }

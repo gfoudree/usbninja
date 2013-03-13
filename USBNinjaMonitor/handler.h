@@ -3,6 +3,7 @@
 
 #define _WIN32_WINNT 0x601
 #include <boost/thread.hpp>
+#include <boost/shared_ptr.hpp>
 #include <windows.h>
 #include <winioctl.h>
 #include <iostream>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.6.2, 2013-02-25T21:04:31. -->
+<!-- Written by Qt Creator 2.6.2, 2013-03-13T05:22:49. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -156,7 +156,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QByteArray" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">C:/Users/grant/Documents/usbninja/USBNinjaDll-build-Desktop_Qt_5_0_1_MinGW_32bit-Release</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">Build</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.BuildConfigurationCount">2</value>
@@ -207,11 +207,11 @@
     </valuelist>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments"></value>
     <value type="int" key="ProjectExplorer.CustomExecutableRunConfiguration.BaseEnvironmentBase">2</value>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">C:/Users/grant/Documents/usbninja/USBNinjaMonitor/Build/debug/usbd.exe</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable"></value>
     <value type="bool" key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal">false</value>
     <valuelist type="QVariantList" key="ProjectExplorer.CustomExecutableRunConfiguration.UserEnvironmentChanges"/>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">%{buildDir}</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run C:\Users\grant\Documents\usbninja\USBNinjaMonitor\Build\debug\usbd.exe</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Custom Executable</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QByteArray" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
@@ -229,7 +229,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
-  <value type="QString">{15d70848-4d76-4d16-9c69-e5af5950961f}</value>
+  <value type="QString">{0a120bca-03d0-4faf-81f4-453324d7d3a4}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
