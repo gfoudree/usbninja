@@ -18,6 +18,7 @@ class ManageDrivesDialog : public QDialog
     
 public:
     explicit ManageDrivesDialog(QWidget *parent = 0);
+    void refreshData();
     ~ManageDrivesDialog();
     
 private slots:
