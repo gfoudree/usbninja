@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QtGui>
+#include <QMenu>
+#include <QMessageBox>
 
 #include <../../USBNinjaDll/sql.h>
 
@@ -20,6 +22,7 @@ public:
     
 private slots:
     void on_pushButton_clicked();
+    void deleteDeviceHandler();
 
 private:
     Ui::ManageDrivesDialog *ui;

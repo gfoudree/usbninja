@@ -29,6 +29,13 @@ ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
         ui->treeWidget->insertTopLevelItem(0, itm);
     }
     ui->treeWidget->resizeColumnToContents(2);
+
+    QMenu *contextMenu = new QMenu(ui->treeWidget);
+    ui->treeWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+    QAction *deleteDrive = new QAction("Delete Device", contextMenu);
+    ui->treeWidget->addAction(deleteDrive);
+
+    connect(deleteDrive, SIGNAL(triggered()), this, SLOT(deleteDeviceHandler()));
 }
 
 ManageDrivesDialog::~ManageDrivesDialog()
@@ -39,4 +46,11 @@ ManageDrivesDialog::~ManageDrivesDialog()
 void ManageDrivesDialog::on_pushButton_clicked()
 {
     done(0);
+}
+
+void ManageDrivesDialog::deleteDeviceHandler()
+{
+    QTreeWidgetItem *itm = ui->treeWidget->currentItem();
+    int id = atoi(itm->text(0).toStdString().c_str());
+    QMessageBox::information(this, "Test", QString::number(id));
 }
