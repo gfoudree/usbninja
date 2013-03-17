@@ -30,6 +30,6 @@ QMAKE_POST_LINK += $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../U
                    & $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaGUI/Build/debug/usb32.dll")
 
 
-QMAKE_CXXFLAGS += -Wno-write-strings   #Get rid of annoying warnings for const *char to *char
+QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc

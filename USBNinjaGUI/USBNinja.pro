@@ -36,4 +36,4 @@ OTHER_FILES +=
 RESOURCES += \
     resource.qrc
 
-QMAKE_CXXFLAGS += -Wno-write-strings    #Get rid of annoying warnings for const *char to *char
+QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
