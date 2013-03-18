@@ -15,6 +15,7 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
+#include <boost/shared_ptr.hpp>
 
 namespace Ui {
 class AboutDialog;

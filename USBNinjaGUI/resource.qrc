@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/new/prefix1">
         <file>resources/branch-end.png</file>
-		<file>resources/vline.png</file>
+        <file>resources/vline.png</file>
+        <file>resources/usbninjalogo.png</file>
     </qresource>
 </RCC>
