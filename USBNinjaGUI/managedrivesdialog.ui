@@ -19,7 +19,7 @@
      <x>10</x>
      <y>11</y>
      <width>531</width>
-     <height>241</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -50,7 +50,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>270</y>
+     <y>280</y>
      <width>81</width>
      <height>23</height>
     </rect>

@@ -37,7 +37,8 @@ bool Sql::dbConnect(char *filename)
             res = sqlite3_open(filename, &db);
             if (res == SQLITE_OK)
             {
-                dbExecSql("CREATE TABLE authDrives (id INTEGER PRIMARY KEY, dateAuthorized CHAR(20), serial CHAR(120), driveName CHAR(30), driveSize INTEGER);");
+                dbExecSql("CREATE TABLE authDrives (id INTEGER PRIMARY KEY, dateAuthorized CHAR(20), serial CHAR(120), driveName CHAR(30), driveSize INTEGER, " \
+                          "notes CHAR(256));");
                 dbExecSql("CREATE TABLE loggedDrives (id INTEGER PRIMARY KEY, accepted INT, date CHAR(50), user CHAR(50), driveLetter CHAR(1), driveName CHAR(50), " \
                           "driveLabel CHAR(50), driveSize BIGINT, driveSerial CHAR(100), driveGUID CHAR(50), usbninjaSerial CHAR(100));");
                 ErrorLog::logErrorToFile("*INFO*", "Created new SQL database.");
@@ -111,6 +112,7 @@ int Sql::sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **co
     tmpDrv.serial = argv[2];
     tmpDrv.driveName = argv[3];
     tmpDrv.driveSize = atoi(argv[4]);
+    tmpDrv.notes = argv[5];
 
     std::vector<authedDrive> *pParamStruct = static_cast<std::vector<authedDrive>*>(dataPtr);
     pParamStruct->push_back(tmpDrv);

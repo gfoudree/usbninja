@@ -73,6 +73,7 @@ struct authedDrive
     std::string     serial;
     std::string     driveName;
     unsigned int    driveSize;
+    std::string     notes;
 };
 
 #endif // SQL_H

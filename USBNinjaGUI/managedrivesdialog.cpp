@@ -21,7 +21,7 @@ ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
     ui->setupUi(this);
 
     QStringList columnTitles;
-    columnTitles << "ID" << "Date Authorized" << "USBNinja Serial" << "Name" << "Size";
+    columnTitles << "ID" << "Date Authorized" << "USBNinja Serial" << "Name" << "Size" << "Notes";
     ui->treeWidget->setHeaderLabels(columnTitles);
     ui->treeWidget->setColumnWidth(0, 40);
 
@@ -49,7 +49,7 @@ void ManageDrivesDialog::refreshData()
         QStringList data;
         data << QString::number(i) << authedDrv.at(element).dateAuthorized.c_str();
         data << authedDrv.at(element).serial.c_str() << authedDrv.at(element).driveName.c_str();
-        data << QString::number(authedDrv.at(element).driveSize);
+        data << QString::number(authedDrv.at(element).driveSize) << authedDrv.at(element).notes.c_str();
 
         QTreeWidgetItem *itm = new QTreeWidgetItem(data);
         ui->treeWidget->insertTopLevelItem(0, itm);
