@@ -37,12 +37,12 @@ public:
     
 private slots:
     void on_actionExit_triggered();
-
     void on_actionClear_Log_triggered();
-
     void on_actionAbout_triggered();
-
     void on_actionManage_Devices_triggered();
+
+    void expandAllHandler();
+    void collapseAllHandler();
 
 private:
     Ui::MainWindow *ui;

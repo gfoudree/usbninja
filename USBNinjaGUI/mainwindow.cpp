@@ -24,6 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
     columnTitles << "ID" << "Action" << "Date" << "User" << "Label" << "Manufacturer" << "Size";
     ui->treeWidget->setHeaderLabels(columnTitles);
 
+    QMenu *contextMenu = new QMenu(ui->treeWidget);
+    ui->treeWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+    QAction *expandAll = new QAction("Expand all", contextMenu);
+    QAction *collapseAll = new QAction("Collapse all", contextMenu);
+    ui->treeWidget->addAction(expandAll);
+    ui->treeWidget->addAction(collapseAll);
+    connect(expandAll, SIGNAL(triggered()), this, SLOT(expandAllHandler()));
+    connect(collapseAll, SIGNAL(triggered()), this, SLOT(collapseAllHandler()));
+
     loadData();
 }
 
@@ -97,4 +106,14 @@ void MainWindow::on_actionManage_Devices_triggered()
     ManageDrivesDialog manageDrivesDialog;
     manageDrivesDialog.setModal(true);
     manageDrivesDialog.exec();
+}
+
+void MainWindow::expandAllHandler()
+{
+    ui->treeWidget->expandAll();
+}
+
+void MainWindow::collapseAllHandler()
+{
+    ui->treeWidget->collapseAll();
 }
