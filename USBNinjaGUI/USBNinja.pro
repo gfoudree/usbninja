@@ -15,15 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
-    managedrivesdialog.cpp
+    managedrivesdialog.cpp \
+    authorizedevicedialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
-    managedrivesdialog.h
+    managedrivesdialog.h \
+    authorizedevicedialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
-    managedrivesdialog.ui
+    managedrivesdialog.ui \
+    authorizedevicedialog.ui
 
 RC_FILE = versioninfo.rc
 

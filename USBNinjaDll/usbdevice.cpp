@@ -181,6 +181,25 @@ char UsbDevice::FirstDriveFromMask(ULONG unitmask)
     return (i + 'A');
 }
 
+bool UsbDevice::GetVolumeFilesystem(char drvLtr, std::string *fileSystem)
+{
+    if (GetVolumeInformationA(UsbDevice::ltrtstr(drvLtr).c_str(), NULL, 0, NULL, NULL, NULL, const_cast<char*>(fileSystem->c_str()), MAX_PATH+1) == 0)
+    {
+        ErrorLog::logErrorToFile("Unable to get volume filesystem: ", ErrorLog::winErrToStr(GetLastError()));
+        return false;
+    }
+    return true;
+}
+
+std::vector<char> UsbDevice::getUSBDrives(DWORD *numDrives)
+{
+    std::vector<char> drvs(255, 0);
+    *numDrives = GetLogicalDriveStringsA(drvs.size(), &drvs.at(0));
+    if (numDrives == 0)
+        ErrorLog::logErrorToFile("Unable to get list of USB drives: ", ErrorLog::winErrToStr(GetLastError()));
+    return drvs;
+}
+
 template <class T>
 inline std::string UsbDevice::toStr(T val)
 {

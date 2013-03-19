@@ -3,5 +3,7 @@
         <file>resources/branch-end.png</file>
         <file>resources/vline.png</file>
         <file>resources/usbninjalogo.png</file>
+        <file>resources/plus-icon.png</file>
+        <file>resources/refresh.png</file>
     </qresource>
 </RCC>

@@ -12,6 +12,7 @@
  */
  
 #include "managedrivesdialog.h"
+#include "authorizedevicedialog.h"
 #include "ui_managedrivesdialog.h"
 
 ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
@@ -64,7 +65,9 @@ ManageDrivesDialog::~ManageDrivesDialog()
 
 void ManageDrivesDialog::on_pushButton_clicked()
 {
-    done(0);
+    AuthorizeDeviceDialog authDriveDialog;
+    authDriveDialog.setModal(true);
+    authDriveDialog.exec();
 }
 
 void ManageDrivesDialog::deleteDeviceHandler()
@@ -91,4 +94,9 @@ void ManageDrivesDialog::deleteDeviceHandler()
     }
     refreshData();
     free(warningMsg);
+}
+
+void ManageDrivesDialog::on_pushButton_2_clicked()
+{
+    refreshData();
 }

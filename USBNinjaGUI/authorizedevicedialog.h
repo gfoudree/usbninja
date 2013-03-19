@@ -10,37 +10,29 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
  * for more details.
  */
- #ifndef MANAGEDRIVESDIALOG_H
-#define MANAGEDRIVESDIALOG_H
+
+#ifndef AUTHORIZEDEVICEDIALOG_H
+#define AUTHORIZEDEVICEDIALOG_H
 
 #include <QDialog>
-#include <QtGui>
-#include <QMenu>
-#include <QMessageBox>
+#include <vector>
+#include <iostream>
 
-#include <../../USBNinjaDll/sql.h>
-
+#include "../../USBNinjaDll/usbdevice.h"
 namespace Ui {
-class ManageDrivesDialog;
+class AuthorizeDeviceDialog;
 }
 
-class ManageDrivesDialog : public QDialog
+class AuthorizeDeviceDialog : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit ManageDrivesDialog(QWidget *parent = 0);
-    void refreshData();
-    ~ManageDrivesDialog();
+    explicit AuthorizeDeviceDialog(QWidget *parent = 0);
+    ~AuthorizeDeviceDialog();
     
-private slots:
-    void on_pushButton_clicked();
-    void deleteDeviceHandler();
-
-    void on_pushButton_2_clicked();
-
 private:
-    Ui::ManageDrivesDialog *ui;
+    Ui::AuthorizeDeviceDialog *ui;
 };
 
-#endif // MANAGEDRIVESDIALOG_H
+#endif // AUTHORIZEDEVICEDIALOG_H

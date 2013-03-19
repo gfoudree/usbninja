@@ -100,7 +100,6 @@
      <string>Manage</string>
     </property>
     <addaction name="actionManage_Devices"/>
-    <addaction name="actionAuthorize_Device"/>
     <addaction name="actionUnauthorize_All_Devices"/>
     <addaction name="separator"/>
     <addaction name="actionGraph_Data"/>
@@ -143,11 +142,6 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Q</string>
-   </property>
-  </action>
-  <action name="actionAuthorize_Device">
-   <property name="text">
-    <string>Authorize Device</string>
    </property>
   </action>
   <action name="actionManage_Devices">

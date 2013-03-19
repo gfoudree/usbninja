@@ -17,13 +17,11 @@
 #include <windows.h>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include "errorlog.h"
 
 class UsbDevice
 {
-private:
-    static std::string ltrtstr(char driveLtr);
-
 public:
 
     __declspec(dllexport) static bool GetDriveDeviceId(char drvLtr, std::string *deviceID);
@@ -33,11 +31,13 @@ public:
     __declspec(dllexport) static bool GetVolumeSize(char drvLtr, unsigned int *volSize);
     __declspec(dllexport) static bool GetVolumeLabel(char drvLtr, std::string *label);
     __declspec(dllexport) static bool GetVolumeGUID(char drvLtr, std::string *GUID);
+    __declspec(dllexport) static bool GetVolumeFilesystem(char drvLtr, std::string *fileSystem);
     __declspec(dllexport) static char FirstDriveFromMask(ULONG unitmask);
+    __declspec(dllexport) static std::vector<char> getUSBDrives(DWORD *numDrives);
 
     template <class T>
     __declspec(dllexport) static inline std::string toStr(T val);
-
+    __declspec(dllexport) static std::string ltrtstr(char driveLtr);
     __declspec(dllexport) UsbDevice();
 };
 
