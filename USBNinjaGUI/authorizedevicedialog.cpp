@@ -22,6 +22,7 @@ AuthorizeDeviceDialog::AuthorizeDeviceDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->comboBox->addItem(" ");
     //TODO: Check if drive is already authorized.
     DWORD numDrives;
     std::vector<char> usbDrives = UsbDevice::getUSBDrives(&numDrives);
@@ -45,4 +46,41 @@ AuthorizeDeviceDialog::AuthorizeDeviceDialog(QWidget *parent) :
 AuthorizeDeviceDialog::~AuthorizeDeviceDialog()
 {
     delete ui;
+}
+
+void AuthorizeDeviceDialog::on_comboBox_activated(const QString &arg1)
+{
+    if (arg1 == " ")
+        return;
+    DriveInfo drvInfo;
+    if (UsbDevice::getDriveInfo(&drvInfo, arg1.toStdString()))
+    {
+        ui->label_2->setText(QString("%1   %2").arg(ui->label_2->text()).arg(QString(arg1)));
+        ui->label_3->setText(QString("%1   %2").arg(ui->label_3->text()).arg(QString(drvInfo.devName)));
+        ui->label_4->setText(QString("%1   %2").arg(ui->label_4->text()).arg(QString(drvInfo.devFs)));
+
+        ULONGLONG freeSpace, totalSpace;
+        if (convToGB(&freeSpace, drvInfo.fSpace) == _GIGABYTE)
+            ui->label_5->setText(QString("%1   %2 %3").arg(ui->label_5->text()).arg(QString::number(freeSpace)).arg(QString("GB")));
+        else
+            ui->label_5->setText(QString("%1   %2 %3").arg(ui->label_5->text()).arg(QString::number(freeSpace)).arg(QString("MB")));
+        if (convToGB(&totalSpace, drvInfo.tSpace) == _GIGABYTE)
+            ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("GB")));
+        else
+            ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("MB")));
+    }
+}
+
+int AuthorizeDeviceDialog::convToGB(ULONGLONG *new_size, ULONGLONG orig_size)
+{
+    if ((orig_size >> 20) > 1024)
+    {
+        *new_size = (orig_size >> 30);
+        return _GIGABYTE;
+    }
+    else
+    {
+        *new_size = (orig_size >> 20);
+        return _MEGABYTE;
+    }
 }

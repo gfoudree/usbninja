@@ -20,6 +20,8 @@
 #include <vector>
 #include "errorlog.h"
 
+struct DriveInfo;
+
 class UsbDevice
 {
 public:
@@ -34,11 +36,21 @@ public:
     __declspec(dllexport) static bool GetVolumeFilesystem(char drvLtr, std::string *fileSystem);
     __declspec(dllexport) static char FirstDriveFromMask(ULONG unitmask);
     __declspec(dllexport) static std::vector<char> getUSBDrives(DWORD *numDrives);
-
+    __declspec(dllexport) static bool getDriveInfo(DriveInfo *pDrvInfo, std::string drive);
+	
     template <class T>
     __declspec(dllexport) static inline std::string toStr(T val);
     __declspec(dllexport) static std::string ltrtstr(char driveLtr);
     __declspec(dllexport) UsbDevice();
+};
+
+
+struct DriveInfo
+{
+    ULONGLONG tSpace;   /* Total disk space */
+    ULONGLONG fSpace;   /* Total free space */
+    char devName[MAX_PATH]; /* Device name */
+    char devFs[15];   /* File system type */
 };
 
 #endif // USBDEVICE_H

@@ -200,6 +200,27 @@ std::vector<char> UsbDevice::getUSBDrives(DWORD *numDrives)
     return drvs;
 }
 
+bool UsbDevice::getDriveInfo(DriveInfo *pDrvInfo, std::string drive)
+{
+	ULARGE_INTEGER freeSpace, diskSize;
+	if (GetDiskFreeSpaceExA(drive.c_str(), &freeSpace, &diskSize, NULL) == 0)
+	{
+		ErrorLog::logErrorToFile("Unable to get drive free space: ", ErrorLog::winErrToStr(GetLastError()));
+		return false;
+	}
+	pDrvInfo->fSpace = freeSpace.QuadPart;
+	pDrvInfo->tSpace = diskSize.QuadPart;
+	
+	if (GetVolumeInformationA(drive.c_str(), pDrvInfo->devName, sizeof(pDrvInfo->devName), NULL, NULL, NULL,
+							pDrvInfo->devFs, sizeof(pDrvInfo->devFs)) == 0)
+	{
+		ErrorLog::logErrorToFile("Unable to getDriveInfo device name and filesystem: ", ErrorLog::winErrToStr(GetLastError()));
+		return false;
+	}
+	return true;
+							
+}
+
 template <class T>
 inline std::string UsbDevice::toStr(T val)
 {

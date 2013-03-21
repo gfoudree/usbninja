@@ -13,12 +13,15 @@
 
 #ifndef AUTHORIZEDEVICEDIALOG_H
 #define AUTHORIZEDEVICEDIALOG_H
+#define _MEGABYTE 0x01
+#define _GIGABYTE 0x02
 
 #include <QDialog>
 #include <vector>
 #include <iostream>
 
 #include "../../USBNinjaDll/usbdevice.h"
+
 namespace Ui {
 class AuthorizeDeviceDialog;
 }
@@ -31,8 +34,14 @@ public:
     explicit AuthorizeDeviceDialog(QWidget *parent = 0);
     ~AuthorizeDeviceDialog();
     
+private slots:
+    void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::AuthorizeDeviceDialog *ui;
+    DriveInfo driveInfo;
+
+    int convToGB(ULONGLONG *new_size, ULONGLONG orig_size);
 };
 
 #endif // AUTHORIZEDEVICEDIALOG_H
