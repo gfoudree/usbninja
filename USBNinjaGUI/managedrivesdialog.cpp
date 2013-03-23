@@ -26,6 +26,7 @@ ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
     ui->treeWidget->setHeaderLabels(columnTitles);
     ui->treeWidget->setColumnWidth(0, 40);
 
+
     refreshData();
 
     QMenu *contextMenu = new QMenu(ui->treeWidget);
@@ -56,6 +57,7 @@ void ManageDrivesDialog::refreshData()
         ui->treeWidget->insertTopLevelItem(0, itm);
     }
     ui->treeWidget->resizeColumnToContents(2);
+    ui->treeWidget->setColumnWidth(2, 100);
 }
 
 ManageDrivesDialog::~ManageDrivesDialog()

@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     managedrivesdialog.cpp \
-    authorizedevicedialog.cpp
+    authorizedevicedialog.cpp \
+    authdrive.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     managedrivesdialog.h \
-    authorizedevicedialog.h
+    authorizedevicedialog.h \
+    authdrive.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
@@ -32,7 +34,7 @@ RC_FILE = versioninfo.rc
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
 
-LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a"
+LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lcryptopp
 
 OTHER_FILES +=
 

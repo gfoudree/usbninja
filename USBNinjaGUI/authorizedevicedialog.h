@@ -20,6 +20,7 @@
 #include <vector>
 #include <iostream>
 
+#include "authdrive.h"
 #include "../../USBNinjaDll/usbdevice.h"
 
 namespace Ui {
@@ -36,6 +37,8 @@ public:
     
 private slots:
     void on_comboBox_activated(const QString &arg1);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::AuthorizeDeviceDialog *ui;

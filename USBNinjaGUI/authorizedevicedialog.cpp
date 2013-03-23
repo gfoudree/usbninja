@@ -84,3 +84,15 @@ int AuthorizeDeviceDialog::convToGB(ULONGLONG *new_size, ULONGLONG orig_size)
         return _MEGABYTE;
     }
 }
+
+void AuthorizeDeviceDialog::on_pushButton_clicked()
+{
+    AuthDrive drv;
+    drv.date = drv.dateAndTime();
+    drv.serial = drv.generateRandomString();
+    drv.notes = ui->plainTextEdit->toPlainText().toStdString();
+    drv.driveName = ui->label_3->text().toStdString();
+    drv.driveName.erase(0, 6); //Trim the data from label "Name: "
+    drv.driveSize = atoi(ui->label_6->text().toStdString().c_str());
+    drv.logEntry();
+}
