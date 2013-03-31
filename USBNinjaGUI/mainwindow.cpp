@@ -117,3 +117,30 @@ void MainWindow::collapseAllHandler()
 {
     ui->treeWidget->collapseAll();
 }
+
+void MainWindow::on_actionUnauthorize_All_Devices_triggered()
+{
+    QMessageBox *msgBox = new QMessageBox(this);
+    msgBox->setWindowTitle("Warning!");
+    msgBox->setText("You are about to unauthorize ALL devices. No device can " \
+                    "access this computer until you authorize it! Are you sure you want to do this?");
+    msgBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox->setDefaultButton(QMessageBox::No);
+    msgBox->setIcon(QMessageBox::Warning);
+
+    if (msgBox->exec() == QMessageBox::Yes)
+    {
+        Sql sql;
+        sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+        if (sql.dbExecSql("DELETE FROM authDrives;"))
+        {
+            QMessageBox::information(this, "Success", "All devices have been unauthorized.");
+        }
+        else
+        {
+            QMessageBox::critical(this, "Error", "There was an error unauthorizing devices from the local database. Please check the log files.");
+        }
+        sql.dbDisconnect();
+    }
+    delete msgBox;
+}

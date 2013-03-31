@@ -44,6 +44,8 @@ private slots:
     void expandAllHandler();
     void collapseAllHandler();
 
+    void on_actionUnauthorize_All_Devices_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
