@@ -9,7 +9,8 @@ SOURCES += \
     errorlog.cpp \
     settings.cpp \
     accesslog.cpp \
-    service.cpp
+    service.cpp \
+    usbbpb.cpp
 
 HEADERS += \
     usbdevice.h \
@@ -17,7 +18,8 @@ HEADERS += \
     errorlog.h \
     settings.h \
     accesslog.h \
-    service.h
+    service.h \
+    usbbpb.h
 
 LIBS += -lsqlite3 -lpugi
 
