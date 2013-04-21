@@ -30,6 +30,8 @@ protected:
     static int sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname);
+    static int sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname);
+
 
 public:
     __declspec(dllexport) bool dbConnect(char *filename);
@@ -38,6 +40,8 @@ public:
     __declspec(dllexport) void queryDrives(std::vector<sqlDriveStruct> *drives);
     __declspec(dllexport) void queryLog(std::vector<logUSB> *drives);
     __declspec(dllexport) void queryAuthedDrives(std::vector<authedDrive> *drives);
+    __declspec(dllexport) int authorizedDrives();
+    __declspec(dllexport) int deniedDrives();
 
     __declspec(dllexport) Sql();
     __declspec(dllexport) Sql(char *filename);
@@ -74,6 +78,13 @@ struct authedDrive
     std::string     driveName;
     unsigned int    driveSize;
     std::string     notes;
+};
+
+struct DriveCount
+{
+    int acceptedDrives, deniedDrives;
+    bool countType;
+    //true = count authorized drives, false = count blocked drives
 };
 
 #endif // SQL_H

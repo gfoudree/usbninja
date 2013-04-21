@@ -144,3 +144,20 @@ void MainWindow::on_actionUnauthorize_All_Devices_triggered()
     }
     delete msgBox;
 }
+
+void MainWindow::on_actionGraph_Data_triggered()
+{
+    GraphDialog graphDialog;
+    graphDialog.setModal(true);
+    graphDialog.exec();
+}
+
+int MainWindow::getAuthorizedCount()
+{
+    int columns = ui->treeWidget->columnCount();
+}
+
+int MainWindow::getUnauthorizedCount()
+{
+
+}

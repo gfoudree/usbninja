@@ -119,6 +119,19 @@ int Sql::sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **co
     return 0;
 }
 
+int Sql::sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname)
+{
+    DriveCount *dc = (DriveCount*)dataPtr;
+
+    for (int i = 0; i < argc; i++)
+    {
+        if (atoi(argv[i]) == true)
+            dc->acceptedDrives += 1;
+        else if (atoi(argv[i]) == false)
+            dc->deniedDrives += 1;
+    }
+}
+
 void Sql::queryDrives(std::vector<sqlDriveStruct> *drives)
 {
     char *errBuf;
@@ -138,4 +151,22 @@ void Sql::queryAuthedDrives(std::vector<authedDrive> *drives)
     char *errBuf;
     if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthedDrivesCallback, static_cast<void*>(drives), &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
+}
+
+int Sql::authorizedDrives()
+{
+    DriveCount driveCount = {0};
+    char *errBuf;
+    if (sqlite3_exec(db, "SELECT accepted FROM loggedDrives;", sqlCountCallback, (void*)&driveCount, &errBuf) != 0)
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error counting authorized drives: ", errBuf);
+    return driveCount.acceptedDrives;
+}
+
+int Sql::deniedDrives()
+{
+    DriveCount driveCount = {0};
+    char *errBuf;
+    if (sqlite3_exec(db, "SELECT accepted FROM loggedDrives;", sqlCountCallback, (void*)&driveCount, &errBuf) != 0)
+        ErrorLog::logErrorToFile("*CRITICAL*", "Error counting authorized drives: ", errBuf);
+    return driveCount.deniedDrives;
 }

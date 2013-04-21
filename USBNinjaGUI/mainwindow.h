@@ -19,6 +19,7 @@
 
 #include "aboutdialog.h"
 #include "managedrivesdialog.h"
+#include "graphdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -40,11 +41,13 @@ private slots:
     void on_actionClear_Log_triggered();
     void on_actionAbout_triggered();
     void on_actionManage_Devices_triggered();
+    void on_actionUnauthorize_All_Devices_triggered();
+    void on_actionGraph_Data_triggered();
 
     void expandAllHandler();
     void collapseAllHandler();
-
-    void on_actionUnauthorize_All_Devices_triggered();
+    int getAuthorizedCount();
+    int getUnauthorizedCount();
 
 private:
     Ui::MainWindow *ui;
