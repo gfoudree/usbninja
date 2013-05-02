@@ -17,6 +17,7 @@
 #define _GIGABYTE 0x02
 
 #include <QDialog>
+#include <QMessageBox>
 #include <vector>
 #include <iostream>
 

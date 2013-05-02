@@ -41,6 +41,7 @@ AuthorizeDeviceDialog::AuthorizeDeviceDialog(QWidget *parent) :
             }
         }
     }
+    ui->pushButton->setEnabled(false);
 }
 
 AuthorizeDeviceDialog::~AuthorizeDeviceDialog()
@@ -68,6 +69,8 @@ void AuthorizeDeviceDialog::on_comboBox_activated(const QString &arg1)
             ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("GB")));
         else
             ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("MB")));
+
+        ui->pushButton->setEnabled(true);
     }
 }
 
@@ -87,12 +90,17 @@ int AuthorizeDeviceDialog::convToGB(ULONGLONG *new_size, ULONGLONG orig_size)
 
 void AuthorizeDeviceDialog::on_pushButton_clicked()
 {
-    AuthDrive drv;
-    drv.date = drv.dateAndTime();
-    drv.serial = drv.generateRandomString();
-    drv.notes = ui->plainTextEdit->toPlainText().toStdString();
-    drv.driveName = ui->label_3->text().toStdString();
-    drv.driveName.erase(0, 6); //Trim the data from label "Name: "
-    drv.driveSize = atoi(ui->label_6->text().toStdString().c_str());
-    drv.logEntry();
+    if (strlen((char*)ui->comboBox->currentText().toStdString().c_str()) > 1)
+    {
+        AuthDrive drv;
+        drv.date = drv.dateAndTime();
+        drv.serial = drv.generateRandomString();
+        drv.notes = ui->plainTextEdit->toPlainText().toStdString();
+        drv.driveName = ui->label_3->text().toStdString();
+        drv.driveName.erase(0, 6); //Trim the data from label "Name: "
+        drv.driveSize = atoi(ui->label_6->text().toStdString().c_str());
+        drv.logEntry();
+    }
+    else
+        QMessageBox::critical(this, "Error", "Error, please select a valid drive letter.");
 }

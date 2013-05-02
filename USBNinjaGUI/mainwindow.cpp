@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(collapseAll, SIGNAL(triggered()), this, SLOT(collapseAllHandler()));
 
     loadData();
+    ui->treeWidget->setSortingEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -152,12 +153,3 @@ void MainWindow::on_actionGraph_Data_triggered()
     graphDialog.exec();
 }
 
-int MainWindow::getAuthorizedCount()
-{
-    int columns = ui->treeWidget->columnCount();
-}
-
-int MainWindow::getUnauthorizedCount()
-{
-
-}

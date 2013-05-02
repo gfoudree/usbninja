@@ -46,8 +46,6 @@ private slots:
 
     void expandAllHandler();
     void collapseAllHandler();
-    int getAuthorizedCount();
-    int getUnauthorizedCount();
 
 private:
     Ui::MainWindow *ui;

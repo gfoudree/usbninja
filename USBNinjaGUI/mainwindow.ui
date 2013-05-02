@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>USBNinja Management Interface</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTreeWidget" name="treeWidget">

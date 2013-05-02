@@ -40,24 +40,27 @@ ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
 void ManageDrivesDialog::refreshData()
 {
     ui->treeWidget->clear();
+    ui->treeWidget->setSortingEnabled(true);
     std::vector<authedDrive> authedDrv;
     Sql sql;
     sql.dbConnect(AUTH_FILE);
     sql.queryAuthedDrives(&authedDrv);
     sql.dbDisconnect();
 
-    for (int i = authedDrv.size(), element = 0; i != 0; i--, element++)
+    for (int i = 0, element = 0; i != authedDrv.size(); i++, element++)
     {
         QStringList data;
-        data << QString::number(i) << authedDrv.at(element).dateAuthorized.c_str();
+        data << QString::number(i+1) << authedDrv.at(element).dateAuthorized.c_str();
         data << authedDrv.at(element).serial.c_str() << authedDrv.at(element).driveName.c_str();
         data << QString::number(authedDrv.at(element).driveSize) << authedDrv.at(element).notes.c_str();
 
         QTreeWidgetItem *itm = new QTreeWidgetItem(data);
         ui->treeWidget->insertTopLevelItem(0, itm);
     }
+
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->setColumnWidth(2, 100);
+    ui->treeWidget->sortByColumn(0, Qt::AscendingOrder);
 }
 
 ManageDrivesDialog::~ManageDrivesDialog()
@@ -87,7 +90,7 @@ void ManageDrivesDialog::deleteDeviceHandler()
 
     if (choice == QMessageBox::Yes)
     {
-        char statement[50];
+        char statement[255];
         sprintf(statement, "DELETE FROM authDrives WHERE id=\'%d\';", id);
 
         Sql sql(AUTH_FILE);
