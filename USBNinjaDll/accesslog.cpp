@@ -18,7 +18,7 @@ AccessLog::AccessLog()
 
 bool AccessLog::logUsbDrive(logUSB &lUsb)
 {
-    Sql sql("C:\\users\\grant\\desktop\\log.db");
+    Sql sql(LOG_FILE);
     std::stringstream sqlStatement;
     sqlStatement << "INSERT INTO loggedDrives (accepted, date, user, driveLetter, driveName, driveLabel, ";
     sqlStatement << "driveSize, driveSerial, driveGUID, usbninjaSerial) VALUES (" << lUsb.accepted << ", \'";

@@ -43,7 +43,7 @@ bool AuthDrive::logEntry()
 {
     char sqlStmt[512];
     Sql sql;
-    sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+    sql.dbConnect(AUTH_FILE);
 
     sprintf(sqlStmt, "INSERT INTO authDrives (dateAuthorized, serial, driveName, driveSize, notes) VALUES (\'%s\', \'%s\', \'%s\', %d, \'%s\');",
             this->date.c_str(), this->serial.c_str(), this->driveName.c_str(), this->driveSize, this->notes.c_str());

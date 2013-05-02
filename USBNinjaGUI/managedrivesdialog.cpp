@@ -42,7 +42,7 @@ void ManageDrivesDialog::refreshData()
     ui->treeWidget->clear();
     std::vector<authedDrive> authedDrv;
     Sql sql;
-    sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+    sql.dbConnect(AUTH_FILE);
     sql.queryAuthedDrives(&authedDrv);
     sql.dbDisconnect();
 
@@ -90,7 +90,7 @@ void ManageDrivesDialog::deleteDeviceHandler()
         char statement[50];
         sprintf(statement, "DELETE FROM authDrives WHERE id=\'%d\';", id);
 
-        Sql sql("C:\\users\\grant\\desktop\\log.db");
+        Sql sql(AUTH_FILE);
         sql.dbExecSql(statement);
         sql.dbDisconnect();
     }

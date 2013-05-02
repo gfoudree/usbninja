@@ -50,7 +50,7 @@ void MainWindow::loadData()
 {
     std::vector<logUSB> usb;
     Sql sql;
-    sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+    sql.dbConnect(LOG_FILE);
     sql.queryLog(&usb);
     sql.dbDisconnect();
 
@@ -131,7 +131,7 @@ void MainWindow::on_actionUnauthorize_All_Devices_triggered()
     if (msgBox->exec() == QMessageBox::Yes)
     {
         Sql sql;
-        sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+        sql.dbConnect(AUTH_FILE);
         if (sql.dbExecSql("DELETE FROM authDrives;"))
         {
             QMessageBox::information(this, "Success", "All devices have been unauthorized.");

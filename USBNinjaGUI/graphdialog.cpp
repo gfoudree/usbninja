@@ -31,7 +31,7 @@ void GraphDialog::paintEvent(QPaintEvent *event)
     int accepted, denied, total;
 
     Sql sql;
-    sql.dbConnect("C:\\users\\grant\\desktop\\log.db");
+    sql.dbConnect(LOG_FILE);
     accepted = sql.authorizedDrives();
     denied = sql.deniedDrives();
     total = accepted + denied;

@@ -45,3 +45,6 @@ RESOURCES += \
     resource.qrc
 
 QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
+
+DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
