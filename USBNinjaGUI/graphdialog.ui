@@ -10,6 +10,12 @@
     <height>302</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>610</width>
+    <height>302</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Data</string>
   </property>

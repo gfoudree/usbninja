@@ -10,6 +10,12 @@
     <height>465</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>753</width>
+    <height>465</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>USBNinja Management Interface</string>
   </property>
