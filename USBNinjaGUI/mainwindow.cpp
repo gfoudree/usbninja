@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadData();
     ui->treeWidget->setSortingEnabled(true);
+    ui->treeWidget->sortItems(0, Qt::AscendingOrder);
 }
 
 MainWindow::~MainWindow()
@@ -55,17 +56,19 @@ void MainWindow::loadData()
     sql.queryLog(&usb);
     sql.dbDisconnect();
 
-    for (int i = usb.size(), element = 0; i != 0; i--, element++)
+    std::vector<logUSB>::iterator usbIt = usb.begin();
+
+    for (int i = usb.size(); usbIt != usb.end(); usbIt++, i--)
     {
         QStringList parentData, childData, childHeader;
-        parentData << QString::number(i) << "REJECTED" << usb.at(element).date.c_str();
-        parentData << usb.at(element).user.c_str() << usb.at(element).driveLabel.c_str();
-        parentData << usb.at(element).driveName.c_str() << QString::number(usb.at(element).driveSize) + " MB";
+        parentData << QString::number(i) << "REJECTED" << usbIt->date.c_str();
+        parentData << usbIt->user.c_str() << usbIt->driveLabel.c_str() << usbIt->driveName.c_str();
+        parentData << QString::number(usbIt->driveSize) + " MB";
 
         childHeader << "" << "Drive Letter" << "Serial" << "GUID" << "USBNinja Serial";
 
-        childData << "" << QString(usb.at(element).driveLetter) << usb.at(element).driveSerial.c_str();
-        childData << usb.at(element).driveGUID.c_str() << usb.at(element).usbninjaSerial.c_str();
+        childData << "" << QString(usbIt->driveLetter) << usbIt->driveSerial.c_str();
+        childData << usbIt->driveGUID.c_str() << usbIt->usbninjaSerial.c_str();
 
         QTreeWidgetItem *parentItm = new QTreeWidgetItem(parentData);
         QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
@@ -153,3 +156,16 @@ void MainWindow::on_actionGraph_Data_triggered()
     graphDialog.exec();
 }
 
+
+void MainWindow::on_actionExport_to_CSV_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save as...", NULL, QString("CSV (*.csv);; All files (*.*)"));
+
+    CSVExport csvExp;
+    csvExp.csvData();
+
+    if (!csvExp.writeData((char*)fileName.toStdString().c_str()))
+    {
+        QMessageBox::critical(this, "Error", "There was an error exporting the data to the CSV file.");
+    }
+}

@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     managedrivesdialog.cpp \
     authorizedevicedialog.cpp \
     authdrive.cpp \
-    graphdialog.cpp
+    graphdialog.cpp \
+    csvexport.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     managedrivesdialog.h \
     authorizedevicedialog.h \
     authdrive.h \
-    graphdialog.h
+    graphdialog.h \
+    csvexport.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \

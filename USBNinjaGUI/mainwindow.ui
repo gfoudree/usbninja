@@ -92,6 +92,7 @@
     </property>
     <addaction name="actionReload_Log"/>
     <addaction name="actionClear_Log"/>
+    <addaction name="actionExport_to_CSV"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -183,6 +184,11 @@
   <action name="actionGraph_Data">
    <property name="text">
     <string>Graph Data</string>
+   </property>
+  </action>
+  <action name="actionExport_to_CSV">
+   <property name="text">
+    <string>Export to CSV</string>
    </property>
   </action>
  </widget>

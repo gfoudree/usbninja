@@ -15,8 +15,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
 #include <../../USBNinjaDll/sql.h>
 
+#include "csvexport.h"
 #include "aboutdialog.h"
 #include "managedrivesdialog.h"
 #include "graphdialog.h"
@@ -46,6 +48,8 @@ private slots:
 
     void expandAllHandler();
     void collapseAllHandler();
+
+    void on_actionExport_to_CSV_triggered();
 
 private:
     Ui::MainWindow *ui;
