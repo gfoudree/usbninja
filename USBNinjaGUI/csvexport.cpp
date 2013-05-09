@@ -44,6 +44,9 @@ std::string CSVExport::csvData()
 
 bool CSVExport::writeData(char *filePath)
 {
+    if (strlen(filePath) < 2)
+        return true;
+
     std::ofstream hFile;
     hFile.open(filePath);
     if (hFile.is_open())

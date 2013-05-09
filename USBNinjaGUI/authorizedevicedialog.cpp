@@ -56,19 +56,19 @@ void AuthorizeDeviceDialog::on_comboBox_activated(const QString &arg1)
     DriveInfo drvInfo;
     if (UsbDevice::getDriveInfo(&drvInfo, arg1.toStdString()))
     {
-        ui->label_2->setText(QString("%1   %2").arg(ui->label_2->text()).arg(QString(arg1)));
-        ui->label_3->setText(QString("%1   %2").arg(ui->label_3->text()).arg(QString(drvInfo.devName)));
-        ui->label_4->setText(QString("%1   %2").arg(ui->label_4->text()).arg(QString(drvInfo.devFs)));
+        ui->label_2->setText(QString("%1   %2").arg("Letter: ").arg(QString(arg1)));
+        ui->label_3->setText(QString("%1   %2").arg("Name: ").arg(QString(drvInfo.devName)));
+        ui->label_4->setText(QString("%1   %2").arg("Filesystem: ").arg(QString(drvInfo.devFs)));
 
         ULONGLONG freeSpace, totalSpace;
         if (convToGB(&freeSpace, drvInfo.fSpace) == _GIGABYTE)
-            ui->label_5->setText(QString("%1   %2 %3").arg(ui->label_5->text()).arg(QString::number(freeSpace)).arg(QString("GB")));
+            ui->label_5->setText(QString("%1   %2 %3").arg("Free Space: ").arg(QString::number(freeSpace)).arg(QString("GB")));
         else
-            ui->label_5->setText(QString("%1   %2 %3").arg(ui->label_5->text()).arg(QString::number(freeSpace)).arg(QString("MB")));
+            ui->label_5->setText(QString("%1   %2 %3").arg("Free Space: ").arg(QString::number(freeSpace)).arg(QString("MB")));
         if (convToGB(&totalSpace, drvInfo.tSpace) == _GIGABYTE)
-            ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("GB")));
+            ui->label_6->setText(QString("%1   %2 %3").arg("Total Space: ").arg(QString::number(totalSpace)).arg(QString("GB")));
         else
-            ui->label_6->setText(QString("%1   %2 %3").arg(ui->label_6->text()).arg(QString::number(totalSpace)).arg(QString("MB")));
+            ui->label_6->setText(QString("%1   %2 %3").arg("Total Space: ").arg(QString::number(totalSpace)).arg(QString("MB")));
 
         ui->pushButton->setEnabled(true);
     }
