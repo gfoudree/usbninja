@@ -16,6 +16,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <windows.h>
 #include <../../USBNinjaDll/sql.h>
 #include <../../USBNinjaDll/errorlog.h>
 

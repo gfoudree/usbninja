@@ -41,6 +41,16 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgu
     wchar_t szClassNameW[15];
     mbstowcs(szClassNameW, szClassName, sizeof(szClassName));
 
+    /* Check if program is already running */
+    SetLastError(0);
+    CreateMutexA(0, FALSE, "Local\\$USBNINJA_DAEMON_MUTEX$");
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+    {
+        ErrorLog::logErrorToFile("*INFO*", "USBNinja is already running...");
+        MessageBoxA(NULL, "USBNinja is already running", "Error", MB_OK);
+        exit(1);
+    }
+
     wincl.hInstance = hInstance;
     wincl.lpszClassName = szClassNameW;
     wincl.lpfnWndProc = WindowProcedure;

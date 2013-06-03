@@ -16,6 +16,12 @@
 
 int main(int argc, char *argv[])
 {
+    SetLastError(0);
+    CreateMutexA(0, FALSE, "Local\\$USBNINJA_GUI_MUTEX$");
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+    {
+        exit(1);
+    }
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
