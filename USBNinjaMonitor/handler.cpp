@@ -13,8 +13,12 @@
  
 #include "handler.h"
 
+extern boost::mutex gMutex;
+
 void threadHandler(char driveLtr)
 {
+    gMutex.lock();
+
     /*
     Sql sql;
     sql.dbConnect("C:\\users\\grant\\desktop\\database.db");
@@ -31,4 +35,6 @@ void threadHandler(char driveLtr)
     boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);
+
+    gMutex.unlock();
 }

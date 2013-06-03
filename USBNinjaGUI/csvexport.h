@@ -25,6 +25,7 @@ public:
 
     std::string csvData();
     bool writeData(char *filePath);
+    static std::string generateCSVHeader();
 
     CSVExport();
 };

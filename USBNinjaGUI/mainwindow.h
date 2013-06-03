@@ -17,6 +17,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <../../USBNinjaDll/sql.h>
+#include <../../USBNinjaDll/errorlog.h>
 
 #include "csvexport.h"
 #include "aboutdialog.h"
@@ -50,6 +51,8 @@ private slots:
     void collapseAllHandler();
 
     void on_actionExport_to_CSV_triggered();
+
+    void on_actionReload_Log_triggered();
 
 private:
     Ui::MainWindow *ui;

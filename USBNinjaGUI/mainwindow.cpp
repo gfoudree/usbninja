@@ -94,6 +94,14 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionClear_Log_triggered()
 {
+    if (QMessageBox::information(this, "Confirm", "Are you sure you want to clear the logs?", QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    {
+        if (!DeleteFileA(LOG_FILE))
+        {
+            ErrorLog::logErrorToFile(NULL, "Error deleteing logfile", ErrorLog::winErrToStr(GetLastError()));
+            QMessageBox::critical(this, "Error", "There was an error deleteing the log file.");
+        }
+    }
     clearData();
     loadData();
 }
@@ -168,4 +176,10 @@ void MainWindow::on_actionExport_to_CSV_triggered()
     {
         QMessageBox::critical(this, "Error", "There was an error exporting the data to the CSV file.");
     }
+}
+
+void MainWindow::on_actionReload_Log_triggered()
+{
+    clearData();
+    loadData();
 }

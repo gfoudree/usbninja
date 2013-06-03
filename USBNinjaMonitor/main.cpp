@@ -29,6 +29,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 void logQuitMessage();
 
 boost::thread_group thrd_grp;
+boost::mutex gMutex;
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArguement, int nCmdShow)
 {
@@ -110,6 +111,6 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
 void logQuitMessage()
 {
-    thrd_grp.join_all();
     ErrorLog::logErrorToFile("*INFO*", "USBNinja daemon stopped.");
+    thrd_grp.join_all();
 }
