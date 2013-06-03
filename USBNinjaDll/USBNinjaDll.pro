@@ -10,7 +10,8 @@ SOURCES += \
     settings.cpp \
     accesslog.cpp \
     service.cpp \
-    usbbpb.cpp
+    usbbpb.cpp \
+    usbkey.cpp
 
 HEADERS += \
     usbdevice.h \
@@ -19,9 +20,10 @@ HEADERS += \
     settings.h \
     accesslog.h \
     service.h \
-    usbbpb.h
+    usbbpb.h \
+    usbkey.h
 
-LIBS += -lsqlite3 -lpugi
+LIBS += -lsqlite3 -lpugi -lz -lboost_random
 
 OTHER_FILES += \
     versioninfo.rc

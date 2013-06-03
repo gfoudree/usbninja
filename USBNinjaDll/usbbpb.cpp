@@ -13,11 +13,11 @@
 
 #include "usbbpb.h"
 
-usbBPB::usbBPB()
+UsbBPB::UsbBPB()
 {
 }
 
-BOOL usbBPB::openDevice()
+BOOL UsbBPB::openDevice()
 {
     hFile = CreateFileA("C:\\users\\grant\\desktop\\test.img",
                                GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -28,7 +28,7 @@ BOOL usbBPB::openDevice()
         return FALSE;
 }
 
-BOOL usbBPB::readBPBCode32(unsigned char *buf)
+BOOL UsbBPB::readBPBCode32(unsigned char *buf)
 {
     DWORD bRead;
     SetFilePointer(hFile, BPB_BOOTCODE, NULL, FILE_BEGIN);
@@ -36,7 +36,7 @@ BOOL usbBPB::readBPBCode32(unsigned char *buf)
     return res;
 }
 
-BOOL usbBPB::writeBPBCode32(unsigned char *buf)
+BOOL UsbBPB::writeBPBCode32(unsigned char *buf)
 {
     DWORD bWrite;
     SetFilePointer(hFile, BPB_BOOTCODE, NULL, FILE_BEGIN);
@@ -44,14 +44,14 @@ BOOL usbBPB::writeBPBCode32(unsigned char *buf)
     return res;
 }
 
-BOOL usbBPB::clearBPBCode32()
+BOOL UsbBPB::clearBPBCode32()
 {
     unsigned char buf[BPB_BOOTCODE_LEN];
     memset(buf, 0, BPB_BOOTCODE_LEN);
     return writeBPBCode32(buf);
 }
 
-BOOL usbBPB::readBPBCode16(unsigned char *buf)
+BOOL UsbBPB::readBPBCode16(unsigned char *buf)
 {
     DWORD bRead;
     SetFilePointer(hFile, FAT16_BPB_BOOTCODE, NULL, FILE_BEGIN);
@@ -59,7 +59,7 @@ BOOL usbBPB::readBPBCode16(unsigned char *buf)
     return res;
 }
 
-BOOL usbBPB::writeBPBCode16(unsigned char *buf)
+BOOL UsbBPB::writeBPBCode16(unsigned char *buf)
 {
     DWORD bWrite;
     SetFilePointer(hFile, FAT16_BPB_BOOTCODE, NULL, FILE_BEGIN);
@@ -67,14 +67,14 @@ BOOL usbBPB::writeBPBCode16(unsigned char *buf)
     return res;
 }
 
-BOOL usbBPB::clearBPBCode16()
+BOOL UsbBPB::clearBPBCode16()
 {
     unsigned char buf[FAT16_BPB_BOOTCODE_LEN];
     memset(buf, 0, FAT16_BPB_BOOTCODE_LEN);
     return writeBPBCode16(buf);
 }
 
-usbBPB::~usbBPB()
+UsbBPB::~UsbBPB()
 {
     CloseHandle(hFile);
 }

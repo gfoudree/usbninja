@@ -21,6 +21,7 @@
 #include <../USBNinjaDll/usbdevice.h>
 #include <../USBNinjaDll/sql.h>
 #include <../USBNinjaDll/errorlog.h>
+
 #include "handler.h"
 
 using namespace std;

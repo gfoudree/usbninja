@@ -21,21 +21,21 @@
 #define FAT16_BPB_BOOTCODE 0x3E
 #define FAT16_BPB_BOOTCODE_LEN 0x1C2
 
-class usbBPB
+class UsbBPB
 {
 protected:
     HANDLE hFile;
 public:
-    BOOL openDevice();
-    BOOL readBPBCode32(unsigned char *buf);
-    BOOL writeBPBCode32(unsigned char *buf);
-    BOOL clearBPBCode32();
-    BOOL readBPBCode16(unsigned char *buf);
-    BOOL writeBPBCode16(unsigned char *buf);
-    BOOL clearBPBCode16();
+    __declspec(dllexport) BOOL openDevice();
+    __declspec(dllexport) BOOL readBPBCode32(unsigned char *buf);
+    __declspec(dllexport) BOOL writeBPBCode32(unsigned char *buf);
+    __declspec(dllexport) BOOL clearBPBCode32();
+    __declspec(dllexport) BOOL readBPBCode16(unsigned char *buf);
+    __declspec(dllexport) BOOL writeBPBCode16(unsigned char *buf);
+    __declspec(dllexport) BOOL clearBPBCode16();
 
-    ~usbBPB();
-    usbBPB();
+    ~UsbBPB();
+    UsbBPB();
 };
 
 #endif // USBBPB_H
