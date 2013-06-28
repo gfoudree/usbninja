@@ -111,7 +111,7 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
         /* Setup buffer to write to BPB of device */
         char *buf;
         bool isFat32;
-        if (drvInfoS.driveFilesystem.compare("FAT32") == 0)
+        if (drvInfoS.driveFilesystem.find("FAT32") != 0)
         {
             /* Device is FAT32 */
             buf = (char*)malloc(FAT32_BPB_BOOTCODE_LEN+1);
@@ -139,7 +139,7 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
                 serialStamp.crc32.c_str());
 
         UsbBPB bpb;
-        bpb.openDevice(); //Todo: change me for production
+        bpb.openDevice(drvLtr);
         if (isFat32)
         {
             if (!bpb.writeBPBCode32((unsigned char*)buf))
@@ -147,6 +147,7 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
                 QMessageBox::critical(this, "Error", "There was an error writing the raw data to the "
                                       "usb disk, please make sure you have sufficient privileges then "
                                       "try again.");
+                return;
             }
         }
         else
@@ -156,6 +157,7 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
                 QMessageBox::critical(this, "Error", "There was an error writing the raw data to the "
                                       "usb disk, please make sure you have sufficient privileges then "
                                       "try again.");
+                return;
             }
         }
 

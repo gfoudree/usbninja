@@ -236,3 +236,10 @@ std::string UsbDevice::ltrtstr(char driveLtr)
     retVal.append(":\\");
     return retVal;
 }
+
+std::string UsbDevice::ltrtCreateFilestr(char drvLtr)
+{
+    char fmt[30];
+    snprintf(fmt, sizeof(fmt), "\\\\.\\%c:", drvLtr);
+    return fmt;
+}

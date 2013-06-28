@@ -41,6 +41,7 @@ public:
     template <class T>
     __declspec(dllexport) static inline std::string toStr(T val);
     __declspec(dllexport) static std::string ltrtstr(char driveLtr);
+    __declspec(dllexport) static std::string ltrtCreateFilestr(char drvLtr);
     __declspec(dllexport) UsbDevice();
 };
 

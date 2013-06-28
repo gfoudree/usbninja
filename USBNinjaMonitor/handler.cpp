@@ -32,6 +32,21 @@ void threadHandler(char driveLtr)
     ops.ejectUSB();
     */
 
+    bool isFat32;
+    UsbBPB bpb;
+
+    /* Get the filesystem of the device so we know what method to call */
+    UsbDevice usbDev;
+    std::string usbFS;
+    usbDev.GetVolumeFilesystem(driveLtr, &usbFS);
+
+    if (usbFS.compare("FAT32") == 0)
+        isFat32 = true;
+    else
+        isFat32 = false;
+
+
+    /* Log media insertion event */
     boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);

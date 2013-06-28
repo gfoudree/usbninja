@@ -23,6 +23,7 @@
 #include <../USBNinjaDll/settings.h>
 #include <../USBNinjaDll/sql.h>
 #include <../USBNinjaDll/accesslog.h>
+#include <../USBNinjaDll/usbbpb.h>
 #include "usbops.h"
 
 void threadHandler(char driveLtr);

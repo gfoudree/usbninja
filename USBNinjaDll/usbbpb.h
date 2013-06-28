@@ -15,8 +15,12 @@
 #define USBBPB_H
 
 #include <windows.h>
+#include <winioctl.h>
 
 #include "bpb.h"
+#include "usbdevice.h"
+#include "errorlog.h"
+
 #define FAT32_BPB_BOOTCODE 0x5A
 #define FAT32_BPB_BOOTCODE_LEN 0x1A6
 #define FAT16_BPB_BOOTCODE 0x3E
@@ -27,13 +31,16 @@ class UsbBPB
 protected:
     HANDLE hFile;
 public:
-    __declspec(dllexport) BOOL openDevice();
+    __declspec(dllexport) BOOL openDevice(char drvLtr);
     __declspec(dllexport) BOOL readBPBCode32(unsigned char *buf);
     __declspec(dllexport) BOOL writeBPBCode32(unsigned char *buf);
     __declspec(dllexport) BOOL clearBPBCode32();
     __declspec(dllexport) BOOL readBPBCode16(unsigned char *buf);
     __declspec(dllexport) BOOL writeBPBCode16(unsigned char *buf);
     __declspec(dllexport) BOOL clearBPBCode16();
+
+    __declspec(dllexport) BOOL readDiskSector(char *readBuf);
+    __declspec(dllexport) BOOL writeDiskSector(char *writeBuf);
 
     __declspec(dllexport) ~UsbBPB();
     __declspec(dllexport) UsbBPB();
