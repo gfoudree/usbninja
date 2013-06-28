@@ -16,8 +16,9 @@
 
 #include <windows.h>
 
-#define BPB_BOOTCODE 0x5A
-#define BPB_BOOTCODE_LEN 0x1A6
+#include "bpb.h"
+#define FAT32_BPB_BOOTCODE 0x5A
+#define FAT32_BPB_BOOTCODE_LEN 0x1A6
 #define FAT16_BPB_BOOTCODE 0x3E
 #define FAT16_BPB_BOOTCODE_LEN 0x1C2
 
@@ -34,8 +35,8 @@ public:
     __declspec(dllexport) BOOL writeBPBCode16(unsigned char *buf);
     __declspec(dllexport) BOOL clearBPBCode16();
 
-    ~UsbBPB();
-    UsbBPB();
+    __declspec(dllexport) ~UsbBPB();
+    __declspec(dllexport) UsbBPB();
 };
 
 #endif // USBBPB_H

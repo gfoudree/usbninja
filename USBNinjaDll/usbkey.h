@@ -19,14 +19,28 @@
 #include <zlib.h>
 #include <boost/random/random_device.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
+#include <boost/format.hpp>
+#include <sstream>
+
 
 class UsbKey : public UsbBPB
 {
 public:
-    __declspec(dllexport) static unsigned long generateCrc32(unsigned char *buf, unsigned int len);
-    __declspec(dllexport) static std::string generateRandStr(const int len);
+    char usbninjaSignature[5];
 
-    UsbKey();
+    __declspec(dllexport) static std::string generateCrc32(unsigned char *buf, unsigned int len);
+    __declspec(dllexport) static std::string generateRandStr(const int len);
+    __declspec(dllexport) static std::string generateTimestamp();
+
+    __declspec(dllexport) UsbKey();
+};
+
+struct UsbKeyhdr
+{
+    char usbninjaSignature[5];
+    char serialkey[25];
+    char timestamp[12];
+    char crc32[10];
 };
 
 #endif // USBKEY_H

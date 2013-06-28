@@ -19,7 +19,7 @@ UsbBPB::UsbBPB()
 
 BOOL UsbBPB::openDevice()
 {
-    hFile = CreateFileA("C:\\users\\grant\\desktop\\test.img",
+    hFile = CreateFileA("C:\\users\\grant\\desktop\\dos.img",
                                GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
                                NULL, OPEN_EXISTING, 0, NULL);
     if (hFile != INVALID_HANDLE_VALUE)
@@ -31,23 +31,23 @@ BOOL UsbBPB::openDevice()
 BOOL UsbBPB::readBPBCode32(unsigned char *buf)
 {
     DWORD bRead;
-    SetFilePointer(hFile, BPB_BOOTCODE, NULL, FILE_BEGIN);
-    BOOL res = ReadFile(hFile, buf, BPB_BOOTCODE_LEN, &bRead, NULL);
+    SetFilePointer(hFile, FAT32_BPB_BOOTCODE, NULL, FILE_BEGIN);
+    BOOL res = ReadFile(hFile, buf, FAT32_BPB_BOOTCODE_LEN, &bRead, NULL);
     return res;
 }
 
 BOOL UsbBPB::writeBPBCode32(unsigned char *buf)
 {
     DWORD bWrite;
-    SetFilePointer(hFile, BPB_BOOTCODE, NULL, FILE_BEGIN);
-    BOOL res = WriteFile(hFile, buf, BPB_BOOTCODE_LEN, &bWrite, NULL);
+    SetFilePointer(hFile, FAT32_BPB_BOOTCODE, NULL, FILE_BEGIN);
+    BOOL res = WriteFile(hFile, buf, FAT32_BPB_BOOTCODE_LEN, &bWrite, NULL);
     return res;
 }
 
 BOOL UsbBPB::clearBPBCode32()
 {
-    unsigned char buf[BPB_BOOTCODE_LEN];
-    memset(buf, 0, BPB_BOOTCODE_LEN);
+    unsigned char buf[FAT32_BPB_BOOTCODE_LEN];
+    memset(buf, 0, FAT32_BPB_BOOTCODE_LEN);
     return writeBPBCode32(buf);
 }
 

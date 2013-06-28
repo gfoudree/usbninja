@@ -21,7 +21,8 @@ HEADERS += \
     accesslog.h \
     service.h \
     usbbpb.h \
-    usbkey.h
+    usbkey.h \
+    bpb.h
 
 LIBS += -lsqlite3 -lpugi -lz -lboost_random
 

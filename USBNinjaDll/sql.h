@@ -17,6 +17,8 @@
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <algorithm>
+
 #include "errorlog.h"
 
 struct sqlDriveStruct;
@@ -31,7 +33,7 @@ protected:
     static int sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname);
-
+    static bool less_than_key(const authedDrive &class1, const authedDrive &class2);
 
 public:
     __declspec(dllexport) bool dbConnect(char *filename);
@@ -73,6 +75,7 @@ struct logUSB
 
 struct authedDrive
 {
+    int             id;
     std::string     dateAuthorized;
     std::string     serial;
     std::string     driveName;

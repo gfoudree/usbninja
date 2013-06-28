@@ -108,6 +108,7 @@ int Sql::sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname)
 int Sql::sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname)
 {
     authedDrive tmpDrv;
+    tmpDrv.id = atoi(argv[0]);
     tmpDrv.dateAuthorized = argv[1];
     tmpDrv.serial = argv[2];
     tmpDrv.driveName = argv[3];
@@ -151,6 +152,8 @@ void Sql::queryAuthedDrives(std::vector<authedDrive> *drives)
     char *errBuf;
     if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthedDrivesCallback, static_cast<void*>(drives), &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
+
+    std::sort(drives->begin(), drives->end(), less_than_key); //Sort vector by ID
 }
 
 int Sql::authorizedDrives()
@@ -169,4 +172,9 @@ int Sql::deniedDrives()
     if (sqlite3_exec(db, "SELECT accepted FROM loggedDrives;", sqlCountCallback, (void*)&driveCount, &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error counting authorized drives: ", errBuf);
     return driveCount.deniedDrives;
+}
+
+bool Sql::less_than_key(const authedDrive &class1, const authedDrive &class2)
+{
+    return (class1.id > class2.id);
 }

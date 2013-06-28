@@ -40,7 +40,6 @@ ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
 void ManageDrivesDialog::refreshData()
 {
     ui->treeWidget->clear();
-    ui->treeWidget->setSortingEnabled(true);
     std::vector<authedDrive> authedDrv;
     Sql sql;
     sql.dbConnect(AUTH_FILE);
@@ -50,7 +49,7 @@ void ManageDrivesDialog::refreshData()
     for (int i = 0, element = 0; i != authedDrv.size(); i++, element++)
     {
         QStringList data;
-        data << QString::number(i+1) << authedDrv.at(element).dateAuthorized.c_str();
+        data << QString::number(authedDrv.at(element).id) << authedDrv.at(element).dateAuthorized.c_str();
         data << authedDrv.at(element).serial.c_str() << authedDrv.at(element).driveName.c_str();
         data << QString::number(authedDrv.at(element).driveSize) << authedDrv.at(element).notes.c_str();
 
@@ -60,7 +59,6 @@ void ManageDrivesDialog::refreshData()
 
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->setColumnWidth(2, 100);
-    ui->treeWidget->sortByColumn(0, Qt::AscendingOrder);
 }
 
 ManageDrivesDialog::~ManageDrivesDialog()
@@ -80,7 +78,7 @@ void ManageDrivesDialog::deleteDeviceHandler()
     QTreeWidgetItem *itm = ui->treeWidget->currentItem();
     int id = atoi(itm->text(0).toStdString().c_str());
 
-    char *warningMsg = (char*)malloc(1024);
+    char warningMsg[1024];
     sprintf(warningMsg, "Are you sure you want to delete %s authorized on %s?" \
             " The drive will no longer be able to access this computer unless reauthorized!",
             itm->text(3).toStdString().c_str(), itm->text(1).toStdString().c_str());
@@ -90,15 +88,16 @@ void ManageDrivesDialog::deleteDeviceHandler()
 
     if (choice == QMessageBox::Yes)
     {
-        char statement[255];
-        sprintf(statement, "DELETE FROM authDrives WHERE id=\'%d\';", id);
+        char statement[255], updateStatement[255];
+        sprintf(statement, "DELETE FROM authDrives WHERE id=\'%d\';", id); //Delete the entry
+        sprintf(updateStatement, "UPDATE authDrives SET id = id - 1 WHERE id > %d;", id); //Update ID index so we arn't missing a # in the sequence
 
         Sql sql(AUTH_FILE);
         sql.dbExecSql(statement);
+        sql.dbExecSql(updateStatement);
         sql.dbDisconnect();
     }
     refreshData();
-    free(warningMsg);
 }
 
 void ManageDrivesDialog::on_pushButton_2_clicked()

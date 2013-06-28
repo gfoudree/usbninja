@@ -53,4 +53,11 @@ struct DriveInfo
     char devFs[15];   /* File system type */
 };
 
+struct DriveInfoS
+{
+    int diskSize;
+    std::string driveName;
+    std::string driveFilesystem;
+};
+
 #endif // USBDEVICE_H

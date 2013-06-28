@@ -15,19 +15,23 @@
 
 UsbKey::UsbKey()
 {
+    strncpy(usbninjaSignature, "NINJA", 5);
 }
 
-unsigned long UsbKey::generateCrc32(unsigned char *buf, unsigned int len)
+std::string UsbKey::generateCrc32(unsigned char *buf, unsigned int len)
 {
-    unsigned long crc = crc32(0, buf, len);
-    return crc;
+    std::stringstream crcstr;
+    unsigned long crc;
+    crc = crc32(0, buf, len);
+
+    crcstr << crc;
+    return crcstr.str();
 }
 
 std::string UsbKey::generateRandStr(const int len = 25)
 {
     std::string randStr;
     std::string chars(
-            "abcdefghijklmnopqrstuvwxyz"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "1234567890");
     boost::random::random_device rng;
@@ -37,4 +41,19 @@ std::string UsbKey::generateRandStr(const int len = 25)
         randStr += chars[index_dist(rng)];
     }
     return randStr;
+}
+
+std::string UsbKey::generateTimestamp()
+{
+    time_t rawtime;
+    struct tm *timeinfo;
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    std::stringstream timestampStr;
+    timestampStr << timeinfo->tm_mon << timeinfo->tm_mday << timeinfo->tm_year;
+    timestampStr << timeinfo->tm_hour << timeinfo->tm_min;
+
+    return timestampStr.str();
 }

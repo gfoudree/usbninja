@@ -27,7 +27,8 @@ HEADERS  += mainwindow.h \
     authorizedevicedialog.h \
     authdrive.h \
     graphdialog.h \
-    csvexport.h
+    csvexport.h \
+    SerialStamp.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
