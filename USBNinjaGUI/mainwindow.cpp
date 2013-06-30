@@ -183,3 +183,10 @@ void MainWindow::on_actionReload_Log_triggered()
     clearData();
     loadData();
 }
+
+void MainWindow::on_actionView_Log_triggered()
+{
+    LogviewDialog ld;
+    ld.setModal(true);
+    ld.exec();
+}

@@ -18,6 +18,17 @@ GraphDialog::GraphDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GraphDialog)
 {
+    Sql sql;
+    sql.dbConnect(LOG_FILE);
+    accepted = sql.authorizedDrives();
+    denied = sql.deniedDrives();
+    total = accepted + denied;
+
+    sql.dbDisconnect();
+    if (total <= 0)
+    {
+        QMessageBox::information(this, "Error", "There are no logged drives to graph.");
+    }
     ui->setupUi(this);
 }
 
@@ -28,15 +39,8 @@ GraphDialog::~GraphDialog()
 
 void GraphDialog::paintEvent(QPaintEvent *event)
 {
-    int accepted, denied, total;
-
-    Sql sql;
-    sql.dbConnect(LOG_FILE);
-    accepted = sql.authorizedDrives();
-    denied = sql.deniedDrives();
-    total = accepted + denied;
-
-    sql.dbDisconnect();
+    if (total <= 0)
+        done(1);
 
     QWidget::paintEvent(event);
     QPainter painter;
@@ -51,6 +55,4 @@ void GraphDialog::paintEvent(QPaintEvent *event)
     pieChart.setShadows(false);
     pieChart.draw(&painter);
     pieChart.drawLegend(&painter);
-
-
 }

@@ -110,6 +110,8 @@
     <addaction name="actionUnauthorize_All_Devices"/>
     <addaction name="separator"/>
     <addaction name="actionGraph_Data"/>
+    <addaction name="separator"/>
+    <addaction name="actionView_Log"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -195,6 +197,11 @@
   <action name="actionExport_to_CSV">
    <property name="text">
     <string>Export to CSV</string>
+   </property>
+  </action>
+  <action name="actionView_Log">
+   <property name="text">
+    <string>View Log</string>
    </property>
   </action>
  </widget>

@@ -33,7 +33,8 @@ public:
     explicit GraphDialog(QWidget *parent = 0);
     ~GraphDialog();
     
-private:   
+private:
+    int accepted, denied, total;
     Ui::GraphDialog *ui;
     void paintEvent(QPaintEvent *event);
 };

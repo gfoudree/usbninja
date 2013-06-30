@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     authorizedevicedialog.cpp \
     authdrive.cpp \
     graphdialog.cpp \
-    csvexport.cpp
+    csvexport.cpp \
+    logviewdialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -28,13 +29,15 @@ HEADERS  += mainwindow.h \
     authdrive.h \
     graphdialog.h \
     csvexport.h \
-    SerialStamp.h
+    SerialStamp.h \
+    logviewdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     managedrivesdialog.ui \
     authorizedevicedialog.ui \
-    graphdialog.ui
+    graphdialog.ui \
+    logviewdialog.ui
 
 RC_FILE = versioninfo.rc
 
@@ -51,3 +54,4 @@ QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const 
 
 DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
 DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+DEFINES +=  DEBUG_LOGFILE=\\\"C:/users/grant/desktop/log.txt\\\"

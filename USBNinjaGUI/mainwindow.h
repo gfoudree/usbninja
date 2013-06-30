@@ -24,6 +24,7 @@
 #include "aboutdialog.h"
 #include "managedrivesdialog.h"
 #include "graphdialog.h"
+#include "logviewdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -54,6 +55,8 @@ private slots:
     void on_actionExport_to_CSV_triggered();
 
     void on_actionReload_Log_triggered();
+
+    void on_actionView_Log_triggered();
 
 private:
     Ui::MainWindow *ui;
