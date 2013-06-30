@@ -54,4 +54,4 @@ QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const 
 
 DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
 DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-DEFINES +=  DEBUG_LOGFILE=\\\"C:/users/grant/desktop/log.txt\\\"
+DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"

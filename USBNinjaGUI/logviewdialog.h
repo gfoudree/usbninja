@@ -14,6 +14,8 @@
 #define LOGVIEWDIALOG_H
 
 #include <QDialog>
+#include <QMenu>
+#include <QMessageBox>
 #include <windows.h>
 #include <fstream>
 #include <vector>
@@ -34,8 +36,12 @@ public:
     ~LogviewDialog();
     
 private:
+    void refreshUI();
     bool parseLogFile(std::vector<logFileFormat> &data,  char *filePath);
     Ui::LogviewDialog *ui;
+
+private slots:
+    void onClearLogfile();
 };
 
 

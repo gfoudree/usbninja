@@ -23,8 +23,26 @@ LogviewDialog::LogviewDialog(QWidget *parent) :
     columnTitles << "Date" << "Level" << "Info";
     ui->treeWidget->setHeaderLabels(columnTitles);
 
+    refreshUI();
+
+    QMenu *contextMenu = new QMenu(ui->treeWidget);
+    ui->treeWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+    QAction *deleteDrive = new QAction("Clear Log", contextMenu);
+    ui->treeWidget->addAction(deleteDrive);
+
+    connect(deleteDrive, SIGNAL(triggered()), this, SLOT(onClearLogfile()));
+}
+
+LogviewDialog::~LogviewDialog()
+{
+    delete ui;
+}
+
+void LogviewDialog::refreshUI()
+{
+    ui->treeWidget->clear();
     std::vector<logFileFormat> logFileData;
-    parseLogFile(logFileData, DEBUG_LOGFILE);
+    parseLogFile(logFileData, ERR_LOG_FILE);
 
     /* Reverse elements so they are in proper order */
     std::reverse(logFileData.begin(), logFileData.end());
@@ -38,11 +56,6 @@ LogviewDialog::LogviewDialog(QWidget *parent) :
         QTreeWidgetItem *widgetItem = new QTreeWidgetItem(itemData);
         ui->treeWidget->insertTopLevelItem(0, widgetItem);
     }
-}
-
-LogviewDialog::~LogviewDialog()
-{
-    delete ui;
 }
 
 bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePath)
@@ -93,4 +106,16 @@ bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePat
         data.push_back(lff);
     }
     return true;
+}
+
+void LogviewDialog::onClearLogfile()
+{
+    if (remove(ERR_LOG_FILE) != 0)
+    {
+        QMessageBox::critical(this, "Error", "Unable to delete the log file.");
+    }
+    else
+    {
+        refreshUI();
+    }
 }
