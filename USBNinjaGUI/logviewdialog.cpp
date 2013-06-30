@@ -56,6 +56,8 @@ void LogviewDialog::refreshUI()
         QTreeWidgetItem *widgetItem = new QTreeWidgetItem(itemData);
         ui->treeWidget->insertTopLevelItem(0, widgetItem);
     }
+
+    ui->treeWidget->resizeColumnToContents(1); //Clean things up...
 }
 
 bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePath)

@@ -20,7 +20,7 @@ UsbBPB::UsbBPB()
 BOOL UsbBPB::openDevice(char drvLtr)
 {
     std::string drvLtrWinFmt = UsbDevice::ltrtCreateFilestr(drvLtr);
-    hFile = CreateFileA("\\\\.\\F:",
+    hFile = CreateFileA(drvLtrWinFmt.c_str(),
                                GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
                                NULL, OPEN_EXISTING, 0, NULL);
     if (hFile != INVALID_HANDLE_VALUE)

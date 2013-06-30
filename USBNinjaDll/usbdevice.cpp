@@ -62,7 +62,7 @@ bool UsbDevice::GetDriveDeviceId(char drvLtr, std::string *deviceID)
     else
     {
         RegCloseKey(key);
-        ErrorLog::logErrorToFile("Unable to read registry key to obtain device id: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to read registry key to obtain device id: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
 }
@@ -92,7 +92,7 @@ bool UsbDevice::GetFriendlyName(std::string deviceID, std::string *friendlyName)
     else
     {
         RegCloseKey(key);
-        ErrorLog::logErrorToFile("Unable to read registery key to get friendly name: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to read registery key to get friendly name: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
 }
@@ -102,7 +102,7 @@ bool UsbDevice::GetVolumeSerial(char drvLtr, std::string *serial)
     DWORD serialNum;
     if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), NULL, 0, &serialNum, NULL, NULL, NULL, 0) == 0)
     {
-        ErrorLog::logErrorToFile("Unable to get volume serial: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume serial: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     else
@@ -117,7 +117,7 @@ bool UsbDevice::GetVolumeName(char drvLtr, std::string *name)
     char label[255];
     if (GetVolumeInformationA(ltrtstr(drvLtr).c_str(), label, sizeof(label), NULL, NULL, NULL, NULL, 0) == 0)
     {
-        ErrorLog::logErrorToFile("Unable to get volume name: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume name: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     else
@@ -132,7 +132,7 @@ bool UsbDevice::GetVolumeSize(char drvLtr, unsigned int *volSize)
     ULARGE_INTEGER freeSpace, diskSpace;
     if(GetDiskFreeSpaceExA(ltrtstr(drvLtr).c_str(), &freeSpace, &diskSpace, NULL) == 0)
     {
-        ErrorLog::logErrorToFile("Unable to get volume size: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume size: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     else
@@ -150,7 +150,7 @@ bool UsbDevice::GetVolumeLabel(char drvLtr, std::string *label)
                                labelBuf, sizeof(labelBuf),
                                NULL, &dwRet, &dwRet, NULL, 0))
     {
-        ErrorLog::logErrorToFile("Unable to get volume label: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume label: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     *label = labelBuf;
@@ -163,7 +163,7 @@ bool UsbDevice::GetVolumeGUID(char drvLtr, std::string *GUID)
     if (!GetVolumeNameForVolumeMountPointA(UsbDevice::ltrtstr(drvLtr).c_str(),
                                            GUIDBuf, sizeof(GUIDBuf)))
     {
-        ErrorLog::logErrorToFile("Unable to get volume GUID: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume GUID: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     *GUID = GUIDBuf;
@@ -185,7 +185,7 @@ bool UsbDevice::GetVolumeFilesystem(char drvLtr, std::string *fileSystem)
 {
     if (GetVolumeInformationA(UsbDevice::ltrtstr(drvLtr).c_str(), NULL, 0, NULL, NULL, NULL, const_cast<char*>(fileSystem->c_str()), MAX_PATH+1) == 0)
     {
-        ErrorLog::logErrorToFile("Unable to get volume filesystem: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get volume filesystem: ", ErrorLog::winErrToStr(GetLastError()));
         return false;
     }
     return true;
@@ -196,7 +196,7 @@ std::vector<char> UsbDevice::getUSBDrives(DWORD *numDrives)
     std::vector<char> drvs(255, 0);
     *numDrives = GetLogicalDriveStringsA(drvs.size(), &drvs.at(0));
     if (numDrives == 0)
-        ErrorLog::logErrorToFile("Unable to get list of USB drives: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get list of USB drives: ", ErrorLog::winErrToStr(GetLastError()));
     return drvs;
 }
 
@@ -205,7 +205,7 @@ bool UsbDevice::getDriveInfo(DriveInfo *pDrvInfo, std::string drive)
 	ULARGE_INTEGER freeSpace, diskSize;
 	if (GetDiskFreeSpaceExA(drive.c_str(), &freeSpace, &diskSize, NULL) == 0)
 	{
-		ErrorLog::logErrorToFile("Unable to get drive free space: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to get drive free space: ", ErrorLog::winErrToStr(GetLastError()));
 		return false;
 	}
 	pDrvInfo->fSpace = freeSpace.QuadPart;
@@ -214,7 +214,7 @@ bool UsbDevice::getDriveInfo(DriveInfo *pDrvInfo, std::string drive)
 	if (GetVolumeInformationA(drive.c_str(), pDrvInfo->devName, sizeof(pDrvInfo->devName), NULL, NULL, NULL,
 							pDrvInfo->devFs, sizeof(pDrvInfo->devFs)) == 0)
 	{
-		ErrorLog::logErrorToFile("Unable to getDriveInfo device name and filesystem: ", ErrorLog::winErrToStr(GetLastError()));
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to getDriveInfo device name and filesystem: ", ErrorLog::winErrToStr(GetLastError()));
 		return false;
 	}
 	return true;

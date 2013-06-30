@@ -40,7 +40,7 @@ void threadHandler(char driveLtr)
     std::string usbFS;
     usbDev.GetVolumeFilesystem(driveLtr, &usbFS);
 
-    if (usbFS.compare("FAT32") == 0)
+    if (usbFS.find("FAT32") != 0)
         isFat32 = true;
     else
         isFat32 = false;
