@@ -36,6 +36,7 @@
 #include "managedrivesdialog.h"
 #include "graphdialog.h"
 #include "logviewdialog.h"
+#include "../../USBNinjaDll/service.h"
 
 namespace Ui {
 class MainWindow;
@@ -68,6 +69,10 @@ private slots:
     void on_actionReload_Log_triggered();
 
     void on_actionView_Log_triggered();
+
+    void on_actionStart_Monitoring_triggered();
+
+    void on_actionStop_Monitoring_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -15,10 +15,22 @@
 
 #define _WIN32_WINNT 0x601
 #include <windows.h>
+#include <tlhelp32.h>
+#include "errorlog.h"
 
-__declspec(dllexport) bool InstallServ(char* name, char* desc, char* path);
-__declspec(dllexport) bool StopServ(char* name);
-__declspec(dllexport) bool StartServ(char* name);
-__declspec(dllexport) bool ChkServ(char* name);
+class Service
+{
+public:
+
+    __declspec(dllexport) static bool InstallServ(char* name, char* desc, char* path);
+    __declspec(dllexport) static bool StopServ(char* name);
+    __declspec(dllexport) static bool StartServ(char* name);
+    __declspec(dllexport) static bool ChkServ(char* name);
+    __declspec(dllexport) static bool StartProcess(char *name);
+    __declspec(dllexport) static bool StopProcess(char* name);
+    __declspec(dllexport) static bool ChkProcess(char *name);
+    __declspec(dllexport) static DWORD getPID(char *name);
+
+};
 
 #endif // SERVICE_H

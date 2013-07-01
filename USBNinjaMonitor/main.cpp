@@ -76,6 +76,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgu
     trayNotification.setWindow(hwnd);
     trayNotification.sendMessage("USBNinja daemon started.", "USBNinja");
 
+    //ShowWindow(GetConsoleWindow(), SW_HIDE);
+
     while (GetMessage (&messages, NULL, 0, 0))
     {
         TranslateMessage(&messages);

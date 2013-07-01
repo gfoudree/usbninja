@@ -11,3 +11,4 @@ Icon?
 *.log
 Build/
 *.pro.user.*
+*.user

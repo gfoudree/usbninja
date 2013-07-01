@@ -20,17 +20,17 @@ void threadHandler(char driveLtr)
     /* Lock the mutex so we don't try and access the database at the same time */
     gMutex.lock();
 
+    bool authorized = false;
+
     /* Lock the USB drive */
     UsbOps ops;
-    //ops.lockUSB(driveLtr); //Causes a problem with raw read/write beacuse of the locking drive, fix it
+    ops.lockUSB(driveLtr);
 
     /* Query authorized devices */
     Sql sql;
-
     if (!sql.dbConnect("C:\\users\\grant\\desktop\\log.db", false))
     {
         ErrorLog::logErrorToFile("*CRITICAL*", "Unable to open authorized drives database!");
-        //Eject the drive!
         gMutex.unlock();
         return;
     }
@@ -41,25 +41,33 @@ void threadHandler(char driveLtr)
     UsbKey usbKey;
     UsbKeyhdr hdr;
 
+    ops.unlockUSB();
     usbKey.getUsbKeyHdr(&hdr, driveLtr);
+    ops.lockUSB(driveLtr);
 
+    /* Check if the serial exists in the database */
     for (std::vector<sqlDriveStruct>::iterator it = drvs.begin(); it != drvs.end(); it++)
     {
         std::cout << it->serial.c_str() << " " << hdr.serialkey.c_str() << std::endl;
         if (it->serial.compare(hdr.serialkey) == 0)
         {
-            //It's authorized, do something
+            authorized = true;
+            break;
         }
     }
 
+    ops.unlockUSB();
+
     /* Log media insertion event */
-    /*
+
     boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);
-    */
 
-end:
-    //ops.unlockUSB();
+    if (!authorized)
+    {
+        ops.lockUSB(driveLtr);
+        ops.ejectUSB();
+    }
     gMutex.unlock();
 }

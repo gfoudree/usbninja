@@ -12,7 +12,7 @@
  */
  #include "service.h"
 
-bool StopServ(char* name)
+bool Service::StopServ(char* name)
 {
     SC_HANDLE scm, serv;
     SERVICE_STATUS serv_stat;
@@ -34,7 +34,7 @@ bool StopServ(char* name)
     }
 }
 
-bool StartServ(char* name)
+bool Service::StartServ(char* name)
 {
     SC_HANDLE scm, serv;
     scm = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
@@ -55,7 +55,7 @@ bool StartServ(char* name)
     }
 }
 
-bool ChkServ(char* name)
+bool Service::ChkServ(char* name)
 {
     SC_HANDLE scm, serv;
     _SERVICE_STATUS servstat;
@@ -76,7 +76,7 @@ bool ChkServ(char* name)
     }
 }
 
-bool InstallServ(char* name, char* desc, char* path)
+bool Service::InstallServ(char* name, char* desc, char* path)
 {
     SC_HANDLE scm = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
     CreateServiceA(scm, name, desc, SERVICE_ALL_ACCESS,
@@ -93,4 +93,118 @@ bool InstallServ(char* name, char* desc, char* path)
         CloseServiceHandle(scm);
         return false;
     }
+}
+
+bool Service::ChkProcess(char *name)
+{
+    wchar_t exeFile[50];
+    mbstowcs(exeFile, name, strlen(name));
+
+    HANDLE hProcessSnap;
+    PROCESSENTRY32 pe32;
+
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == INVALID_HANDLE_VALUE)
+        return false;
+
+    pe32.dwSize = sizeof(PROCESSENTRY32);
+
+    if (!Process32First(hProcessSnap, &pe32))
+    {
+        CloseHandle(hProcessSnap);
+        return false;
+    }
+    do
+    {
+        if (wcscmp(pe32.szExeFile, exeFile) == 0)
+        {
+            CloseHandle(hProcessSnap);
+            return true;
+        }
+    } while (Process32Next(hProcessSnap, &pe32));
+
+    CloseHandle(hProcessSnap);
+    return false;
+}
+
+bool Service::StartProcess(char *name)
+{
+    STARTUPINFOA si;
+    PROCESS_INFORMATION pi;
+
+    memset(&pi, 0, sizeof(pi));
+    memset(&si, 0, sizeof(si));
+    si.cb = sizeof(si);
+
+    if (!CreateProcessA(name, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+    {
+        ErrorLog::logErrorToFile("*WARNING*", "Unable to create process: ",
+                                 ErrorLog::winErrToStr(GetLastError()));
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        return false;
+    }
+    else
+    {
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        return true;
+    }
+}
+
+bool Service::StopProcess(char *name)
+{
+    DWORD pid = Service::getPID("notepad.exe");
+    HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+    if (hProc == NULL)
+    {
+        ErrorLog::logErrorToFile("*WARNING*", "Unable to open process: ", name, " Error code: ",
+                                 ErrorLog::winErrToStr(GetLastError()));
+        return false;
+    }
+
+    if (TerminateProcess(hProc, 1) == 0)
+    {
+        ErrorLog::logErrorToFile("*WARNING*", "Unable to terminate process: ",
+                                 ErrorLog::winErrToStr(GetLastError()));
+        return false;
+    }
+    return true;
+}
+
+DWORD Service::getPID(char *name)
+{
+    wchar_t exeName[50];
+    swprintf(exeName, L"%hs", name);
+    HANDLE hProcessSnap;
+
+    PROCESSENTRY32W pe32;
+
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == INVALID_HANDLE_VALUE)
+    {
+        ErrorLog::logErrorToFile("*WARNING*", "Unable to create process snapshot: ",
+                                 ErrorLog::winErrToStr(GetLastError()));
+        return false;
+    }
+
+    pe32.dwSize = sizeof(PROCESSENTRY32W);
+
+    if (!Process32First(hProcessSnap, &pe32))
+    {
+        CloseHandle(hProcessSnap);
+        return false;
+    }
+
+    do
+    {
+        if (wcscmp(exeName, pe32.szExeFile) == 0)
+        {
+            CloseHandle(hProcessSnap);
+            return pe32.th32ProcessID;
+        }
+    } while (Process32Next(hProcessSnap, &pe32));
+
+    CloseHandle(hProcessSnap);
+    return 0;
 }

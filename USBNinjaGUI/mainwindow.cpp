@@ -52,7 +52,7 @@ void MainWindow::loadData()
 {
     std::vector<logUSB> usb;
     Sql sql;
-    sql.dbConnect(LOG_FILE);
+    sql.dbConnect(LOG_FILE, true);
     sql.queryLog(&usb);
     sql.dbDisconnect();
 
@@ -143,7 +143,7 @@ void MainWindow::on_actionUnauthorize_All_Devices_triggered()
     if (msgBox->exec() == QMessageBox::Yes)
     {
         Sql sql;
-        sql.dbConnect(AUTH_FILE);
+        sql.dbConnect(AUTH_FILE, false);
         if (sql.dbExecSql("DELETE FROM authDrives;"))
         {
             QMessageBox::information(this, "Success", "All devices have been unauthorized.");
@@ -189,4 +189,14 @@ void MainWindow::on_actionView_Log_triggered()
     LogviewDialog ld;
     ld.setModal(true);
     ld.exec();
+}
+
+void MainWindow::on_actionStart_Monitoring_triggered()
+{
+    Service::StartProcess("C:\\windows\\system32\\notepad.exe");
+}
+
+void MainWindow::on_actionStop_Monitoring_triggered()
+{
+    Service::StopProcess("notepad.exe");
 }

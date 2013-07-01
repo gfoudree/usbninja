@@ -42,7 +42,7 @@ void ManageDrivesDialog::refreshData()
     ui->treeWidget->clear();
     std::vector<authedDrive> authedDrv;
     Sql sql;
-    sql.dbConnect(AUTH_FILE);
+    sql.dbConnect(AUTH_FILE, true);
     sql.queryAuthedDrives(&authedDrv);
     sql.dbDisconnect();
 

@@ -24,7 +24,7 @@ std::string CSVExport::csvData()
 
     std::vector<logUSB> usb;
     Sql sql;
-    sql.dbConnect(LOG_FILE);
+    sql.dbConnect(LOG_FILE, false);
     sql.queryLog(&usb);
     sql.dbDisconnect();
 
