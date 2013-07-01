@@ -22,7 +22,6 @@
 #include <iostream>
 
 #include "authdrive.h"
-#include "SerialStamp.h"
 #include "../../USBNinjaDll/usbdevice.h"
 #include "../../USBNinjaDll/usbkey.h"
 #include "../../USBNinjaDll/usbbpb.h"

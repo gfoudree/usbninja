@@ -17,7 +17,6 @@
 #include <windows.h>
 #include <winioctl.h>
 
-#include "bpb.h"
 #include "usbdevice.h"
 #include "errorlog.h"
 
@@ -41,6 +40,8 @@ public:
 
     __declspec(dllexport) BOOL readDiskSector(char *readBuf);
     __declspec(dllexport) BOOL writeDiskSector(char *writeBuf);
+
+    __declspec(dllexport) static bool isFat32(char drvLtr);
 
     __declspec(dllexport) ~UsbBPB();
     __declspec(dllexport) UsbBPB();

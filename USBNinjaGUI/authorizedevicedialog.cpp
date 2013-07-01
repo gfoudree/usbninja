@@ -110,8 +110,8 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
 
         /* Setup buffer to write to BPB of device */
         char *buf;
-        bool isFat32;
-        if (drvInfoS.driveFilesystem.find("FAT32") != 0)
+        bool isFat32 = UsbBPB::isFat32(drvLtr);
+        if (isFat32)
         {
             /* Device is FAT32 */
             buf = (char*)malloc(FAT32_BPB_BOOTCODE_LEN+1);
@@ -128,15 +128,17 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
 
         /* Generate serial key & format it to a buffer */
         UsbKey usbKey;
-        SerialStamp serialStamp;
+        UsbKeyhdr serialStamp;
 
-        serialStamp.usbninjaSignature = usbKey.usbninjaSignature;
-        serialStamp.serial = usbKey.generateRandStr(25);
-        serialStamp.crc32 = usbKey.generateCrc32((unsigned char*)serialStamp.serial.c_str(),
-                                                 serialStamp.serial.length());
+        serialStamp.magic = "NINJA";
+        serialStamp.serialkey = usbKey.generateRandStr(25);
+        serialStamp.crc32 = usbKey.generateCrc32(
+                    (unsigned char*)serialStamp.serialkey.c_str(),
+                    serialStamp.serialkey.length());
 
-        sprintf(buf, "%s%s%s", serialStamp.usbninjaSignature, serialStamp.serial.c_str(),
+        sprintf(buf, "%s%s%s", serialStamp.magic.c_str(), serialStamp.serialkey.c_str(),
                 serialStamp.crc32.c_str());
+
 
         UsbBPB bpb;
         bpb.openDevice(drvLtr);
@@ -165,7 +167,7 @@ void AuthorizeDeviceDialog::on_pushButton_clicked()
         AuthDrive drv;
 
         drv.date = drv.dateAndTime();
-        drv.serial = serialStamp.serial;
+        drv.serial = serialStamp.serialkey;
 
         if (strcmp(ui->plainTextEdit->toPlainText().toStdString().c_str(), "Add description here.") == 0)
             drv.notes = " ";

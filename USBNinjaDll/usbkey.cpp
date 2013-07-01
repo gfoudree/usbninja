@@ -15,7 +15,6 @@
 
 UsbKey::UsbKey()
 {
-    strncpy(usbninjaSignature, "NINJA", 5);
 }
 
 std::string UsbKey::generateCrc32(unsigned char *buf, unsigned int len)
@@ -56,4 +55,32 @@ std::string UsbKey::generateTimestamp()
     timestampStr << timeinfo->tm_hour << timeinfo->tm_min;
 
     return timestampStr.str();
+}
+
+bool UsbKey::getUsbKeyHdr(UsbKeyhdr *hdr, char drvLtr)
+{
+    char buf[512];
+    UsbBPB bpb;
+
+    if (bpb.openDevice(drvLtr))
+    {
+        if (UsbBPB::isFat32(drvLtr))
+        {
+            bpb.readBPBCode32((unsigned char*)buf);
+        }
+        else
+        {
+            bpb.readBPBCode16((unsigned char*)buf);
+        }
+
+        std::string magic(buf, buf + 5);
+        std::string serial(buf + 5, buf + 30);
+        std::string crc32(buf + 30, buf + 40);
+
+        hdr->magic = magic;
+        hdr->serialkey = serial;
+        hdr->crc32 = crc32;
+    }
+    else
+        return false;
 }

@@ -35,10 +35,12 @@ BOOL UsbBPB::openDevice(char drvLtr)
 
 BOOL UsbBPB::readBPBCode32(unsigned char *buf)
 {
-    DWORD bRead;
-    SetFilePointer(hFile, FAT32_BPB_BOOTCODE, NULL, FILE_BEGIN);
-    BOOL res = ReadFile(hFile, buf, FAT32_BPB_BOOTCODE_LEN, &bRead, NULL);
-    return res;
+    char bpbData[1024];
+    if (!readDiskSector(bpbData))
+        return false;
+    memcpy(buf, &bpbData[FAT32_BPB_BOOTCODE], 512 - FAT32_BPB_BOOTCODE);
+    return true;
+
 }
 
 BOOL UsbBPB::writeBPBCode32(unsigned char *buf)
@@ -61,10 +63,13 @@ BOOL UsbBPB::clearBPBCode32()
 
 BOOL UsbBPB::readBPBCode16(unsigned char *buf)
 {
-    DWORD bRead;
-    SetFilePointer(hFile, FAT16_BPB_BOOTCODE, NULL, FILE_BEGIN);
-    BOOL res = ReadFile(hFile, buf, FAT16_BPB_BOOTCODE_LEN, &bRead, NULL);
-    return res;
+    char prevBPB[1024];
+    if (!readDiskSector(prevBPB))
+        return false;
+    memcpy(&prevBPB[FAT16_BPB_BOOTCODE], buf, 512 - FAT16_BPB_BOOTCODE);
+    if (!writeDiskSector(prevBPB))
+        return false;
+    return true;
 }
 
 BOOL UsbBPB::writeBPBCode16(unsigned char *buf)
@@ -120,6 +125,20 @@ BOOL UsbBPB::writeDiskSector(char *writeBuf)
     }
     DeviceIoControl(hFile, FSCTL_UNLOCK_VOLUME, NULL, 0, NULL, 0, &cb, NULL);
     return TRUE;
+}
+
+bool UsbBPB::isFat32(char drvLtr)
+{
+    DriveInfoS drvInfoS;
+    UsbDevice::GetVolumeFilesystem(drvLtr, &drvInfoS.driveFilesystem);
+    if (drvInfoS.driveFilesystem.find("FAT32") != 0)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 UsbBPB::~UsbBPB()

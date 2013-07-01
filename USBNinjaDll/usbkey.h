@@ -22,25 +22,23 @@
 #include <boost/format.hpp>
 #include <sstream>
 
+struct UsbKeyhdr;
 
 class UsbKey : public UsbBPB
 {
 public:
-    char usbninjaSignature[5];
-
     __declspec(dllexport) static std::string generateCrc32(unsigned char *buf, unsigned int len);
     __declspec(dllexport) static std::string generateRandStr(const int len);
     __declspec(dllexport) static std::string generateTimestamp();
+    __declspec(dllexport) static bool getUsbKeyHdr(UsbKeyhdr *hdr, char drvLtr);
 
     __declspec(dllexport) UsbKey();
 };
 
 struct UsbKeyhdr
 {
-    char usbninjaSignature[5];
-    char serialkey[25];
-    char timestamp[12];
-    char crc32[10];
+    std::string magic,
+    serialkey, crc32;
 };
 
 #endif // USBKEY_H

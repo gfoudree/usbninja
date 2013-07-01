@@ -29,7 +29,6 @@ HEADERS  += mainwindow.h \
     authdrive.h \
     graphdialog.h \
     csvexport.h \
-    SerialStamp.h \
     logviewdialog.h
 
 FORMS    += mainwindow.ui \
