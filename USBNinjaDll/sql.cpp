@@ -18,7 +18,7 @@ Sql::Sql()
 
 Sql::Sql(char *filename)
 {
-    dbConnect(filename);
+    dbConnect(filename, false);
 }
 
 Sql::~Sql()
@@ -26,13 +26,13 @@ Sql::~Sql()
     dbDisconnect();
 }
 
-bool Sql::dbConnect(char *filename)
+bool Sql::dbConnect(char *filename, bool createNew)
 {
     int res;
     res = sqlite3_open_v2(filename, &db, SQLITE_OPEN_READWRITE, 0);
     if (res != SQLITE_OK)
     {
-        if (res == SQLITE_CANTOPEN)
+        if ((res == SQLITE_CANTOPEN) && createNew == true)
         {
             res = sqlite3_open(filename, &db);
             if (res == SQLITE_OK)
@@ -50,6 +50,8 @@ bool Sql::dbConnect(char *filename)
                 return false;
             }
         }
+        else
+            return false;
     }
     return true;
 }

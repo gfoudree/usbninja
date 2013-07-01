@@ -17,39 +17,49 @@ extern boost::mutex gMutex;
 
 void threadHandler(char driveLtr)
 {
+    /* Lock the mutex so we don't try and access the database at the same time */
     gMutex.lock();
 
-    /*
+    /* Lock the USB drive */
+    UsbOps ops;
+    //ops.lockUSB(driveLtr); //Causes a problem with raw read/write beacuse of the locking drive, fix it
+
+    /* Query authorized devices */
     Sql sql;
-    sql.dbConnect("C:\\users\\grant\\desktop\\database.db");
+
+    if (!sql.dbConnect("C:\\users\\grant\\desktop\\log.db", false))
+    {
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to open authorized drives database!");
+        //Eject the drive!
+        gMutex.unlock();
+        return;
+    }
     std::vector<sqlDriveStruct> drvs;
     sql.queryDrives(&drvs);
 
-    std::cout << drvs.at(0).date;
+    /* Get the serial key of the device */
+    UsbKey usbKey;
+    UsbKeyhdr hdr;
 
-    UsbOps ops;
-    ops.lockUSB(driveLtr);
-    ops.ejectUSB();
-    */
+    usbKey.getUsbKeyHdr(&hdr, driveLtr);
 
-    bool isFat32;
-    UsbBPB bpb;
-
-    /* Get the filesystem of the device so we know what method to call */
-    UsbDevice usbDev;
-    std::string usbFS;
-    usbDev.GetVolumeFilesystem(driveLtr, &usbFS);
-
-    if (usbFS.find("FAT32") != 0)
-        isFat32 = true;
-    else
-        isFat32 = false;
-
+    for (std::vector<sqlDriveStruct>::iterator it = drvs.begin(); it != drvs.end(); it++)
+    {
+        std::cout << it->serial.c_str() << " " << hdr.serialkey.c_str() << std::endl;
+        if (it->serial.compare(hdr.serialkey) == 0)
+        {
+            //It's authorized, do something
+        }
+    }
 
     /* Log media insertion event */
+    /*
     boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
     log->logUsbDrive(log->logUSBStruct);
+    */
 
+end:
+    //ops.unlockUSB();
     gMutex.unlock();
 }

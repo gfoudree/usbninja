@@ -36,7 +36,7 @@ protected:
     static bool less_than_key(const authedDrive &class1, const authedDrive &class2);
 
 public:
-    __declspec(dllexport) bool dbConnect(char *filename);
+    __declspec(dllexport) bool dbConnect(char *filename, bool createNew);
     __declspec(dllexport) void dbDisconnect();
     __declspec(dllexport) bool dbExecSql(char *sqlStmt);
     __declspec(dllexport) void queryDrives(std::vector<sqlDriveStruct> *drives);
