@@ -25,7 +25,7 @@ GraphDialog::GraphDialog(QWidget *parent) :
     total = accepted + denied;
 
     sql.dbDisconnect();
-    if (total <= 0)
+    if (total == 0)
     {
         QMessageBox::information(this, "Error", "There are no logged drives to graph.");
     }
@@ -39,7 +39,7 @@ GraphDialog::~GraphDialog()
 
 void GraphDialog::paintEvent(QPaintEvent *event)
 {
-    if (total <= 0)
+    if (total == 0)
         done(1);
 
     QWidget::paintEvent(event);

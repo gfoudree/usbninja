@@ -5,7 +5,8 @@ TARGET = usbd
 
 SOURCES += main.cpp \
     handler.cpp \
-    usbops.cpp
+    usbops.cpp \
+    traynotify.cpp
 
 OTHER_FILES += \
     versioninfo.rc
@@ -17,6 +18,8 @@ RC_FILE = versioninfo.rc
 
 HEADERS += \
     handler.h \
-    usbops.h
+    usbops.h \
+    main.h \
+    traynotify.h
 
 QMAKE_CXXFLAGS += -Wno-write-strings    #Get rid of annoying warnings for const *char to *char

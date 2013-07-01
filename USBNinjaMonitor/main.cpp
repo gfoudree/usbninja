@@ -10,27 +10,17 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
  * for more details.
  */
- 
-#include <iostream>
-#include <windows.h>
-#include <dbt.h>
-#include <stdlib.h>
-#include <winsvc.h>
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
-#include <../USBNinjaDll/usbdevice.h>
-#include <../USBNinjaDll/sql.h>
-#include <../USBNinjaDll/errorlog.h>
 
+#include "main.h"
 #include "handler.h"
+#include "traynotify.h"
 
-using namespace std;
-
-LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-void logQuitMessage();
 
 boost::thread_group thrd_grp;
 boost::mutex gMutex;
+
+NOTIFYICONDATAA nid;
+TrayNotify trayNotification;
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArguement, int nCmdShow)
 {
@@ -83,6 +73,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgu
     ErrorLog::logErrorToFile("*INFO*", "USBNinja daemon started.");
     atexit(logQuitMessage);
 
+    trayNotification.setWindow(hwnd);
+    trayNotification.sendMessage("USBNinja daemon started.", "USBNinja");
+
     while (GetMessage (&messages, NULL, 0, 0))
     {
         TranslateMessage(&messages);
@@ -104,6 +97,8 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 char driveLtr = UsbDevice::FirstDriveFromMask(pHdrv->dbcv_unitmask);
 
                 thrd_grp.create_thread(boost::bind(threadHandler, driveLtr));
+
+                trayNotification.sendMessage("Drive Inserted", "Alert");
             }
         }
         break;
