@@ -18,7 +18,7 @@ AccessLog::AccessLog()
 
 bool AccessLog::logUsbDrive(logUSB &lUsb)
 {
-    Sql sql(LOG_FILE);
+    Sql sql((char*)Paths::getDatabasePath().c_str());
     std::stringstream sqlStatement;
     sqlStatement << "INSERT INTO loggedDrives (accepted, date, user, driveLetter, driveName, driveLabel, ";
     sqlStatement << "driveSize, driveSerial, driveGUID, usbninjaSerial) VALUES (" << lUsb.accepted << ", \'";
@@ -27,7 +27,6 @@ bool AccessLog::logUsbDrive(logUSB &lUsb)
     sqlStatement << "\', \'" << lUsb.driveGUID << "\', \'" << lUsb.usbninjaSerial << "\');";
     sql.dbExecSql((char*)sqlStatement.str().c_str());
 
-    ErrorLog::logErrorToFile((char*)sqlStatement.str().c_str());
     return true;
 }
 

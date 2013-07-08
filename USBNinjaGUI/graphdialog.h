@@ -19,6 +19,7 @@
 #include <nightcharts.h>
 
 #include <../../USBNinjaDll/sql.h>
+#include <../../USBNinjaDll/paths.h>
 
 namespace Ui {
 class GraphDialog;

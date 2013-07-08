@@ -19,7 +19,7 @@ GraphDialog::GraphDialog(QWidget *parent) :
     ui(new Ui::GraphDialog)
 {
     Sql sql;
-    sql.dbConnect(LOG_FILE, false);
+    sql.dbConnect((char*)Paths::getDatabasePath().c_str(), false);
     accepted = sql.authorizedDrives();
     denied = sql.deniedDrives();
     total = accepted + denied;

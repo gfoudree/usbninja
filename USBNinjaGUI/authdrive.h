@@ -22,6 +22,7 @@
 
 #include <../../USBNinjaDll/errorlog.h>
 #include <../../USBNinjaDll/sql.h>
+#include <../../USBNinjaDll/paths.h>
 
 class AuthDrive : public ErrorLog //To get dateAndTime();
 {

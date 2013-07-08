@@ -21,6 +21,8 @@
 #include <vector>
 #include <algorithm>
 
+#include <../../USBNinjaDll/paths.h>
+
 struct logFileFormat;
 
 namespace Ui {

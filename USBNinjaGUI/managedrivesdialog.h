@@ -19,6 +19,7 @@
 #include <QMessageBox>
 
 #include <../../USBNinjaDll/sql.h>
+#include <../../USBNinjaDll/paths.h>
 
 namespace Ui {
 class ManageDrivesDialog;

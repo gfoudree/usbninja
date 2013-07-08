@@ -28,7 +28,7 @@ void threadHandler(char driveLtr)
 
     /* Query authorized devices */
     Sql sql;
-    if (!sql.dbConnect("C:\\users\\grant\\desktop\\log.db", false))
+    if (!sql.dbConnect((char*)Paths::getDatabasePath().c_str(), false))
     {
         ErrorLog::logErrorToFile("*CRITICAL*", "Unable to open authorized drives database!");
         gMutex.unlock();
@@ -62,6 +62,7 @@ void threadHandler(char driveLtr)
 
     boost::shared_ptr<AccessLog> log(new AccessLog);
     log->createLogStruct(&log->logUSBStruct, driveLtr);
+    log->logUSBStruct.accepted = authorized;
     log->logUsbDrive(log->logUSBStruct);
 
     if (!authorized)

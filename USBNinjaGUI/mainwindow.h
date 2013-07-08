@@ -30,13 +30,15 @@
 #include <windows.h>
 #include <../../USBNinjaDll/sql.h>
 #include <../../USBNinjaDll/errorlog.h>
+#include <../../USBNinjaDll/service.h>
+#include <../../USBNinjaDll/paths.h>
 
 #include "csvexport.h"
 #include "aboutdialog.h"
 #include "managedrivesdialog.h"
 #include "graphdialog.h"
 #include "logviewdialog.h"
-#include "../../USBNinjaDll/service.h"
+
 
 namespace Ui {
 class MainWindow;

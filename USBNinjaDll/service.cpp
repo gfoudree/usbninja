@@ -154,7 +154,7 @@ bool Service::StartProcess(char *name)
 
 bool Service::StopProcess(char *name)
 {
-    DWORD pid = Service::getPID("notepad.exe");
+    DWORD pid = Service::getPID(name);
     HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
     if (hProc == NULL)
     {

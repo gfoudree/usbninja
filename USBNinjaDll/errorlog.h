@@ -21,6 +21,8 @@
 #include <windows.h>
 #include <memory>
 
+
+#include "paths.h"
 class ErrorLog
 {
 public:

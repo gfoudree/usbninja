@@ -77,7 +77,7 @@ void Sql::dbDisconnect()
 int Sql::sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname)
 {
     logUSB tmpUsb;
-    tmpUsb.accepted = false; /*TODO: fix this later!*/
+    tmpUsb.accepted = atoi(argv[1]);
     tmpUsb.date = argv[2];
     tmpUsb.user = argv[3];
     tmpUsb.driveLetter = argv[4][0];

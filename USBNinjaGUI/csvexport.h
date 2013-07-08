@@ -15,6 +15,7 @@
 #define CSVEXPORT_H
 
 #include <../../USBNinjaDll/sql.h>
+#include <../../USBNinjaDll/paths.h>
 #include <iostream>
 #include <fstream>
 

@@ -42,7 +42,7 @@ void ManageDrivesDialog::refreshData()
     ui->treeWidget->clear();
     std::vector<authedDrive> authedDrv;
     Sql sql;
-    sql.dbConnect(AUTH_FILE, true);
+    sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
     sql.queryAuthedDrives(&authedDrv);
     sql.dbDisconnect();
 
@@ -92,7 +92,7 @@ void ManageDrivesDialog::deleteDeviceHandler()
         sprintf(statement, "DELETE FROM authDrives WHERE id=\'%d\';", id); //Delete the entry
         sprintf(updateStatement, "UPDATE authDrives SET id = id - 1 WHERE id > %d;", id); //Update ID index so we arn't missing a # in the sequence
 
-        Sql sql(AUTH_FILE);
+        Sql sql((char*)Paths::getDatabasePath().c_str());
         sql.dbExecSql(statement);
         sql.dbExecSql(updateStatement);
         sql.dbDisconnect();

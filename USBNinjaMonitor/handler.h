@@ -24,6 +24,8 @@
 #include <../USBNinjaDll/sql.h>
 #include <../USBNinjaDll/accesslog.h>
 #include <../USBNinjaDll/usbkey.h>
+#include <../USBNinjaDll/paths.h>
+
 #include "usbops.h"
 
 void threadHandler(char driveLtr);

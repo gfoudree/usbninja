@@ -52,7 +52,7 @@ void MainWindow::loadData()
 {
     std::vector<logUSB> usb;
     Sql sql;
-    sql.dbConnect(LOG_FILE, true);
+    sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
     sql.queryLog(&usb);
     sql.dbDisconnect();
 
@@ -61,7 +61,12 @@ void MainWindow::loadData()
     for (int i = usb.size(); usbIt != usb.end(); usbIt++, i--)
     {
         QStringList parentData, childData, childHeader;
-        parentData << QString::number(i) << "REJECTED" << usbIt->date.c_str();
+        parentData << QString::number(i);
+        if (usbIt->accepted)
+            parentData << "AUTHORIZED";
+        else
+            parentData << "REJECTED";
+        parentData << usbIt->date.c_str();
         parentData << usbIt->user.c_str() << usbIt->driveLabel.c_str() << usbIt->driveName.c_str();
         parentData << QString::number(usbIt->driveSize) + " MB";
 
@@ -96,7 +101,7 @@ void MainWindow::on_actionClear_Log_triggered()
 {
     if (QMessageBox::information(this, "Confirm", "Are you sure you want to clear the logs?", QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
     {
-        if (!DeleteFileA(LOG_FILE))
+        if (!DeleteFileA((char*)Paths::getDatabasePath().c_str()))
         {
             ErrorLog::logErrorToFile(NULL, "Error deleteing logfile", ErrorLog::winErrToStr(GetLastError()));
             QMessageBox::critical(this, "Error", "There was an error deleteing the log file.");
@@ -143,7 +148,7 @@ void MainWindow::on_actionUnauthorize_All_Devices_triggered()
     if (msgBox->exec() == QMessageBox::Yes)
     {
         Sql sql;
-        sql.dbConnect(AUTH_FILE, false);
+        sql.dbConnect((char*)Paths::getDatabasePath().c_str(), false);
         if (sql.dbExecSql("DELETE FROM authDrives;"))
         {
             QMessageBox::information(this, "Success", "All devices have been unauthorized.");
@@ -193,10 +198,13 @@ void MainWindow::on_actionView_Log_triggered()
 
 void MainWindow::on_actionStart_Monitoring_triggered()
 {
-    Service::StartProcess("C:\\windows\\system32\\notepad.exe");
+    char pwd[MAX_PATH + 1];
+    GetCurrentDirectoryA(MAX_PATH, pwd);
+    strcat(pwd, "\\usbd.exe");
+    Service::StartProcess(pwd);
 }
 
 void MainWindow::on_actionStop_Monitoring_triggered()
 {
-    Service::StopProcess("notepad.exe");
+    Service::StopProcess("usbd.exe");
 }

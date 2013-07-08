@@ -21,6 +21,7 @@
 #include <lmcons.h>
 #include "sql.h"
 #include "usbdevice.h"
+#include "paths.h"
 
 struct logUSB;
 

@@ -42,7 +42,7 @@ void LogviewDialog::refreshUI()
 {
     ui->treeWidget->clear();
     std::vector<logFileFormat> logFileData;
-    parseLogFile(logFileData, ERR_LOG_FILE);
+    parseLogFile(logFileData, (char*)Paths::getLogPath().c_str());
 
     /* Reverse elements so they are in proper order */
     std::reverse(logFileData.begin(), logFileData.end());
@@ -112,7 +112,7 @@ bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePat
 
 void LogviewDialog::onClearLogfile()
 {
-    if (remove(ERR_LOG_FILE) != 0)
+    if (remove((char*)Paths::getLogPath().c_str()) != 0)
     {
         QMessageBox::critical(this, "Error", "Unable to delete the log file.");
     }

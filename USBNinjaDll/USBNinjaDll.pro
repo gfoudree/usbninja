@@ -11,7 +11,8 @@ SOURCES += \
     accesslog.cpp \
     service.cpp \
     usbbpb.cpp \
-    usbkey.cpp
+    usbkey.cpp \
+    paths.cpp
 
 HEADERS += \
     usbdevice.h \
@@ -22,7 +23,8 @@ HEADERS += \
     service.h \
     usbbpb.h \
     usbkey.h \
-    bpb.h
+    bpb.h \
+    paths.h
 
 LIBS += -lsqlite3 -lpugi -lz -lboost_random
 
@@ -31,14 +33,14 @@ OTHER_FILES += \
 
 RC_FILE = versioninfo.rc
 
-QMAKE_POST_LINK += $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaMonitor/Build/debug/usb32.dll") \
-                   & $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaGUI/Build/debug/usb32.dll")
+#QMAKE_POST_LINK += $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaMonitor/Build/debug/usb32.dll") \
+#                   & $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaGUI/Build/debug/usb32.dll")
 
 
 QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
 
-DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"
+#DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+#DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+#DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"

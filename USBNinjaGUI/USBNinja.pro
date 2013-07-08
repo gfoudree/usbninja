@@ -42,7 +42,7 @@ RC_FILE = versioninfo.rc
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
 
-LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lcryptopp -lnightcharts
+LIBS += "..\..\USBNinjaDll\Build\release\libusb32.a" -lcryptopp -lnightcharts
 
 OTHER_FILES +=
 
@@ -51,6 +51,6 @@ RESOURCES += \
 
 QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
 
-DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"
+#DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+#DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
+#DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"
