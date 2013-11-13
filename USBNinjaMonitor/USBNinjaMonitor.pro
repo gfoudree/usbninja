@@ -24,7 +24,10 @@ HEADERS += \
     traynotify.h
 
 QMAKE_CXXFLAGS += -Wno-write-strings    #Get rid of annoying warnings for const *char to *char
+QMAKE_CXXFLAGS_RELEASE += -O3
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_LFLAGS_RELEASE -= -O1
 
-#DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-#DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-#DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"
+
+QMAKE_LFLAGS +=  -static-libstdc++ -static-libgcc
+

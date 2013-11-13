@@ -12,7 +12,8 @@ SOURCES += \
     service.cpp \
     usbbpb.cpp \
     usbkey.cpp \
-    paths.cpp
+    paths.cpp \
+    configparser.cpp
 
 HEADERS += \
     usbdevice.h \
@@ -24,23 +25,24 @@ HEADERS += \
     usbbpb.h \
     usbkey.h \
     bpb.h \
-    paths.h
+    paths.h \
+    configparser.h
 
-LIBS += -lsqlite3 -lpugi -lz -lboost_random
+LIBS += -lboost_random -lz  -lsqlite3 -lpugi
 
 OTHER_FILES += \
     versioninfo.rc
 
 RC_FILE = versioninfo.rc
 
+QMAKE_CXXFLAGS_RELEASE += -O3
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_LFLAGS_RELEASE -= -O1
+
 #QMAKE_POST_LINK += $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaMonitor/Build/debug/usb32.dll") \
 #                   & $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../USBNinjaGUI/Build/debug/usb32.dll")
 
 
-QMAKE_CXXFLAGS += -Wno-write-strings -g #Get rid of annoying warnings for const *char to *char
+QMAKE_CXXFLAGS += -Wno-write-strings #Get rid of annoying warnings for const *char to *char
 
-QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
-
-#DEFINES +=  LOG_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-#DEFINES +=  AUTH_FILE=\\\"C:/users/grant/desktop/log.db\\\"
-#DEFINES +=  ERR_LOG_FILE=\\\"C:/users/grant/desktop/log.txt\\\"
+QMAKE_LFLAGS +=  -static-libstdc++ -static-libgcc

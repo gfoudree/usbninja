@@ -80,6 +80,7 @@ bool UsbKey::getUsbKeyHdr(UsbKeyhdr *hdr, char drvLtr)
         hdr->magic = magic;
         hdr->serialkey = serial;
         hdr->crc32 = crc32;
+        return true;
     }
     else
         return false;

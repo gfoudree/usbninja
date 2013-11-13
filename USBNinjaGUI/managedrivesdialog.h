@@ -14,7 +14,6 @@
 #define MANAGEDRIVESDIALOG_H
 
 #include <QDialog>
-#include <QtGui>
 #include <QMenu>
 #include <QMessageBox>
 

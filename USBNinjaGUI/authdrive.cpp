@@ -42,11 +42,13 @@ std::string AuthDrive::generateRandomString()
 bool AuthDrive::logEntry()
 {
     char sqlStmt[512];
+    bool ret;
     Sql sql;
     sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
 
     sprintf(sqlStmt, "INSERT INTO authDrives (dateAuthorized, serial, driveName, driveSize, notes) VALUES (\'%s\', \'%s\', \'%s\', %d, \'%s\');",
             this->date.c_str(), this->serial.c_str(), this->driveName.c_str(), this->driveSize, this->notes.c_str());
-    sql.dbExecSql(sqlStmt);
+    ret = sql.dbExecSql(sqlStmt);
     sql.dbDisconnect();
+    return ret;
 }
