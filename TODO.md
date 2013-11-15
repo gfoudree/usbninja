@@ -1,6 +1,8 @@
 Todo
 ----------------------------
-- add USBserial reading function and member in USBLog struct
+- add syncDB that syncs sqlite3 and mysql DB
+- possibally add QWizard for authorizing drive
+- optimize code for SQL (inheritance)
 
 Notes
 ----------------------------

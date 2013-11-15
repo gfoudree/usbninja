@@ -112,6 +112,8 @@
     <addaction name="actionGraph_Data"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -202,6 +204,11 @@
   <action name="actionView_Log">
    <property name="text">
     <string>View Log</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

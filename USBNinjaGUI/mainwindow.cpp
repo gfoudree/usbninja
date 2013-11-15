@@ -208,3 +208,10 @@ void MainWindow::on_actionStop_Monitoring_triggered()
 {
     Service::StopProcess("usbd.exe");
 }
+
+void MainWindow::on_actionSettings_triggered()
+{
+    SettingsDialog settingsDialog;
+    settingsDialog.setModal(true);
+    settingsDialog.exec();
+}

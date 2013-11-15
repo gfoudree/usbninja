@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     authdrive.cpp \
     graphdialog.cpp \
     csvexport.cpp \
-    logviewdialog.cpp
+    logviewdialog.cpp \
+    settingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -29,14 +30,16 @@ HEADERS  += mainwindow.h \
     authdrive.h \
     graphdialog.h \
     csvexport.h \
-    logviewdialog.h
+    logviewdialog.h \
+    settingsdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     managedrivesdialog.ui \
     authorizedevicedialog.ui \
     graphdialog.ui \
-    logviewdialog.ui
+    logviewdialog.ui \
+    settingsdialog.ui
 
 RC_FILE = versioninfo.rc
 

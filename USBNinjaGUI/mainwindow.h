@@ -38,7 +38,7 @@
 #include "managedrivesdialog.h"
 #include "graphdialog.h"
 #include "logviewdialog.h"
-
+#include "settingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -75,6 +75,8 @@ private slots:
     void on_actionStart_Monitoring_triggered();
 
     void on_actionStop_Monitoring_triggered();
+
+    void on_actionSettings_triggered();
 
 private:
     Ui::MainWindow *ui;
