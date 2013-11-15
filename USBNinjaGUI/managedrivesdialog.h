@@ -20,6 +20,8 @@
 #include <../../USBNinjaDll/sql.h>
 #include <../../USBNinjaDll/paths.h>
 
+#include "usbwizard.h"
+
 namespace Ui {
 class ManageDrivesDialog;
 }

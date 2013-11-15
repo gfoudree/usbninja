@@ -7,5 +7,6 @@
         <file>resources/refresh.png</file>
         <file>resources/settings.png</file>
         <file>resources/database.png</file>
+        <file>resources/background.png</file>
     </qresource>
 </RCC>

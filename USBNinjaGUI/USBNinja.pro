@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     graphdialog.cpp \
     csvexport.cpp \
     logviewdialog.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    usbwizard.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     graphdialog.h \
     csvexport.h \
     logviewdialog.h \
-    settingsdialog.h
+    settingsdialog.h \
+    usbwizard.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
@@ -39,7 +41,8 @@ FORMS    += mainwindow.ui \
     authorizedevicedialog.ui \
     graphdialog.ui \
     logviewdialog.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    usbwizard.ui
 
 RC_FILE = versioninfo.rc
 

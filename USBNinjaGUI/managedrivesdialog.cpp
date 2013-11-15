@@ -68,9 +68,15 @@ ManageDrivesDialog::~ManageDrivesDialog()
 
 void ManageDrivesDialog::on_pushButton_clicked()
 {
+    //Old version update with wizard
+    /*
     AuthorizeDeviceDialog authDriveDialog;
     authDriveDialog.setModal(true);
     authDriveDialog.exec();
+    */
+
+    USBWizard usbWizard;
+    usbWizard.exec();
 }
 
 void ManageDrivesDialog::deleteDeviceHandler()
