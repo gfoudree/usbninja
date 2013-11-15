@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Manage Drives</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/new/prefix1/resources/settings.png</normaloff>:/new/prefix1/resources/settings.png</iconset>
+  </property>
   <widget class="QTreeWidget" name="treeWidget">
    <property name="geometry">
     <rect>

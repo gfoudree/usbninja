@@ -26,6 +26,10 @@ public:
 private slots:
     void on_USBWizard_currentIdChanged(int id);
 
+    void on_comboBox_activated(const QString &arg1);
+
+    void on_USBWizard_accepted();
+
 private:
     Ui::USBWizard *ui;
     QString device;
@@ -33,7 +37,7 @@ private:
     int convToGB(ULONGLONG *new_size, ULONGLONG orig_size);
 
     void setupFirstPage();
-    void setupSecondPage();
+    void loadUsbInfo();
 
 };
 

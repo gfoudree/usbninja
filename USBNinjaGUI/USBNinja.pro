@@ -16,7 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     managedrivesdialog.cpp \
-    authorizedevicedialog.cpp \
     authdrive.cpp \
     graphdialog.cpp \
     csvexport.cpp \
@@ -27,7 +26,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     managedrivesdialog.h \
-    authorizedevicedialog.h \
     authdrive.h \
     graphdialog.h \
     csvexport.h \

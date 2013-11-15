@@ -12,7 +12,6 @@
  */
  
 #include "managedrivesdialog.h"
-#include "authorizedevicedialog.h"
 #include "ui_managedrivesdialog.h"
 
 ManageDrivesDialog::ManageDrivesDialog(QWidget *parent) :
@@ -51,7 +50,7 @@ void ManageDrivesDialog::refreshData()
         QStringList data;
         data << QString::number(authedDrv.at(element).id) << authedDrv.at(element).dateAuthorized.c_str();
         data << authedDrv.at(element).serial.c_str() << authedDrv.at(element).driveName.c_str();
-        data << QString::number(authedDrv.at(element).driveSize) << authedDrv.at(element).notes.c_str();
+        data << QString::number(authedDrv.at(element).driveSize).append(" MB") << authedDrv.at(element).notes.c_str();
 
         QTreeWidgetItem *itm = new QTreeWidgetItem(data);
         ui->treeWidget->insertTopLevelItem(0, itm);
@@ -68,15 +67,9 @@ ManageDrivesDialog::~ManageDrivesDialog()
 
 void ManageDrivesDialog::on_pushButton_clicked()
 {
-    //Old version update with wizard
-    /*
-    AuthorizeDeviceDialog authDriveDialog;
-    authDriveDialog.setModal(true);
-    authDriveDialog.exec();
-    */
-
     USBWizard usbWizard;
     usbWizard.exec();
+    refreshData();
 }
 
 void ManageDrivesDialog::deleteDeviceHandler()

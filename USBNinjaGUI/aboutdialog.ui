@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>About USBNinja</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/new/prefix1/resources/info.png</normaloff>:/new/prefix1/resources/info.png</iconset>
+  </property>
   <widget class="QTextBrowser" name="textBrowser">
    <property name="geometry">
     <rect>
@@ -80,7 +84,7 @@ p, li { white-space: pre-wrap; }
      <x>20</x>
      <y>10</y>
      <width>100</width>
-     <height>80</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
@@ -88,6 +92,8 @@ p, li { white-space: pre-wrap; }
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

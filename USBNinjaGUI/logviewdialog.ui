@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Log File</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/new/prefix1/resources/log.png</normaloff>:/new/prefix1/resources/log.png</iconset>
+  </property>
   <widget class="QTreeWidget" name="treeWidget">
    <property name="geometry">
     <rect>
@@ -32,6 +36,8 @@
    </column>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

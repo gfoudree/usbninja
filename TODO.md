@@ -1,8 +1,8 @@
 Todo
 ----------------------------
 - add syncDB that syncs sqlite3 and mysql DB
-- possibally add QWizard for authorizing drive
 - optimize code for SQL (inheritance)
+- usbninja service status (pid etc..)
 
 Notes
 ----------------------------
