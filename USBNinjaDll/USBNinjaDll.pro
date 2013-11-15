@@ -13,7 +13,8 @@ SOURCES += \
     usbbpb.cpp \
     usbkey.cpp \
     paths.cpp \
-    configparser.cpp
+    configparser.cpp \
+    mysqldb.cpp
 
 HEADERS += \
     usbdevice.h \
@@ -26,9 +27,10 @@ HEADERS += \
     usbkey.h \
     bpb.h \
     paths.h \
-    configparser.h
+    configparser.h \
+    mysqldb.h
 
-LIBS += -lboost_random -lz  -lsqlite3 -lpugi
+LIBS += -lboost_random -lz  -lsqlite3 -lpugi -lmysql
 
 OTHER_FILES += \
     versioninfo.rc
