@@ -50,7 +50,7 @@ QMAKE_LFLAGS_RELEASE -= -O1
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
 
-LIBS += "..\..\USBNinjaDll\Build\release\libusb32.a" -lcryptopp -lnightcharts
+LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lcryptopp -lnightcharts
 
 OTHER_FILES +=
 

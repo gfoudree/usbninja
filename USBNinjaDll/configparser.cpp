@@ -26,3 +26,16 @@ std::string ConfigParser::getData()
 {
     return configFileData;
 }
+
+bool ConfigParser::setValue(std::string varStr, std::string valueStr)
+{
+    std::ofstream hFile(configFile.c_str(), std::ios::app);
+    if (hFile.is_open())
+    {
+        hFile << varStr.c_str() << "=" << valueStr.c_str() << "\n";
+        hFile.close();
+        return true;
+    }
+    else
+        return false;
+}

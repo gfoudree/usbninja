@@ -14,26 +14,32 @@ class ConfigParser
     std::string configFileData;
     std::vector<std::string> var, value;
 
-    void parseLine(std::string line);
+    __declspec(dllexport) void parseLine(std::string line);
 
 public:
-    ConfigParser(char *cfgFile) : configFile(cfgFile)
+    __declspec(dllexport) ConfigParser(char *cfgFile) : configFile(cfgFile)
     {
+        remove(configFile.c_str());
         std::string dataTemp;
         std::ifstream hFile(configFile.c_str());
         while (hFile.good())
         {
             std::getline(hFile, dataTemp);
-            if ((dataTemp.at(0) != '#') && ((dataTemp.find('=')) != std::string::npos))
+            if (dataTemp.length() > 0)
             {
-                configFileData.append(dataTemp);
-                parseLine(dataTemp);
+                if ((dataTemp.at(0) != '#') && ((dataTemp.find('=')) != std::string::npos))
+                {
+                    configFileData.append(dataTemp);
+                    parseLine(dataTemp);
+                }
             }
         }
+        hFile.close();
     }
 
-    std::string getValue(std::string varStr);
-    std::string getData();
+    __declspec(dllexport) std::string getValue(std::string varStr);
+    __declspec(dllexport) bool setValue(std::string varStr, std::string valueStr);
+    __declspec(dllexport) std::string getData();
 };
 
 #endif // CONFIGPARSER_H
