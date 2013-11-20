@@ -11,7 +11,7 @@ SOURCES += main.cpp \
 OTHER_FILES += \
     versioninfo.rc
 
-LIBS += "..\..\USBNinjaDll\Build\release\libusb32.a" -lboost_system -lboost_thread
+LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lboost_system -lboost_thread
 
 DEFINES += BOOST_THREAD_USE_LIB
 

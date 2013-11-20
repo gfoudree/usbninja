@@ -15,6 +15,7 @@ class ConfigParser
     std::vector<std::string> var, value;
 
     __declspec(dllexport) void parseLine(std::string line);
+    __declspec(dllexport) int findPos(std::string varStr);
 
 public:
     __declspec(dllexport) ConfigParser(char *cfgFile) : configFile(cfgFile)
@@ -38,7 +39,7 @@ public:
     }
 
     __declspec(dllexport) std::string getValue(std::string varStr);
-    __declspec(dllexport) bool setValue(std::string varStr, std::string valueStr);
+    __declspec(dllexport) void setValue(std::string varStr, std::string valueStr);
     __declspec(dllexport) std::string getData();
 };
 

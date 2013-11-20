@@ -45,7 +45,7 @@ public:
 
     __declspec(dllexport) static bool logUsbDrive(logUSB &lUsb);
     __declspec(dllexport) static std::string userName();
-    __declspec(dllexport) void createLogStruct(logUSB *lUsb, char drvLtr);
+    __declspec(dllexport) void createLogStruct(logUSB *lUsb, char drvLtr, char *usbNinjaSerial);
     __declspec(dllexport) AccessLog();
 };
 

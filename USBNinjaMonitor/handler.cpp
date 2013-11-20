@@ -61,7 +61,7 @@ void threadHandler(char driveLtr)
     /* Log media insertion event */
 
     boost::shared_ptr<AccessLog> log(new AccessLog);
-    log->createLogStruct(&log->logUSBStruct, driveLtr);
+    log->createLogStruct(&log->logUSBStruct, driveLtr, (char*)hdr.serialkey.c_str());
     log->logUSBStruct.accepted = authorized;
     log->logUsbDrive(log->logUSBStruct);
 

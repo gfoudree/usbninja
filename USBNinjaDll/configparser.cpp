@@ -1,5 +1,15 @@
 #include "configparser.h"
 
+int ConfigParser::findPos(std::string varStr)
+{
+    std::vector<std::string>::iterator it;
+    it = std::find(var.begin(), var.end(), varStr);
+    if (it != var.end())
+        return std::distance(var.begin(), it);
+    else
+        return -1;
+}
+
 void ConfigParser::parseLine(std::string line)
 {
     char *ptr = strtok((char*)line.c_str(), "=");
@@ -13,16 +23,11 @@ void ConfigParser::parseLine(std::string line)
 
 std::string ConfigParser::getValue(std::string varStr)
 {
-    int pos;
-    std::vector<std::string>::iterator it;
-    it = std::find(var.begin(), var.end(), varStr);
-    if (it != var.end())
-    {
-        pos = std::distance(var.begin(), it);
-        return value.at(pos);
-    }
-    else
+    int pos = findPos(varStr);
+    if (pos == -1)
         return "";
+    else
+        return value.at(pos);
 }
 
 std::string ConfigParser::getData()
@@ -30,16 +35,11 @@ std::string ConfigParser::getData()
     return configFileData;
 }
 
-bool ConfigParser::setValue(std::string varStr, std::string valueStr)
+void ConfigParser::setValue(std::string varStr, std::string valueStr)
 {
-    int pos;
-    std::vector<std::string>::iterator it;
-    it = std::find(var.begin(), var.end(), varStr);
-    if (it != var.end())
-    {
-        pos = std::distance(var.begin(), it);
+    int pos = findPos(varStr);
+    if (pos != -1)
         value[pos] = valueStr;
-    }
     else
     {
         value.push_back(valueStr);

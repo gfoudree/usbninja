@@ -30,11 +30,12 @@ bool AccessLog::logUsbDrive(logUSB &lUsb)
     return true;
 }
 
-void AccessLog::createLogStruct(logUSB *lUsb, char drvLtr)
+void AccessLog::createLogStruct(logUSB *lUsb, char drvLtr, char *usbNinjaSerial)
 {
     lUsb->date = ErrorLog::dateAndTime();
     lUsb->user = AccessLog::userName();
     lUsb->driveLetter = drvLtr;
+    lUsb->usbninjaSerial = usbNinjaSerial;
 
     std::string devId;
     UsbDevice::GetDriveDeviceId(drvLtr, &devId);
