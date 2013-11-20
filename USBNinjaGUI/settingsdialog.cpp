@@ -6,7 +6,17 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
+
+    int portVal;
+
     ConfigParser configParser("C:\\users\\grant\\desktop\\usbsninja.conf");
+    portVal = atoi((char*)configParser.getValue("port").c_str());
+
+    ui->lineIP->setText(QString::fromStdString(configParser.getValue("ip")));
+    ui->spinBoxPort->setValue(portVal);
+    ui->lineUN->setText(QString::fromStdString(configParser.getValue("username")));
+    ui->linePass->setText(QString::fromStdString(configParser.getValue("password")));
+    ui->lineDB->setText(QString::fromStdString(configParser.getValue("database")));
 }
 
 SettingsDialog::~SettingsDialog()
@@ -25,6 +35,8 @@ void SettingsDialog::on_pushButton_clicked()
     configParser.setValue("username",  ui->lineUN->text().toStdString());
     configParser.setValue("password", ui->linePass->text().toStdString());
     configParser.setValue("database", ui->lineDB->text().toStdString());
+
+    done(0);
 }
 
 void SettingsDialog::on_pushButton_2_clicked()

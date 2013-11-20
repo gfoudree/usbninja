@@ -19,9 +19,9 @@ class ConfigParser
 public:
     __declspec(dllexport) ConfigParser(char *cfgFile) : configFile(cfgFile)
     {
-        remove(configFile.c_str());
+        //remove(configFile.c_str());
         std::string dataTemp;
-        std::ifstream hFile(configFile.c_str());
+        std::fstream hFile(configFile.c_str(), std::fstream::in);
         while (hFile.good())
         {
             std::getline(hFile, dataTemp);
