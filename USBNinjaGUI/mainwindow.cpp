@@ -87,6 +87,50 @@ void MainWindow::loadData()
         parentItm->addChild(childItm);
         ui->treeWidget->insertTopLevelItem(0, parentItm);
     }
+
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+    if (configParser.getValue("SQLenabled") == "1")
+    {
+        std::vector<logUSB> remoteUsb;
+        MySQLDB db;
+        sqlSettings settings = configParser.getSqlSettings();
+
+        db.dbConnect(settings.ip.c_str(), settings.username.c_str(),
+                     settings.password.c_str(), settings.database.c_str(),
+                     settings.port);
+        db.queryLog(&remoteUsb);
+
+        std::vector<logUSB>::iterator remoteUsbIt = remoteUsb.begin();
+
+        for (int i = remoteUsb.size(); remoteUsbIt != remoteUsb.end(); remoteUsbIt++, i--)
+        {
+            QStringList parentData, childData, childHeader;
+            parentData << QString::number(i);
+            if (remoteUsbIt->accepted)
+                parentData << "AUTHORIZED";
+            else
+                parentData << "REJECTED";
+            parentData << remoteUsbIt->date.c_str();
+            parentData << remoteUsbIt->user.c_str() << remoteUsbIt->driveLabel.c_str() << remoteUsbIt->driveName.c_str();
+            parentData << QString::number(remoteUsbIt->driveSize) + " MB";
+
+            childHeader << "" << "Drive Letter" << "Serial" << "GUID" << "USBNinja Serial";
+
+            childData << "" << QString(remoteUsbIt->driveLetter) << remoteUsbIt->driveSerial.c_str();
+            childData << remoteUsbIt->driveGUID.c_str() << remoteUsbIt->usbninjaSerial.c_str();
+
+            QTreeWidgetItem *parentItm = new QTreeWidgetItem(parentData);
+            QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
+            QTreeWidgetItem *childItm = new QTreeWidgetItem(childData);
+
+            for (int i = 0; i < childItmHeader->columnCount(); i++)
+                childItmHeader->setForeground(i, Qt::lightGray);
+
+            parentItm->addChild(childItmHeader);
+            parentItm->addChild(childItm);
+            ui->treeWidget->insertTopLevelItem(0, parentItm);
+        }
+    }
     ui->treeWidget->setColumnWidth(0, 40);
     ui->treeWidget->setColumnWidth(3, 150);
     ui->treeWidget->resizeColumnToContents(2);

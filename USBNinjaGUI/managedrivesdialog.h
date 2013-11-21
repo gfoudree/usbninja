@@ -20,6 +20,7 @@
 #include <../../USBNinjaDll/sql.h>
 #include <../../USBNinjaDll/paths.h>
 #include <../../USBNinjaDll/mysqldb.h>
+#include <../../USBNinjaDll/configparser.h>
 
 #include "usbwizard.h"
 

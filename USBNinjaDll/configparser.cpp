@@ -57,3 +57,16 @@ void ConfigParser::setValue(std::string varStr, std::string valueStr)
     }
     hFile.close();
 }
+
+sqlSettings ConfigParser::getSqlSettings()
+{
+    sqlSettings sql;
+
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+    sql.ip = configParser.getValue("ip");
+    sql.username = configParser.getValue("username");
+    sql.password = configParser.getValue("password");
+    sql.database = configParser.getValue("database");
+    sql.port = atoi((char*)configParser.getValue("port").c_str());
+    return sql;
+}

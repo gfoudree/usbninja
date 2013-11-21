@@ -57,6 +57,30 @@ void ManageDrivesDialog::refreshData()
         ui->treeWidget->insertTopLevelItem(0, itm);
     }
 
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+    if (configParser.getValue("SQLenabled") == "1")
+    {
+        //If MYSQL is enabled, get that data too
+        MySQLDB db;
+        std::vector<authedDrive> remoteAuthedDrv;
+        sqlSettings settings = configParser.getSqlSettings();
+
+        db.dbConnect(settings.ip.c_str(), settings.username.c_str(),
+                     settings.password.c_str(), settings.database.c_str(),
+                     settings.port);
+        db.queryAuthedDrives(&remoteAuthedDrv);
+        for (int i = 0, element = 0; i != remoteAuthedDrv.size(); i++, element++)
+        {
+            QStringList data;
+            data << QString::number(remoteAuthedDrv.at(element).id) << remoteAuthedDrv.at(element).dateAuthorized.c_str();
+            data << remoteAuthedDrv.at(element).serial.c_str() << remoteAuthedDrv.at(element).driveName.c_str();
+            data << QString::number(remoteAuthedDrv.at(element).driveSize).append(" MB") << remoteAuthedDrv.at(element).notes.c_str();
+
+            QTreeWidgetItem *itm = new QTreeWidgetItem(data);
+            ui->treeWidget->insertTopLevelItem(0, itm);
+        }
+
+    }
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->setColumnWidth(2, 100);
 }

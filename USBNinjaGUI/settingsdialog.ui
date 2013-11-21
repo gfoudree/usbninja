@@ -96,7 +96,7 @@
  }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="general">
     <attribute name="icon">
@@ -106,6 +106,19 @@
     <attribute name="title">
      <string>General </string>
     </attribute>
+    <widget class="QCheckBox" name="checkBoxSQL">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable MySQL logging</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="mysql">
     <attribute name="icon">

@@ -8,6 +8,16 @@
 #include <stdio.h>
 #include <algorithm>
 
+#include "paths.h"
+
+struct sqlSettings
+{
+    std::string ip,
+    username, password,
+    database;
+    int port;
+};
+
 class ConfigParser
 {
     std::string configFile;
@@ -41,6 +51,7 @@ public:
     __declspec(dllexport) std::string getValue(std::string varStr);
     __declspec(dllexport) void setValue(std::string varStr, std::string valueStr);
     __declspec(dllexport) std::string getData();
+    __declspec(dllexport) sqlSettings getSqlSettings();
 };
 
 #endif // CONFIGPARSER_H

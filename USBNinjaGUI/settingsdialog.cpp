@@ -17,6 +17,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->lineUN->setText(QString::fromStdString(configParser.getValue("username")));
     ui->linePass->setText(QString::fromStdString(configParser.getValue("password")));
     ui->lineDB->setText(QString::fromStdString(configParser.getValue("database")));
+
+    if (configParser.getValue("SQLenabled") == "1")
+        ui->checkBoxSQL->setChecked(true);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -35,6 +38,11 @@ void SettingsDialog::on_pushButton_clicked()
     configParser.setValue("username",  ui->lineUN->text().toStdString());
     configParser.setValue("password", ui->linePass->text().toStdString());
     configParser.setValue("database", ui->lineDB->text().toStdString());
+
+    if (ui->checkBoxSQL->isChecked())
+        configParser.setValue("SQLenabled", "1");
+    else
+        configParser.setValue("SQLenabled", "0");
 
     done(0);
 }
