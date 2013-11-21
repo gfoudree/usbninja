@@ -7,7 +7,6 @@ SOURCES += \
     usbdevice.cpp \
     sql.cpp \
     errorlog.cpp \
-    settings.cpp \
     accesslog.cpp \
     service.cpp \
     usbbpb.cpp \
@@ -20,7 +19,6 @@ HEADERS += \
     usbdevice.h \
     sql.h \
     errorlog.h \
-    settings.h \
     accesslog.h \
     service.h \
     usbbpb.h \
