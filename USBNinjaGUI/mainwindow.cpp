@@ -51,6 +51,7 @@ void MainWindow::clearData()
 void MainWindow::loadData()
 {
     std::vector<logUSB> usb;
+
     Sql sql;
     sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
     sql.queryLog(&usb);

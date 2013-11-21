@@ -12,6 +12,7 @@ protected:
 public:
     __declspec(dllexport) static std::string getLogPath();
     __declspec(dllexport) static std::string getDatabasePath();
+    __declspec(dllexport) static std::string getConfigPath();
 };
 
 #endif // PATHS_H

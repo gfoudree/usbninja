@@ -40,6 +40,7 @@ void ManageDrivesDialog::refreshData()
 {
     ui->treeWidget->clear();
     std::vector<authedDrive> authedDrv;
+
     Sql sql;
     sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
     sql.queryAuthedDrives(&authedDrv);

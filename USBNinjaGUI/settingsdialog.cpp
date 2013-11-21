@@ -9,7 +9,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     int portVal;
 
-    ConfigParser configParser("C:\\users\\grant\\desktop\\usbsninja.conf");
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
     portVal = atoi((char*)configParser.getValue("port").c_str());
 
     ui->lineIP->setText(QString::fromStdString(configParser.getValue("ip")));
@@ -29,7 +29,7 @@ void SettingsDialog::on_pushButton_clicked()
     char portStr[10];
     itoa(ui->spinBoxPort->value(), portStr, 10);
 
-    ConfigParser configParser("C:\\users\\grant\\desktop\\usbsninja.conf");
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
     configParser.setValue("ip", ui->lineIP->text().toStdString());
     configParser.setValue("port", portStr);
     configParser.setValue("username",  ui->lineUN->text().toStdString());

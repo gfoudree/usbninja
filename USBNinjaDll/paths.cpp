@@ -20,3 +20,10 @@ std::string Paths::getDatabasePath()
     path.append("\\UsbNinja\\drives.db");
     return path;
 }
+
+std::string Paths::getConfigPath()
+{
+    std::string path = Paths::expandVariable("%appdata%");
+    path.append("\\UsbNinja\\settings.conf");
+    return path;
+}

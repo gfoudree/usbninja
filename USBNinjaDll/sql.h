@@ -29,7 +29,6 @@ class Sql
 {
 protected:
     sqlite3 *db;
-    static int sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname);
     static int sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname);
@@ -39,7 +38,6 @@ public:
     __declspec(dllexport) bool dbConnect(char *filename, bool createNew);
     __declspec(dllexport) void dbDisconnect();
     __declspec(dllexport) bool dbExecSql(char *sqlStmt);
-    __declspec(dllexport) void queryDrives(std::vector<sqlDriveStruct> *drives);
     __declspec(dllexport) void queryLog(std::vector<logUSB> *drives);
     __declspec(dllexport) void queryAuthedDrives(std::vector<authedDrive> *drives);
     __declspec(dllexport) int authorizedDrives();
@@ -48,15 +46,6 @@ public:
     __declspec(dllexport) Sql();
     __declspec(dllexport) Sql(char *filename);
     __declspec(dllexport) ~Sql();
-};
-
-struct sqlDriveStruct
-{
-    int id;
-    std::string date;
-    std::string serial;
-    std::string driveName;
-    unsigned int driveSize;
 };
 
 struct logUSB

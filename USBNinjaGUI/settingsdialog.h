@@ -5,6 +5,7 @@
 #include <QMessageBox>
 
 #include <../../USBNinjaDll/configparser.h>
+#include <../../USBNinjaDll/paths.h>
 
 namespace Ui {
 class SettingsDialog;

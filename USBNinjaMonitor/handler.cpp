@@ -34,8 +34,8 @@ void threadHandler(char driveLtr)
         gMutex.unlock();
         return;
     }
-    std::vector<sqlDriveStruct> drvs;
-    sql.queryDrives(&drvs);
+    std::vector<authedDrive> drvs;
+    sql.queryAuthedDrives(&drvs);
 
     /* Get the serial key of the device */
     UsbKey usbKey;
@@ -46,7 +46,7 @@ void threadHandler(char driveLtr)
     ops.lockUSB(driveLtr);
 
     /* Check if the serial exists in the database */
-    for (std::vector<sqlDriveStruct>::iterator it = drvs.begin(); it != drvs.end(); it++)
+    for (std::vector<authedDrive>::iterator it = drvs.begin(); it != drvs.end(); it++)
     {
         std::cout << it->serial.c_str() << " " << hdr.serialkey.c_str() << std::endl;
         if (it->serial.compare(hdr.serialkey) == 0)

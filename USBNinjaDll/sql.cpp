@@ -93,19 +93,6 @@ int Sql::sqlLogCallback(void *dataPtr, int argc, char **argv, char **colname)
     return 0;
 }
 
-int Sql::sqlAuthCallback(void *dataPtr, int argc, char **argv, char **colname)
-{
-    sqlDriveStruct tmpDrv;
-    tmpDrv.id = atoi(argv[0]);
-    tmpDrv.date = argv[1];
-    tmpDrv.serial = argv[2];
-    tmpDrv.driveName = argv[3];
-    tmpDrv.driveSize = atoi(argv[4]);
-
-    std::vector<sqlDriveStruct> *pParamStruct = static_cast<std::vector<sqlDriveStruct>*>(dataPtr);
-    pParamStruct->push_back(tmpDrv);
-    return 0;
-}
 
 int Sql::sqlAuthedDrivesCallback(void *dataPtr, int argc, char **argv, char **colname)
 {
@@ -133,13 +120,6 @@ int Sql::sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname)
         else if (atoi(argv[i]) == false)
             dc->deniedDrives += 1;
     }
-}
-
-void Sql::queryDrives(std::vector<sqlDriveStruct> *drives)
-{
-    char *errBuf;
-    if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthCallback, static_cast<void*>(drives), &errBuf) != 0)
-        ErrorLog::logErrorToFile("*CRITICAL*", "Error reading authorized USB drives: ", errBuf);
 }
 
 void Sql::queryLog(std::vector<logUSB> *drives)

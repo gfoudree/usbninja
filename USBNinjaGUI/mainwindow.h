@@ -32,6 +32,7 @@
 #include <../../USBNinjaDll/errorlog.h>
 #include <../../USBNinjaDll/service.h>
 #include <../../USBNinjaDll/paths.h>
+#include <../../USBNinjaDll/mysqldb.h>
 
 #include "csvexport.h"
 #include "aboutdialog.h"
