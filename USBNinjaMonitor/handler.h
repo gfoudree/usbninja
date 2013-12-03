@@ -20,7 +20,6 @@
 #include <winioctl.h>
 #include <iostream>
 #include <../USBNinjaDll/usbdevice.h>
-#include <../USBNinjaDll/settings.h>
 #include <../USBNinjaDll/sql.h>
 #include <../USBNinjaDll/accesslog.h>
 #include <../USBNinjaDll/usbkey.h>

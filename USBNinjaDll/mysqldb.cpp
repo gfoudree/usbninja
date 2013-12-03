@@ -133,3 +133,22 @@ int MySQLDB::deniedDrives()
     res = mysql_store_result(conn);
     return (int)mysql_num_rows(res);
 }
+
+bool MySQLDB::dbExecSql(char *str)
+{
+    MYSQL_STMT *stmt;
+    stmt = mysql_stmt_init(conn);
+
+    if ((mysql_stmt_prepare(stmt, str, strlen(str)) != 0) ||
+            mysql_stmt_execute(stmt) != 0)
+    {
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to run MySQL query ", (char*)mysql_error(conn));
+        mysql_stmt_close(stmt);
+        return false;
+    }
+    else
+    {
+        mysql_stmt_close(stmt);
+        return true;
+    }
+}

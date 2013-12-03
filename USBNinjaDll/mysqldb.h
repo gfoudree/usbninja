@@ -2,7 +2,6 @@
 #define MYSQLDB_H
 
 #include <mysql.h>
-
 #include "errorlog.h"
 #include "sql.h"
 
@@ -21,7 +20,7 @@ public:
      __declspec(dllexport) void queryAuthedDrives(std::vector<authedDrive> *drives);
      __declspec(dllexport) int authorizedDrives();
      __declspec(dllexport) int deniedDrives();
-
+     __declspec(dllexport) bool dbExecSql(char *str);
      __declspec(dllexport) MySQLDB();
      __declspec(dllexport) ~MySQLDB();
 };

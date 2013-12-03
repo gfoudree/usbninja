@@ -16,18 +16,37 @@ AccessLog::AccessLog()
 {
 }
 
-bool AccessLog::logUsbDrive(logUSB &lUsb)
+bool AccessLog::logUsbDrive(logUSB &lUsb, bool mysql)
 {
     Sql sql((char*)Paths::getDatabasePath().c_str());
+
     std::stringstream sqlStatement;
     sqlStatement << "INSERT INTO loggedDrives (accepted, date, user, driveLetter, driveName, driveLabel, ";
-    sqlStatement << "driveSize, driveSerial, driveGUID, usbninjaSerial) VALUES (" << lUsb.accepted << ", \'";
+    sqlStatement << "driveSize, driveSerial, driveGUID, usbninjaSerial) VALUES (\'" << lUsb.accepted << "\', \'";
     sqlStatement << lUsb.date << "\', \'" << lUsb.user << "\', \'" << lUsb.driveLetter << "\', \'" << lUsb.driveName;
-    sqlStatement << "\', \'" << lUsb.driveLabel << "\', " << lUsb.driveSize << ", \'" << lUsb.driveSerial;
-    sqlStatement << "\', \'" << lUsb.driveGUID << "\', \'" << lUsb.usbninjaSerial << "\');";
-    sql.dbExecSql((char*)sqlStatement.str().c_str());
+    sqlStatement << "\', \'" << lUsb.driveLabel << "\', \'" << lUsb.driveSize << "\', \'" << lUsb.driveSerial;
+    sqlStatement << "\', \'";
+    if (!lUsb.driveGUID.empty())
+        sqlStatement << lUsb.driveGUID << "\\";
+    else
+        sqlStatement << lUsb.driveGUID;
+    sqlStatement << "\', \'" << lUsb.usbninjaSerial << "\')";
 
-    return true;
+    std::string tmp = sqlStatement.str();
+    char *stmt = (char*)tmp.c_str();
+
+    if (mysql)
+    {
+        MySQLDB db;
+        ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+        sqlSettings settings = configParser.getSqlSettings();
+
+        db.dbConnect(settings.ip.c_str(), settings.username.c_str(),
+                     settings.password.c_str(), settings.database.c_str(),
+                     settings.port);
+        db.dbExecSql(stmt);
+    }
+    return sql.dbExecSql(stmt);
 }
 
 void AccessLog::createLogStruct(logUSB *lUsb, char drvLtr, char *usbNinjaSerial)

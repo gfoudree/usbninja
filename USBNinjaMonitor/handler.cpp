@@ -60,10 +60,20 @@ void threadHandler(char driveLtr)
 
     /* Log media insertion event */
 
-    boost::shared_ptr<AccessLog> log(new AccessLog);
+    AccessLog *log = new AccessLog();
     log->createLogStruct(&log->logUSBStruct, driveLtr, (char*)hdr.serialkey.c_str());
     log->logUSBStruct.accepted = authorized;
-    log->logUsbDrive(log->logUSBStruct);
+
+
+    /* Get config settings, check if remote SQL is enabled */
+    ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+    if (configParser.getValue("SQLenabled") == "1")
+    {
+        /* SQL enabled = true */
+        log->logUsbDrive(log->logUSBStruct, true);
+    }
+    else
+        log->logUsbDrive(log->logUSBStruct, false);
 
     if (!authorized)
     {
@@ -71,4 +81,5 @@ void threadHandler(char driveLtr)
         ops.ejectUSB();
     }
     gMutex.unlock();
+    delete log;
 }

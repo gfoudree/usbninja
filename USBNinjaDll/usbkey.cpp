@@ -78,7 +78,10 @@ bool UsbKey::getUsbKeyHdr(UsbKeyhdr *hdr, char drvLtr)
         std::string crc32(buf + 30, buf + 40);
 
         hdr->magic = magic;
-        hdr->serialkey = serial;
+        if (magic == "USBNINJA")
+            hdr->serialkey = serial;
+        else
+            hdr->serialkey = "";
         hdr->crc32 = crc32;
         return true;
     }
