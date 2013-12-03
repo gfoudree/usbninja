@@ -28,7 +28,7 @@ HEADERS += \
     configparser.h \
     mysqldb.h
 
-LIBS += -lboost_random -lz  -lsqlite3 -lpugi -lmysql
+LIBS += -lboost_random -lz  -lsqlite3 -lmysql
 
 OTHER_FILES += \
     versioninfo.rc

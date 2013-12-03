@@ -80,6 +80,9 @@ void MainWindow::loadData()
         QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
         QTreeWidgetItem *childItm = new QTreeWidgetItem(childData);
 
+        parentItm->setIcon(0, QIcon(":/new/prefix1/resources/harddrive.png"));
+        parentItm->setToolTip(0, "Locally logged event");
+
         for (int i = 0; i < childItmHeader->columnCount(); i++)
             childItmHeader->setForeground(i, Qt::lightGray);
 
@@ -123,6 +126,9 @@ void MainWindow::loadData()
             QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
             QTreeWidgetItem *childItm = new QTreeWidgetItem(childData);
 
+            parentItm->setIcon(0, QIcon(":/new/prefix1/resources/database.png"));
+            parentItm->setToolTip(0, "Remotely logged event");
+
             for (int i = 0; i < childItmHeader->columnCount(); i++)
                 childItmHeader->setForeground(i, Qt::lightGray);
 
@@ -131,8 +137,8 @@ void MainWindow::loadData()
             ui->treeWidget->insertTopLevelItem(0, parentItm);
         }
     }
-    ui->treeWidget->setColumnWidth(0, 40);
-    ui->treeWidget->setColumnWidth(3, 150);
+    ui->treeWidget->setColumnWidth(0, 60);
+    ui->treeWidget->setColumnWidth(3, 100);
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->resizeColumnToContents(5);
 }

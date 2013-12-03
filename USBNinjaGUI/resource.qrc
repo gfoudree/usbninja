@@ -11,5 +11,6 @@
         <file>resources/usbninjalogo_transparent.png</file>
         <file>resources/info.png</file>
         <file>resources/log.png</file>
+        <file>resources/harddrive.png</file>
     </qresource>
 </RCC>

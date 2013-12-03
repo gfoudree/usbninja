@@ -120,6 +120,7 @@ int Sql::sqlCountCallback(void *dataPtr, int argc, char **argv, char **colname)
         else if (atoi(argv[i]) == false)
             dc->deniedDrives += 1;
     }
+    return 0;
 }
 
 void Sql::queryLog(std::vector<logUSB> *drives)
