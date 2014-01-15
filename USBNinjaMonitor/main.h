@@ -4,6 +4,7 @@
 #define _WIN32_WINNT 0x0601
 #include <iostream>
 #include <windows.h>
+#include <shellapi.h>
 #include <dbt.h>
 #include <stdlib.h>
 #include <winsvc.h>

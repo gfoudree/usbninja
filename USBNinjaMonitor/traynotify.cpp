@@ -24,10 +24,17 @@ void TrayNotify::setWindow(HWND hWindow)
     nid.hWnd = hwnd;
     nid.guidItem = usbninjaGUID;
     nid.uVersion = NOTIFYICON_VERSION_4;
+    nid.uCallbackMessage = WM_NOTIFYBUBBLECLICK;
     nid.dwInfoFlags = 0x00000001; //Information Icon for balloon popup
     nid.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     strcpy(nid.szTip, "USBNinja Daemon");
     nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP | NIF_INFO | NIF_GUID;
 
     Shell_NotifyIconA(NIM_ADD, &nid);
+}
+
+void TrayNotify::getMessage(char *message, char *title)
+{
+    strcpy(message, nid.szInfo);
+    strcpy(title, nid.szInfoTitle);
 }

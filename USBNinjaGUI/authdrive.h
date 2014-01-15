@@ -19,6 +19,7 @@
 #include <cryptopp/hex.h>
 #include <iostream>
 #include <stdio.h>
+#include <boost/algorithm/string.hpp>
 
 #include <../../USBNinjaDll/errorlog.h>
 #include <../../USBNinjaDll/sql.h>

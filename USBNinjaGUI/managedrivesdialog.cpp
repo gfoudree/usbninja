@@ -57,6 +57,8 @@ void ManageDrivesDialog::refreshData()
         ui->treeWidget->insertTopLevelItem(0, itm);
     }
 
+    //TODO: setup remote authorization etc...
+    /*
     ConfigParser configParser((char*)Paths::getConfigPath().c_str());
     if (configParser.getValue("SQLenabled") == "1")
     {
@@ -81,6 +83,7 @@ void ManageDrivesDialog::refreshData()
         }
 
     }
+    */
     ui->treeWidget->resizeColumnToContents(2);
     ui->treeWidget->setColumnWidth(2, 100);
 }

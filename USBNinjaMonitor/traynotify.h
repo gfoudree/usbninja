@@ -4,6 +4,7 @@
 #define WINVER 0x0601
 #define _WIN32_WINNT 0x0601
 #define _WIN32_IE 0x0601
+#define WM_NOTIFYBUBBLECLICK (WM_APP + 100)
 #include <windows.h>
 #include <Shellapi.h>
 #include <Commctrl.h>
@@ -21,6 +22,7 @@ protected:
 public:
     void setWindow(HWND hWindow);
     void sendMessage(char *message, char *title);
+    void getMessage(char *message, char *title);
 
     TrayNotify();
     ~TrayNotify();

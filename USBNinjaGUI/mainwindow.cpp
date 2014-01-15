@@ -220,7 +220,6 @@ void MainWindow::on_actionGraph_Data_triggered()
     graphDialog.exec();
 }
 
-
 void MainWindow::on_actionExport_to_CSV_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Save as...", NULL, QString("CSV (*.csv);; All files (*.*)"));
@@ -252,12 +251,14 @@ void MainWindow::on_actionStart_Monitoring_triggered()
     char pwd[MAX_PATH + 1];
     GetCurrentDirectoryA(MAX_PATH, pwd);
     strcat(pwd, "\\usbd.exe");
-    Service::StartProcess(pwd);
+    if (!Service::StartProcess(pwd))
+        QMessageBox::critical(this, "Error!", "There was an error starting the USBNinja daemon, your computer is NOT protected. Please check logs.");
 }
 
 void MainWindow::on_actionStop_Monitoring_triggered()
 {
-    Service::StopProcess("usbd.exe");
+    if (!Service::StopProcess("usbd.exe"))
+        QMessageBox::critical(this, "Error!", "There was an error stopping the USBNinja daemon. Please check logs.");
 }
 
 void MainWindow::on_actionSettings_triggered()

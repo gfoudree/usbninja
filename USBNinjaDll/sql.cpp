@@ -136,7 +136,10 @@ void Sql::queryAuthedDrives(std::vector<authedDrive> *drives)
     if (sqlite3_exec(db, "SELECT * FROM authDrives;", sqlAuthedDrivesCallback, static_cast<void*>(drives), &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error reading logfile: ", errBuf);
 
-    std::sort(drives->begin(), drives->end(), less_than_key); //Sort vector by ID
+    std::sort(drives->begin(), drives->end(), [](const authedDrive &class1, const authedDrive &class2) -> bool
+    {
+        return (class1.id > class2.id);
+    }); //Sort vector by ID
 }
 
 int Sql::authorizedDrives()
@@ -155,9 +158,4 @@ int Sql::deniedDrives()
     if (sqlite3_exec(db, "SELECT accepted FROM loggedDrives;", sqlCountCallback, (void*)&driveCount, &errBuf) != 0)
         ErrorLog::logErrorToFile("*CRITICAL*", "Error counting authorized drives: ", errBuf);
     return driveCount.deniedDrives;
-}
-
-bool Sql::less_than_key(const authedDrive &class1, const authedDrive &class2)
-{
-    return (class1.id > class2.id);
 }

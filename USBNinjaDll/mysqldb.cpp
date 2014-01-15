@@ -115,7 +115,7 @@ int MySQLDB::authorizedDrives()
     if (mysql_query(conn, "SELECT accepted FROM loggedDrives WHERE accepted=1") != 0)
     {
         ErrorLog::logErrorToFile("*CRITICAL*", "Unable to run MySQL query ", (char*)mysql_error(conn));
-        return 1;
+        return 0;
     }
     res = mysql_store_result(conn);
     return (int)mysql_num_rows(res);
@@ -128,7 +128,7 @@ int MySQLDB::deniedDrives()
     if (mysql_query(conn, "SELECT accepted FROM loggedDrives WHERE accepted=0") != 0)
     {
         ErrorLog::logErrorToFile("*CRITICAL*", "Unable to run MySQL query ", (char*)mysql_error(conn));
-        return 1;
+        return 0;
     }
     res = mysql_store_result(conn);
     return (int)mysql_num_rows(res);

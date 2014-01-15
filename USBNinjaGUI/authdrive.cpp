@@ -12,6 +12,7 @@
  */
 
 #include "authdrive.h"
+#include <boost/range/algorithm.hpp>
 
 AuthDrive::AuthDrive()
 {
@@ -46,8 +47,12 @@ bool AuthDrive::logEntry()
     Sql sql;
     sql.dbConnect((char*)Paths::getDatabasePath().c_str(), true);
 
+    std::string notes = this->notes;
+    boost::algorithm::trim(notes); //Clean up extra characters
+    notes.erase(boost::remove_if(notes, boost::algorithm::is_any_of("\n\'\r\t")), notes.end());
+
     sprintf(sqlStmt, "INSERT INTO authDrives (dateAuthorized, serial, driveName, driveSize, notes) VALUES (\'%s\', \'%s\', \'%s\', %d, \'%s\');",
-            this->date.c_str(), this->serial.c_str(), this->driveName.c_str(), this->driveSize, this->notes.c_str());
+            this->date.c_str(), this->serial.c_str(), this->driveName.c_str(), this->driveSize, notes.c_str());
     ret = sql.dbExecSql(sqlStmt);
     sql.dbDisconnect();
     return ret;

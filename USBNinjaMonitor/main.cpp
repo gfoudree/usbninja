@@ -15,6 +15,7 @@
 #include "handler.h"
 #include "traynotify.h"
 
+#define NIN_BALLOONUSERCLICK (WM_USER + 5)
 
 boost::thread_group thrd_grp;
 boost::mutex gMutex;
@@ -104,6 +105,16 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
             }
         }
         break;
+
+    case WM_NOTIFYBUBBLECLICK:
+    {
+        /* Tray notification bubble clicked */
+        if (lParam == NIN_BALLOONUSERCLICK)
+        {
+
+        }
+    }
+    break;
 
     case WM_DESTROY:
     {
