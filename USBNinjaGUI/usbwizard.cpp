@@ -190,7 +190,12 @@ void USBWizard::on_USBWizard_accepted()
     if (strcmp(ui->plainTextEdit->toPlainText().toStdString().c_str(), "Add description here.") == 0)
         drv.notes = " ";
     else
-        drv.notes = ui->plainTextEdit->toPlainText().toStdString();
+    {
+        /* Trim up string */
+        std::string notesStr = ui->plainTextEdit->toPlainText().toStdString();
+        boost::trim(notesStr);
+        drv.notes = notesStr;
+    }
 
     drv.driveName = drvInfoS.driveName;
     drv.driveSize = drvInfoS.diskSize;

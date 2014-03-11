@@ -92,51 +92,57 @@ void MainWindow::loadData()
     }
 
     ConfigParser configParser((char*)Paths::getConfigPath().c_str());
+
     if (configParser.getValue("SQLenabled") == "1")
     {
+
         std::vector<logUSB> remoteUsb;
         MySQLDB db;
         sqlSettings settings = configParser.getSqlSettings();
 
-        db.dbConnect(settings.ip.c_str(), settings.username.c_str(),
+
+        if (db.dbConnect(settings.ip.c_str(), settings.username.c_str(),
                      settings.password.c_str(), settings.database.c_str(),
-                     settings.port);
-        db.queryLog(&remoteUsb);
-
-        std::vector<logUSB>::iterator remoteUsbIt = remoteUsb.begin();
-
-        for (int i = remoteUsb.size(); remoteUsbIt != remoteUsb.end(); remoteUsbIt++, i--)
+                     settings.port))
         {
-            QStringList parentData, childData, childHeader;
-            parentData << QString::number(i);
-            if (remoteUsbIt->accepted)
-                parentData << "AUTHORIZED";
-            else
-                parentData << "REJECTED";
-            parentData << remoteUsbIt->date.c_str();
-            parentData << remoteUsbIt->user.c_str() << remoteUsbIt->driveLabel.c_str() << remoteUsbIt->driveName.c_str();
-            parentData << QString::number(remoteUsbIt->driveSize) + " MB";
+            db.queryLog(&remoteUsb);
 
-            childHeader << "" << "Drive Letter" << "Serial" << "GUID" << "USBNinja Serial";
+            std::vector<logUSB>::iterator remoteUsbIt = remoteUsb.begin();
 
-            childData << "" << QString(remoteUsbIt->driveLetter) << remoteUsbIt->driveSerial.c_str();
-            childData << remoteUsbIt->driveGUID.c_str() << remoteUsbIt->usbninjaSerial.c_str();
+            for (int i = remoteUsb.size(); remoteUsbIt != remoteUsb.end(); remoteUsbIt++, i--)
+            {
+                QStringList parentData, childData, childHeader;
+                parentData << QString::number(i);
+                if (remoteUsbIt->accepted)
+                    parentData << "AUTHORIZED";
+                else
+                    parentData << "REJECTED";
+                parentData << remoteUsbIt->date.c_str();
+                parentData << remoteUsbIt->user.c_str() << remoteUsbIt->driveLabel.c_str() << remoteUsbIt->driveName.c_str();
+                parentData << QString::number(remoteUsbIt->driveSize) + " MB";
 
-            QTreeWidgetItem *parentItm = new QTreeWidgetItem(parentData);
-            QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
-            QTreeWidgetItem *childItm = new QTreeWidgetItem(childData);
+                childHeader << "" << "Drive Letter" << "Serial" << "GUID" << "USBNinja Serial";
 
-            parentItm->setIcon(0, QIcon(":/new/prefix1/resources/database.png"));
-            parentItm->setToolTip(0, "Remotely logged event");
+                childData << "" << QString(remoteUsbIt->driveLetter) << remoteUsbIt->driveSerial.c_str();
+                childData << remoteUsbIt->driveGUID.c_str() << remoteUsbIt->usbninjaSerial.c_str();
 
-            for (int i = 0; i < childItmHeader->columnCount(); i++)
-                childItmHeader->setForeground(i, Qt::lightGray);
+                QTreeWidgetItem *parentItm = new QTreeWidgetItem(parentData);
+                QTreeWidgetItem *childItmHeader = new QTreeWidgetItem(childHeader);
+                QTreeWidgetItem *childItm = new QTreeWidgetItem(childData);
 
-            parentItm->addChild(childItmHeader);
-            parentItm->addChild(childItm);
-            ui->treeWidget->insertTopLevelItem(0, parentItm);
+                parentItm->setIcon(0, QIcon(":/new/prefix1/resources/database.png"));
+                parentItm->setToolTip(0, "Remotely logged event");
+
+                for (int i = 0; i < childItmHeader->columnCount(); i++)
+                    childItmHeader->setForeground(i, Qt::lightGray);
+
+                parentItm->addChild(childItmHeader);
+                parentItm->addChild(childItm);
+                ui->treeWidget->insertTopLevelItem(0, parentItm);
+            }
         }
     }
+
     ui->treeWidget->setColumnWidth(0, 60);
     ui->treeWidget->setColumnWidth(3, 100);
     ui->treeWidget->resizeColumnToContents(2);
@@ -266,4 +272,16 @@ void MainWindow::on_actionSettings_triggered()
     SettingsDialog settingsDialog;
     settingsDialog.setModal(true);
     settingsDialog.exec();
+}
+
+void MainWindow::on_actionHelp_triggered()
+{
+    ShellExecuteA(NULL, "open", "http://usbninja.weebly.com/", NULL, NULL, SW_SHOWNORMAL);
+}
+
+void MainWindow::on_actionDaemon_Status_triggered()
+{
+    DaemonStatusDialog dsd;
+    dsd.setModal(true);
+    dsd.exec();
 }

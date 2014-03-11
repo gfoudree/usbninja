@@ -5,6 +5,7 @@
 
 #include <QWizard>
 #include <QMessageBox>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "authdrive.h"
 #include "../../USBNinjaDll/usbdevice.h"

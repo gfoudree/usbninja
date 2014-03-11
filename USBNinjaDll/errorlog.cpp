@@ -19,7 +19,9 @@ ErrorLog::ErrorLog()
 void ErrorLog::logErrorToFile(char *errLevel, char *errMsg, char *extra, char *extra_2, char *extra_3)
 {
     std::ofstream logfile;
+
     logfile.open(Paths::getLogPath().c_str(), std::ios::app);
+
     if (logfile.is_open())
     {
         logfile << "[" << dateAndTime() << "] ";

@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <regex>
+#include <string>
+#include <sstream>
 
 #include <../../USBNinjaDll/configparser.h>
 #include <../../USBNinjaDll/paths.h>

@@ -28,7 +28,7 @@ HEADERS += \
     configparser.h \
     mysqldb.h
 
-LIBS += -lboost_random -lz  -lsqlite3 -lmysql
+LIBS += -lboost_random -lz -lsqlite3 -lmysql
 
 OTHER_FILES += \
     versioninfo.rc
@@ -45,4 +45,4 @@ QMAKE_POST_LINK += $$QMAKE_COPY $$quote("debug/"$$TARGET".dll") $$quote("../../U
 
 QMAKE_CXXFLAGS += -Wno-write-strings -std=gnu++0x #Get rid of annoying warnings for const *char to *char
 
-QMAKE_LFLAGS +=  -static-libstdc++ -static-libgcc
+QMAKE_LFLAGS +=  -static -static-libstdc++ -static-libgcc

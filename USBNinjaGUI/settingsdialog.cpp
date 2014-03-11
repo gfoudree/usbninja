@@ -29,12 +29,12 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::on_pushButton_clicked()
 {
-    char portStr[10];
-    itoa(ui->spinBoxPort->value(), portStr, 10);
-
     ConfigParser configParser((char*)Paths::getConfigPath().c_str());
-    configParser.setValue("ip", ui->lineIP->text().toStdString());
-    configParser.setValue("port", portStr);
+
+    std::ostringstream ostr;
+    ostr << ui->spinBoxPort->value();
+
+    configParser.setValue("port", ostr.str());
     configParser.setValue("username",  ui->lineUN->text().toStdString());
     configParser.setValue("password", ui->linePass->text().toStdString());
     configParser.setValue("database", ui->lineDB->text().toStdString());
@@ -43,6 +43,15 @@ void SettingsDialog::on_pushButton_clicked()
         configParser.setValue("SQLenabled", "1");
     else
         configParser.setValue("SQLenabled", "0");
+
+    /* Verify IP is a valid IP */
+    QRegExp ipChk(R"(^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$)");
+
+    std::string ip = ui->lineIP->text().toStdString();
+    if (ipChk.exactMatch(QString::fromStdString(ip)))
+        configParser.setValue("ip", ui->lineIP->text().toStdString());
+    else
+        QMessageBox::information(this, "Error", "An invalid IP was entered, it will not be stored in the configuration file.");
 
     done(0);
 }

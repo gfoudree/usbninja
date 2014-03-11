@@ -12,5 +12,6 @@
         <file>resources/info.png</file>
         <file>resources/log.png</file>
         <file>resources/harddrive.png</file>
+        <file>resources/process.png</file>
     </qresource>
 </RCC>

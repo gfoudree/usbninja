@@ -42,31 +42,22 @@ void LogviewDialog::refreshUI()
 {
     ui->treeWidget->clear();
     std::vector<logFileFormat> logFileData;
+    parseLogFile(logFileData, (char*)Paths::getLogPath().c_str());
 
-    if (!parseLogFile(logFileData, (char*)Paths::getLogPath().c_str()))
+    /* Reverse elements so they are in proper order */
+    std::reverse(logFileData.begin(), logFileData.end());
+
+    for (std::vector<logFileFormat>::iterator it = logFileData.begin(); it != logFileData.end();
+         it++)
     {
         QStringList itemData;
-        itemData << "Now" << "CRITICAL" << "Error parsing log file.";
-        ui->treeWidget->insertTopLevelItem(0, new QTreeWidgetItem(itemData));
-    }
-    else
-    {
-        /* Reverse elements so they are in proper order */
-        std::reverse(logFileData.begin(), logFileData.end());
+        itemData << it->date.c_str() << it->urgency.c_str() << it->info.c_str();
 
-        for (std::vector<logFileFormat>::iterator it = logFileData.begin(); it != logFileData.end();
-             it++)
-        {
-            QStringList itemData;
-            itemData << it->date.c_str() << it->urgency.c_str() << it->info.c_str();
-
-            QTreeWidgetItem *widgetItem = new QTreeWidgetItem(itemData);
-            ui->treeWidget->insertTopLevelItem(0, widgetItem);
-        }
+        QTreeWidgetItem *widgetItem = new QTreeWidgetItem(itemData);
+        ui->treeWidget->insertTopLevelItem(0, widgetItem);
     }
 
-    for (int i = 0; i < 3; i++) //Clean formatting up
-        ui->treeWidget->resizeColumnToContents(i);
+    ui->treeWidget->resizeColumnToContents(1); //Clean things up...
 }
 
 bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePath)

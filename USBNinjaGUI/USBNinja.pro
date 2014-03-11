@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     csvexport.cpp \
     logviewdialog.cpp \
     settingsdialog.cpp \
-    usbwizard.cpp
+    usbwizard.cpp \
+    daemonstatusdialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     csvexport.h \
     logviewdialog.h \
     settingsdialog.h \
-    usbwizard.h
+    usbwizard.h \
+    daemonstatusdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
@@ -40,7 +42,8 @@ FORMS    += mainwindow.ui \
     graphdialog.ui \
     logviewdialog.ui \
     settingsdialog.ui \
-    usbwizard.ui
+    usbwizard.ui \
+    daemonstatusdialog.ui
 
 RC_FILE = versioninfo.rc
 
@@ -50,11 +53,12 @@ QMAKE_LFLAGS_RELEASE -= -O1
 
 QMAKE_LFLAGS += -static -static-libstdc++ -static-libgcc
 
-LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lcryptopp -lnightcharts
+LIBS += ../../USBNinjaDll/Build/debug/libusb32.a -LC:/MinGW/lib -lcryptopp -lnightcharts
+#LIBS += "..\..\USBNinjaDll\Build\release\usb32.dll" -LC:/MinGW/lib -lcryptopp -lnightcharts
 
 OTHER_FILES +=
 
 RESOURCES += \
     resource.qrc
 
-QMAKE_CXXFLAGS += -Wno-write-strings #Get rid of annoying warnings for const *char to *char
+QMAKE_CXXFLAGS += -Wno-write-strings -std=c++11 #Get rid of annoying warnings for const *char to *char

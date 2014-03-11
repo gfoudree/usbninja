@@ -138,6 +138,7 @@
     </property>
     <addaction name="actionStart_Monitoring"/>
     <addaction name="actionStop_Monitoring"/>
+    <addaction name="actionDaemon_Status"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuManage"/>
@@ -219,6 +220,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionDaemon_Status">
+   <property name="text">
+    <string>Daemon Status</string>
    </property>
   </action>
  </widget>

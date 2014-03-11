@@ -41,6 +41,7 @@
 #include "graphdialog.h"
 #include "logviewdialog.h"
 #include "settingsdialog.h"
+#include "daemonstatusdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -79,6 +80,10 @@ private slots:
     void on_actionStop_Monitoring_triggered();
 
     void on_actionSettings_triggered();
+
+    void on_actionHelp_triggered();
+
+    void on_actionDaemon_Status_triggered();
 
 private:
     Ui::MainWindow *ui;
