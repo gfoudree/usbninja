@@ -147,15 +147,21 @@
   </widget>
   <action name="actionReload_Log">
    <property name="text">
-    <string>Refresh Log</string>
+    <string>Refresh Device Log</string>
+   </property>
+   <property name="toolTip">
+    <string>Refresh Device Log</string>
    </property>
    <property name="shortcut">
-    <string notr="true">F5</string>
+    <string>F5</string>
    </property>
   </action>
   <action name="actionClear_Log">
    <property name="text">
-    <string>Clear Log</string>
+    <string>Clear Device Log</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear Device Log</string>
    </property>
   </action>
   <action name="actionExit">

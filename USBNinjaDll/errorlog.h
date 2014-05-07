@@ -20,7 +20,7 @@
 #include <time.h>
 #include <windows.h>
 #include <memory>
-
+#include <direct.h>
 
 #include "paths.h"
 class ErrorLog

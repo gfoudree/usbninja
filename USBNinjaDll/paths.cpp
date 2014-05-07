@@ -27,3 +27,14 @@ std::string Paths::getConfigPath()
     path.append("\\UsbNinja\\settings.conf");
     return path;
 }
+
+bool Paths::directoryExists(const char *path)
+{
+    DWORD file = GetFileAttributesA(path);
+    if (file == INVALID_FILE_ATTRIBUTES)
+        return false;
+    if (file & FILE_ATTRIBUTE_DIRECTORY)
+        return true;
+    else
+        return false;
+}

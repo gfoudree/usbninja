@@ -34,6 +34,15 @@ bool Sql::dbConnect(char *filename, bool createNew)
     {
         if ((res == SQLITE_CANTOPEN) && createNew == true)
         {
+            std::string filePath = Paths::getDatabasePath();
+            if (!Paths::directoryExists(filePath.c_str()))
+            {
+                char *fName = strrchr(filePath.c_str(), '\\');
+                std::string dir = filePath;
+                dir.erase(dir.find(fName));
+                _mkdir(dir.c_str());
+            }
+
             res = sqlite3_open(filename, &db);
             if (res == SQLITE_OK)
             {

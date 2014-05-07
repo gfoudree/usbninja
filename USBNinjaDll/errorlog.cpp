@@ -20,7 +20,15 @@ void ErrorLog::logErrorToFile(char *errLevel, char *errMsg, char *extra, char *e
 {
     std::ofstream logfile;
 
-    logfile.open(Paths::getLogPath().c_str(), std::ios::app);
+    std::string filePath = Paths::getLogPath();
+    if (!Paths::directoryExists(filePath.c_str()))
+    {
+        char *fName = strrchr(filePath.c_str(), '\\');
+        std::string dir = filePath;
+        dir.erase(dir.find(fName));
+        _mkdir(dir.c_str());
+    }
+    logfile.open(filePath.c_str(), std::ios::app);
 
     if (logfile.is_open())
     {
