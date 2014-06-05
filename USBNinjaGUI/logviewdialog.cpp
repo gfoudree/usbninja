@@ -121,12 +121,16 @@ bool LogviewDialog::parseLogFile(std::vector<logFileFormat> &data, char *filePat
 
 void LogviewDialog::onClearLogfile()
 {
-    if (remove((char*)Paths::getLogPath().c_str()) != 0)
+    std::ofstream truncStream;
+    truncStream.open(Paths::getLogPath(), std::ios::trunc);
+
+    if (!truncStream.is_open())
     {
-        QMessageBox::critical(this, "Error", "Unable to delete the log file.");
+        QMessageBox::critical(this, "Error", "Unable to clear the log file.");
     }
     else
     {
         refreshUI();
     }
+    truncStream.close();
 }

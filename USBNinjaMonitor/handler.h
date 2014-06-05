@@ -26,6 +26,7 @@
 #include <../USBNinjaDll/paths.h>
 
 #include "usbops.h"
+#include "virusscan.h"
 
 void threadHandler(char driveLtr);
 

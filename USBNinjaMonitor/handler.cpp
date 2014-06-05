@@ -31,6 +31,7 @@ void threadHandler(char driveLtr)
     if (!sql.dbConnect((char*)Paths::getDatabasePath().c_str(), false))
     {
         ErrorLog::logErrorToFile("*CRITICAL*", "Unable to open authorized drives database!");
+        ops.ejectUSB();
         gMutex.unlock();
         return;
     }
@@ -75,11 +76,15 @@ void threadHandler(char driveLtr)
     else
         log->logUsbDrive(log->logUSBStruct, false);
 
+    /* If not authorized, eject it! */
     if (!authorized)
     {
         ops.lockUSB(driveLtr);
         ops.ejectUSB();
     }
+
+    /* Check for viruses here... */
+
     gMutex.unlock();
     delete log;
 }

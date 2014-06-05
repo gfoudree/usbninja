@@ -20,6 +20,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 #include <../../USBNinjaDll/paths.h>
 
