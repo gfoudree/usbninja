@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <winsvc.h>
 #include <string.h>
+#include <clamav/clamav.h>
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <../USBNinjaDll/usbdevice.h>

@@ -12,7 +12,7 @@ SOURCES += main.cpp \
 OTHER_FILES += \
     versioninfo.rc
 
-LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" -lboost_system -lboost_thread -lboost_filesystem
+LIBS += "..\..\USBNinjaDll\Build\debug\libusb32.a" "..\libclamav.dll" -lboost_system -lboost_thread -lboost_filesystem
 #LIBS += "..\..\USBNinjaDll\Build\release\usb32.dll" -lboost_system -lboost_thread
 
 DEFINES += BOOST_THREAD_USE_LIB
@@ -33,3 +33,4 @@ QMAKE_LFLAGS_RELEASE -= -O1
 
 QMAKE_LFLAGS +=  -static-libstdc++ -static-libgcc
 
+win32:RC_FILE=res.rc

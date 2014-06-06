@@ -75,12 +75,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgu
     ErrorLog::logErrorToFile("*INFO*", "USBNinja daemon started.");
     atexit(logQuitMessage);
 
+    trayNotification.setHInstance(hInstance);
     trayNotification.setWindow(hwnd);
     trayNotification.sendMessage("USBNinja daemon started.", "USBNinja");
 
     //ShowWindow(GetConsoleWindow(), SW_HIDE);
-    VirusScan vs;
-    vs.lockFiles(vs.findFiles('E'));
+    VirusScan vs(&trayNotification);
+    //vs.lockFiles(vs.findFiles('E'));
 
     while (GetMessage (&messages, NULL, 0, 0))
     {
@@ -99,12 +100,15 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
             PDEV_BROADCAST_HDR pHdr = (PDEV_BROADCAST_HDR) lParam;
             if (wParam == DBT_DEVICEARRIVAL && pHdr->dbch_devicetype == DBT_DEVTYP_VOLUME)
             {
+                char msg[20];
+
                 PDEV_BROADCAST_VOLUME pHdrv = (PDEV_BROADCAST_VOLUME) pHdr;
                 char driveLtr = UsbDevice::FirstDriveFromMask(pHdrv->dbcv_unitmask);
 
                 thrd_grp.create_thread(boost::bind(threadHandler, driveLtr));
+                sprintf(msg, "Drive %c Inserted", driveLtr);
 
-                trayNotification.sendMessage("Drive Inserted", "Alert");
+                trayNotification.sendMessage(msg, "Alert");
             }
         }
         break;

@@ -2,7 +2,6 @@
 
 TrayNotify::TrayNotify()
 {
-
 }
 
 TrayNotify::~TrayNotify()
@@ -26,7 +25,7 @@ void TrayNotify::setWindow(HWND hWindow)
     nid.uVersion = NOTIFYICON_VERSION_4;
     nid.uCallbackMessage = WM_NOTIFYBUBBLECLICK;
     nid.dwInfoFlags = 0x00000001; //Information Icon for balloon popup
-    nid.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    nid.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(UsbIcon));
     strcpy(nid.szTip, "USBNinja Daemon");
     nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP | NIF_INFO | NIF_GUID;
 
@@ -37,4 +36,15 @@ void TrayNotify::getMessage(char *message, char *title)
 {
     strcpy(message, nid.szInfo);
     strcpy(title, nid.szInfoTitle);
+}
+
+void TrayNotify::setHoverMessage(char *message)
+{
+    strcpy(nid.szTip, message);
+    Shell_NotifyIconA(NIM_MODIFY, &nid);
+}
+
+void TrayNotify::setHInstance(HINSTANCE hInst)
+{
+    hInstance = hInst;
 }

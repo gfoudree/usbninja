@@ -1,7 +1,8 @@
 #include "virusscan.h"
 
-VirusScan::VirusScan()
+VirusScan::VirusScan(TrayNotify *tn)
 {
+    numSignatures = 0;
     fTypes[0] = ".EXE";
     fTypes[1] = ".BAT";
     fTypes[2] = ".BIN";
@@ -16,6 +17,45 @@ VirusScan::VirusScan()
     fTypes[11] = ".PPTX";
     fTypes[12] = ".SYS";
     fTypes[13] = ".VBS";
+
+    /* Init AV engine */
+    int res = cl_init(0);
+    cl = cl_engine_new();
+    if (res != CL_SUCCESS)
+    {
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to initialize AV engine: ", (char*)cl_strerror(res));
+        std::cout << cl_strerror(res);
+        return;
+    }
+
+    res = cl_load(cl_retdbdir(), cl, &numSignatures, CL_DB_STDOPT);
+    if (res != CL_SUCCESS)
+    {
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to load AV engine signatures. Check for db folder?: ", (char*)cl_strerror(res));
+        std::cout << cl_strerror(res);
+        return;
+    }
+
+    res = cl_engine_compile(cl);
+    if (res != CL_SUCCESS)
+    {
+        ErrorLog::logErrorToFile("*CRITICAL*", "Unable to compile AV engine rules: ", (char*)cl_strerror(res));
+        std::cout << cl_strerror(res);
+        return;
+    }
+
+    char msgStr[100];
+    sprintf(msgStr, "ClamAV engine initialized. %d signatures loaded.", numSignatures);
+
+    ErrorLog::logErrorToFile("*INFO*", msgStr);
+    tn->sendMessage(msgStr, "ClamAV");
+    tn->setHoverMessage("UsbNinja Daemon\nClamAV Loaded");
+
+}
+
+VirusScan::~VirusScan()
+{
+    cl_engine_free(cl);
 }
 
 std::string VirusScan::getFileExtention(std::string fileName)
@@ -61,4 +101,28 @@ void VirusScan::lockFiles(std::vector<std::string> files)
                                   0, NULL, OPEN_EXISTING, 0, NULL);
         hFiles.push_back(hFile);
     }
+}
+
+char* VirusScan::getVirusName()
+{
+    return virusName;
+}
+
+cl_cvd VirusScan::getCVDInfo(char *file)
+{
+    cl_cvd ret;
+    struct cl_cvd *cc;
+    cc = cl_cvdhead(file);
+
+    ret.builder = cc->builder;
+    ret.dsig = cc->dsig;
+    ret.fl = cc->fl;
+    ret.md5 = cc->md5;
+    ret.sigs = cc->sigs;
+    ret.stime = cc->stime;
+    ret.time = cc->time;
+    ret.version = cc->version;
+
+    cl_cvdfree(cc);
+    return ret;
 }
